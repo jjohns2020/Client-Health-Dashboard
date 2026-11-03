@@ -33,6 +33,10 @@ jobs:
           VITE_BASE: /ROI-Dashboard/
       - name: Configure Pages
         uses: actions/configure-pages@v5
+        with:
+          # Create the Pages site and select GitHub Actions when it has not
+          # already been enabled in the repository settings.
+          enablement: true
       - name: Upload site
         uses: actions/upload-pages-artifact@v3
         with:
