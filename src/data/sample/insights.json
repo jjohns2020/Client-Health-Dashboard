@@ -1,0 +1,246 @@
+{
+ "maine": [
+  {
+   "area": "rm",
+   "type": "Observation",
+   "aud": "client",
+   "title": "More addresses found and corrected year over year",
+   "obs": "Return mail New results rose 22.1% (6,255 → 7,635) and Improved rose 26.1% (836 → 1,054), Jan–Jun 2024 vs 2025.",
+   "so": "Improved addresses grew slightly faster, lifting the improved share from 11.8% to 12.1% of corrected accounts.",
+   "rec": "Use the New and Improved volumes to size automation: improved-only automation is the low-risk first step.",
+   "metric": "+22% new · +26% improved"
+  },
+  {
+   "area": "roi",
+   "type": "Observation",
+   "aud": "client",
+   "title": "Q3 value is driven by stronger patient payment performance",
+   "obs": "Patient payments rose 32.4% year over year (Jul–Sep: $45.2M → $59.8M) and the collection rate improved 3.18 points (6.58% → 9.76%).",
+   "so": "Payment growth outpaced inventory growth, so the lift reflects better collection effectiveness, not just more volume.",
+   "rec": "Keep segmentation-based strategies in place and track the collection rate monthly to confirm the gain holds through Q4.",
+   "metric": "+3.18 pts collection rate"
+  },
+  {
+   "area": "roi",
+   "type": "Risk",
+   "aud": "internal",
+   "title": "ROI rests almost entirely on one lever",
+   "obs": "Recovery lift is 95.8% of Q3 quantified benefit ($464,737 of $485,089).",
+   "so": "If the collection rate softens, ROI drops sharply. Automation and statement savings are mostly sitting in “additional value,” not the ROI.",
+   "rec": "Quantify return mail, bankruptcy and deceased automation so the ROI has a second, steadier leg before renewal.",
+   "metric": "95.8% from one lever"
+  },
+  {
+   "area": "roi",
+   "type": "Data quality",
+   "aud": "internal",
+   "title": "Workbook “% change” formulas understate growth",
+   "obs": "The Cash Impact change formulas divide by the current period, so the Q3 deck shows patient payments +24.4%. Measured against the prior year it is +32.4%.",
+   "so": "The client-facing number is conservative but inconsistent with how a CFO would calculate growth.",
+   "rec": "Standardize the template to (current − prior) ÷ prior, or label the metric clearly.",
+   "metric": "24.4% vs 32.4%"
+  },
+  {
+   "area": "pfc",
+   "type": "Observation",
+   "aud": "client",
+   "title": "Low income does not mean low likelihood to pay",
+   "obs": "44.6% of patients are at or below 200% FPL, yet 73.6% score high propensity to pay.",
+   "so": "A policy that writes off on FPL alone would forgo payments from patients who are likely to pay.",
+   "rec": "Use segment/propensity alongside FPL in the presumptive charity policy.",
+   "metric": "44.6% ≤200% FPL vs 73.6% high propensity"
+  },
+  {
+   "area": "av",
+   "type": "Observation",
+   "aud": "client",
+   "title": "Front-end address correction is reducing returned mail",
+   "obs": "27.2% of PIV transactions returned a new or improved address, and return mail volume fell 94% (17,917 → 1,140).",
+   "so": "Cleaner addresses at registration mean fewer returned statements and less rework downstream.",
+   "rec": "Present PIV and Return Mail together as one address-quality story.",
+   "metric": "−94% return mail volume"
+  },
+  {
+   "area": "bk",
+   "type": "Observation",
+   "aud": "client",
+   "title": "Fewer but larger bankruptcy balances",
+   "obs": "Bankruptcy results rose 20% (92 → 110) while impacted dollars rose 161% ($38K → $100K); the average balance more than doubled ($415 → $906).",
+   "so": "Each missed bankruptcy now carries more compliance and write-off exposure.",
+   "rec": "Confirm bankruptcy holds are automated; the workbook sizes manual handling at 18.3 hours this quarter.",
+   "metric": "Avg balance $415 → $906"
+  },
+  {
+   "area": "dc",
+   "type": "Observation",
+   "aud": "client",
+   "title": "Deceased hits are down sharply",
+   "obs": "Deceased results fell 61% (104 → 41) year over year.",
+   "so": "Lower volume reduces manual research, but a drop this large can also reflect a change in what is being scrubbed.",
+   "rec": "Confirm the deceased scrub population did not change before presenting this as an improvement.",
+   "metric": "−61% results"
+  },
+  {
+   "area": "rm",
+   "type": "Opportunity",
+   "aud": "client",
+   "title": "Return mail is a ready automation candidate",
+   "obs": "77.5% of return mail searches found a new, improved or equal address, and updated accounts produced $20,352 in payments.",
+   "so": "Most returned mail can be corrected automatically; manual handling costs about 901.5 hours (1.73 FTE) per quarter.",
+   "rec": "Propose automating improved and new address updates, starting with improved only if the client prefers.",
+   "metric": "1.73 FTE manual effort"
+  },
+  {
+   "area": "ch",
+   "type": "Risk",
+   "aud": "client",
+   "title": "Charity qualified volume fell by half",
+   "obs": "Qualified accounts fell 51% (308,006 → 150,396) and qualified balance fell 55% ($167.3M → $74.9M).",
+   "so": "A drop this large usually means a policy, timing or filter change rather than a change in patient need.",
+   "rec": "Review with the client whether presumptive charity criteria or timing changed during 2025.",
+   "metric": "−51% accounts"
+  },
+  {
+   "area": "ch",
+   "type": "Data quality",
+   "aud": "internal",
+   "title": "Charity counts differ between the deck and workbook",
+   "obs": "The Q3 deck shows 308,006 accounts for Jul–Sep 2024; the workbook shows 155,730 for all of Jan–Jun 2024.",
+   "so": "Comparing the two could mislead the client.",
+   "rec": "Confirm both use the same Tableau report view before the next review.",
+   "metric": "Deck vs workbook mismatch"
+  },
+  {
+   "area": "seg",
+   "type": "Observation",
+   "aud": "client",
+   "title": "Segments 1–2 carry the payments",
+   "obs": "Segments 1–2 are 53% of volume but 74% of payments; segments 4–5 are 22% of volume and about 10% of payments.",
+   "so": "Effort spent on segments 4–5 returns little cash.",
+   "rec": "Shift dialer and statement effort toward segments 1–3 and consider earlier charity screening or offload for segments 4–5.",
+   "metric": "53% vol → 74% payments"
+  }
+ ],
+ "washu": [
+  {
+   "area": "rm",
+   "type": "Risk",
+   "aud": "client",
+   "title": "Return mail corrections dropped sharply in 2024",
+   "obs": "New results fell 66.8% (6,255 → 2,076) and Improved fell 70.5% (836 → 247), Jan–Jun 2023 vs 2024.",
+   "so": "Either far less mail is being returned or fewer returned accounts are being sent through the scrub.",
+   "rec": "Confirm all returned mail is routed to the scrub, and fill in the Jan–Jun 2025 row before the next review.",
+   "metric": "−67% new · −70% improved"
+  },
+  {
+   "area": "roi",
+   "type": "Risk",
+   "aud": "client",
+   "title": "Balances grew faster than payments",
+   "obs": "Outstanding patient balance rose 16.1% while patient payments rose 3.0%, so the collection rate fell 2.05 points (18.16% → 16.11%).",
+   "so": "The ROI uses patient-payment lift ($2.07M) because recovery-rate lift was negative. A CFO may challenge that.",
+   "rec": "Lead with the inventory explanation below and present a conservative ROI alongside the full ROI.",
+   "metric": "−2.05 pts collection rate"
+  },
+  {
+   "area": "roi",
+   "type": "Observation",
+   "aud": "client",
+   "title": "Inventory shifted to higher-balance accounts",
+   "obs": "Accounts placed fell 36.7% (1.39M → 881K) while dollars placed were flat (+1.1%), so the average placed balance rose 60% ($129 → $206).",
+   "so": "Higher-balance self-pay is harder to collect, which explains much of the collection-rate decline.",
+   "rec": "Frame the period as “holding payments steady on a harder inventory” and review segment strategy for high balances.",
+   "metric": "Avg balance +60%"
+  },
+  {
+   "area": "roi",
+   "type": "Risk",
+   "aud": "internal",
+   "title": "Cash impact is 64% of the ROI",
+   "obs": "Cash impact is 64.2% of quantified benefit; Medicaid is 18.9% and return mail 10.1%. Excluding cash impact, ROI is 6.2 : 1 instead of 17.2 : 1.",
+   "so": "The headline ROI is sensitive to how cash impact is calculated.",
+   "rec": "Have the 6.2 : 1 conservative figure ready for renewal conversations.",
+   "metric": "6.2 : 1 without cash impact"
+  },
+  {
+   "area": "mc",
+   "type": "Risk",
+   "aud": "client",
+   "title": "Medicaid payments fell despite a better hit rate",
+   "obs": "Medicaid payments fell 57% (Jan–Jun: $1.42M → $609K) while the hit rate rose (8.0% → 10.2%).",
+   "so": "Fewer dollars with a higher hit rate points to fewer or lower-balance accounts being scrubbed, or timely-filing loss.",
+   "rec": "Check scrub scope (true self-pay, Medicare no secondary) and timely-filing windows; consider expanding to neighboring states if enrolled.",
+   "metric": "−57% payments"
+  },
+  {
+   "area": "ch",
+   "type": "Observation",
+   "aud": "client",
+   "title": "Presumptive charity is growing",
+   "obs": "Qualified accounts rose 29% (23,421 → 30,214) and qualified balance rose 27% ($11.3M → $14.3M).",
+   "so": "More patients are being identified for assistance before bad debt, which supports compliance and reduces wasted collection effort.",
+   "rec": "Check segment overlap so likely payers (segments 1–3) are not written off on FPL alone.",
+   "metric": "+29% qualified accounts"
+  },
+  {
+   "area": "pfc",
+   "type": "Observation",
+   "aud": "client",
+   "title": "Improved-address rate is slipping",
+   "obs": "PIV improved addresses fell from 4.79% to 3.55% of volume (2023 → 2025) while new-address rate held near 17%.",
+   "so": "Fewer corrections at registration can push more work to return mail later.",
+   "rec": "Review PIV/PFC configuration with the client to confirm all patients are being sent through.",
+   "metric": "−1.24 pts improved"
+  },
+  {
+   "area": "bk",
+   "type": "Observation",
+   "aud": "client",
+   "title": "Bankruptcy volume up 19%",
+   "obs": "Bankruptcy results rose 19% (6,975 → 8,274) with about $1.31M in impacted balance.",
+   "so": "More accounts are being correctly removed from active collection.",
+   "rec": "Confirm adjustments are automated; manual handling is sized at $15,169 for the period.",
+   "metric": "+19% results"
+  },
+  {
+   "area": "bk",
+   "type": "Data quality",
+   "aud": "internal",
+   "title": "Bankruptcy dollars jump in 2024",
+   "obs": "Average bankruptcy balance went from $14 (2023) to $181 (2024).",
+   "so": "A 13× jump is more likely a report filter change than real behavior.",
+   "rec": "Re-pull Jan–Jun 2023 bankruptcy dollars before showing the 3-year trend.",
+   "metric": "$14 → $181 avg"
+  },
+  {
+   "area": "dc",
+   "type": "Observation",
+   "aud": "client",
+   "title": "Deceased results down 35%",
+   "obs": "Deceased results fell 35% (2,259 → 1,462) year over year.",
+   "so": "Lower volume reduces sensitive manual work.",
+   "rec": "Confirm scrub population was unchanged.",
+   "metric": "−35% results"
+  },
+  {
+   "area": "agency",
+   "type": "Risk",
+   "aud": "client",
+   "title": "Both agencies trail the benchmark",
+   "obs": "Over 24 months, Agency A recovers at 41% of benchmark (3.42% vs 8.27%) and Agency B at 74% (6.13%).",
+   "so": "Placements to Agency A are recovering well below what comparable inventory achieves elsewhere.",
+   "rec": "Review placement allocation and consider shifting inventory toward the stronger agency.",
+   "metric": "Agency A at 41% of benchmark"
+  },
+  {
+   "area": "rm",
+   "type": "Data quality",
+   "aud": "internal",
+   "title": "Return mail 2025 New/Improved is blank",
+   "obs": "The workbook Jan–Jun 2025 New/Improved row is empty.",
+   "so": "Year-over-year return mail improvement cannot be shown.",
+   "rec": "Fill from the Return Mail dashboard before the next review.",
+   "metric": "Missing data"
+  }
+ ]
+}

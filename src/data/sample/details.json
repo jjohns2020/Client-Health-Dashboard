@@ -1,0 +1,745 @@
+{
+ "maine": {
+  "pfc": {
+   "name": "Patient Financial Clearance",
+   "sub": "Front-end patient financial insight and address validation",
+   "src": "Q3 deck · slide 6",
+   "kpis": [
+    [
+     "PIV transactions",
+     "545,867",
+     "Address/identity verification volume"
+    ],
+    [
+     "New + improved",
+     "27.2%",
+     "Address opportunities"
+    ],
+    [
+     "PFC searches",
+     "917,078",
+     "Financial insight volume"
+    ],
+    [
+     "High propensity",
+     "73.6%",
+     "Propensity distribution"
+    ]
+   ],
+   "charts": [
+    {
+     "t": "FPL distribution (% of accounts)",
+     "cats": [
+      "1–100%",
+      "101–200%",
+      "201–300%",
+      "301–400%",
+      "401–500%",
+      "501%+",
+      "No FPL"
+     ],
+     "v": [
+      0.057,
+      0.389,
+      0.31,
+      0.13,
+      0.053,
+      0.040999999999999995,
+      0.018000000000000002
+     ],
+     "f": "p"
+    },
+    {
+     "t": "Propensity to pay (% of accounts)",
+     "cats": [
+      "High",
+      "Medium",
+      "Low",
+      "NC"
+     ],
+     "v": [
+      0.736,
+      0.214,
+      0.03,
+      0.019
+     ],
+     "f": "p"
+    }
+   ],
+   "tl": "Executive implication",
+   "take": "PFC insights support point-of-service collections, financial assistance identification, and earlier workflow decisions.",
+   "trend": "piv"
+  },
+  "av": {
+   "name": "Address Verification",
+   "sub": "Address correction supports statement deliverability, manual work avoidance, and collection feasibility",
+   "src": "Q3 deck · slide 7",
+   "kpis": [
+    [
+     "Total searches",
+     "545,867",
+     "PIV transaction volume"
+    ],
+    [
+     "New addresses",
+     "19.0%",
+     "Completely new result"
+    ],
+    [
+     "Improved addresses",
+     "44,913 | 8.2%",
+     "Workbook improved volume"
+    ],
+    [
+     "Impacted AR",
+     "$2.2M",
+     "Additional benefit"
+    ]
+   ],
+   "table": {
+    "h": [
+     "Value lever",
+     "Workbook value"
+    ],
+    "r": [
+     [
+      "Statement cost avoidance",
+      "$11,977"
+     ],
+     [
+      "Manual work avoidance",
+      "$18,714"
+     ],
+     [
+      "Manual hours avoided",
+      "1,248"
+     ],
+     [
+      "FTE equivalent",
+      "0.60"
+     ]
+    ]
+   },
+   "tl": "Operational proof",
+   "take": "Improved addresses are used for workbook ROI calculations because they represent validated corrections that can reduce downstream return mail and manual correction work.",
+   "trend": "piv"
+  },
+  "bk": {
+   "name": "Bankruptcy",
+   "sub": "Bankruptcy monitoring supports compliance mitigation and uncollectable account identification",
+   "src": "Q3 deck · slide 9",
+   "kpis": [
+    [
+     "Accounts monitored",
+     "100,789",
+     "Active AR monitored"
+    ],
+    [
+     "Bankruptcy results",
+     "110",
+     "Q3 2025 results"
+    ],
+    [
+     "Impacted balance",
+     "$99,652",
+     "Patient balance"
+    ],
+    [
+     "Automation sizing",
+     "$422",
+     "18.3 hours"
+    ]
+   ],
+   "charts": [
+    {
+     "t": "Bankruptcy volume, Jul–Sep",
+     "cats": [
+      "2024",
+      "2025"
+     ],
+     "v": [
+      92,
+      110
+     ],
+     "f": "n"
+    },
+    {
+     "t": "Bankruptcy dollars, Jul–Sep",
+     "cats": [
+      "2024",
+      "2025"
+     ],
+     "v": [
+      38168,
+      99652
+     ],
+     "f": "$"
+    }
+   ],
+   "tl": "Executive takeaway",
+   "take": "Bankruptcy monitoring protects against continued collection on accounts that should be handled through bankruptcy-aware workflows and identifies additional automation opportunity.",
+   "trend": "bk"
+  },
+  "dc": {
+   "name": "Deceased",
+   "sub": "Deceased monitoring supports patient experience and appropriate account handling",
+   "src": "Q3 deck · slide 10",
+   "kpis": [
+    [
+     "Accounts monitored",
+     "100,789",
+     "Active AR monitored"
+    ],
+    [
+     "Deceased results",
+     "41",
+     "Q3 2025 results"
+    ],
+    [
+     "Collections",
+     "$1,643",
+     "Workbook value"
+    ],
+    [
+     "Automation sizing",
+     "$157",
+     "6.8 hours"
+    ]
+   ],
+   "charts": [
+    {
+     "t": "Deceased volume, Jul–Sep",
+     "cats": [
+      "2024",
+      "2025"
+     ],
+     "v": [
+      104,
+      41
+     ],
+     "f": "n"
+    }
+   ],
+   "tl": "Executive takeaway",
+   "take": "The deceased workflow supports appropriate patient-sensitive handling while creating an opportunity to reduce manual research and documentation effort.",
+   "trend": "dc"
+  },
+  "rm": {
+   "name": "Return Mail",
+   "sub": "Return mail scrubbing produced corrected-address activity and collections tied to new/improved outcomes",
+   "src": "Q3 deck · slide 11",
+   "kpis": [
+    [
+     "Accounts",
+     "5,409",
+     "Return Mail dashboard"
+    ],
+    [
+     "Searches",
+     "1,470",
+     "Searches processed"
+    ],
+    [
+     "Search hit rate",
+     "77.5%",
+     "New/improved/equal"
+    ],
+    [
+     "Collections",
+     "$20,352",
+     "Patient payments after update"
+    ]
+   ],
+   "table": {
+    "h": [
+     "Automation opportunity",
+     "Workbook value"
+    ],
+    "r": [
+     [
+      "Manual hours avoided",
+      "901.5"
+     ],
+     [
+      "FTE equivalent",
+      "1.73"
+     ],
+     [
+      "Labor equivalent savings",
+      "$20,734"
+     ],
+     [
+      "Collections",
+      "$20,352"
+     ]
+    ]
+   },
+   "charts": [
+    {
+     "t": "Return mail volume",
+     "cats": [
+      "2024",
+      "2025"
+     ],
+     "v": [
+      17917,
+      1140
+     ],
+     "f": "n"
+    }
+   ],
+   "trend": "rm"
+  },
+  "mc": {
+   "name": "Medicaid",
+   "sub": "Medicaid eligibility scrub",
+   "src": "Not presented in the Q3 deck",
+   "empty": "Medicaid was not included in the Q3 2025 executive deck. In the live dashboard this page fills from the Medicaid tab (records scrubbed, active coverage found, hit rate, Medicaid payments, statement savings).",
+   "trend": "mc"
+  },
+  "ch": {
+   "name": "Charity",
+   "sub": "Presumptive charity workflow identifies qualified accounts and supports policy-aligned revenue cycle decisions",
+   "src": "Q3 deck · slide 12",
+   "kpis": [
+    [
+     "Qualified accounts",
+     "150,396",
+     "Q3 2025 results"
+    ],
+    [
+     "Qualified balance",
+     "$74.9M",
+     "Total patient balance"
+    ],
+    [
+     "Avg monthly volume",
+     "50,132",
+     "Accounts per month"
+    ],
+    [
+     "Statement savings",
+     "$360,950",
+     "Potential value"
+    ]
+   ],
+   "charts": [
+    {
+     "t": "Qualified balance",
+     "cats": [
+      "2024",
+      "2025"
+     ],
+     "v": [
+      167261258,
+      74894145
+     ],
+     "f": "$"
+    },
+    {
+     "t": "Qualified accounts",
+     "cats": [
+      "2024",
+      "2025"
+     ],
+     "v": [
+      308006,
+      150396
+     ],
+     "f": "n"
+    }
+   ],
+   "trend": "ch"
+  }
+ },
+ "washu": {
+  "pfc": {
+   "name": "Patient Financial Clearance / Address Verification",
+   "sub": "Front-end address validation (PIV)",
+   "src": "Workbook · Patient Financial Clearance tab (no deck on file)",
+   "kpis": [
+    [
+     "PIV volume",
+     "2,947,042",
+     "Jan–Jun 2025"
+    ],
+    [
+     "Avg monthly",
+     "491,174",
+     "Accounts per month"
+    ],
+    [
+     "New addresses",
+     "17.3%",
+     "Address comparison"
+    ],
+    [
+     "Improved addresses",
+     "3.55%",
+     "104,681 accounts"
+    ]
+   ],
+   "table": {
+    "h": [
+     "Value lever",
+     "Workbook value"
+    ],
+    "r": [
+     [
+      "Return mail statement cost avoidance",
+      "$27,915"
+     ],
+     [
+      "Manual work avoidance",
+      "$63,972"
+     ],
+     [
+      "FTE equivalent",
+      "2.80"
+     ]
+    ]
+   },
+   "charts": [
+    {
+     "t": "New % by year (Jan–Jun)",
+     "cats": [
+      "2023",
+      "2024",
+      "2025"
+     ],
+     "v": [
+      0.1722,
+      0.174,
+      0.173
+     ],
+     "f": "p"
+    },
+    {
+     "t": "Improved % by year (Jan–Jun)",
+     "cats": [
+      "2023",
+      "2024",
+      "2025"
+     ],
+     "v": [
+      0.0479,
+      0.0384,
+      0.0355
+     ],
+     "f": "p"
+    }
+   ],
+   "tl": "Consultant note",
+   "take": "New-address rate is steady while improved-address rate has declined since 2023. Worth reviewing PIV configuration with the client.",
+   "trend": "piv"
+  },
+  "bk": {
+   "name": "Bankruptcy",
+   "sub": "Bankruptcy monitoring across active AR and bad debt",
+   "src": "Workbook · Bankruptcy tab",
+   "kpis": [
+    [
+     "Active AR monitored",
+     "236,904",
+     "Accounts"
+    ],
+    [
+     "Bad debt monitored",
+     "303,480",
+     "Accounts"
+    ],
+    [
+     "Bankruptcy results",
+     "8,274",
+     "Jan–Jun 2025"
+    ],
+    [
+     "Impacted balance",
+     "$1,309,342",
+     "Patient balance"
+    ]
+   ],
+   "table": {
+    "h": [
+     "Value lever",
+     "Workbook value"
+    ],
+    "r": [
+     [
+      "Manual work cost avoidance",
+      "$15,169"
+     ],
+     [
+      "FTE equivalent",
+      "0.66"
+     ]
+    ]
+   },
+   "charts": [
+    {
+     "t": "Bankruptcy volume, Jan–Jun",
+     "cats": [
+      "2023",
+      "2024",
+      "2025"
+     ],
+     "v": [
+      5396,
+      6975,
+      8274
+     ],
+     "f": "n"
+    },
+    {
+     "t": "Bankruptcy dollars, Jan–Jun",
+     "cats": [
+      "2023",
+      "2024",
+      "2025"
+     ],
+     "v": [
+      75259,
+      1264927,
+      1309342
+     ],
+     "f": "$"
+    }
+   ],
+   "trend": "bk"
+  },
+  "dc": {
+   "name": "Deceased",
+   "sub": "Deceased monitoring",
+   "src": "Workbook · Deceased tab",
+   "kpis": [
+    [
+     "Deceased results",
+     "1,462",
+     "Jan–Jun 2025"
+    ],
+    [
+     "Impacted balance",
+     "$11,754",
+     "Patient balance"
+    ],
+    [
+     "Collections",
+     "$7,636",
+     "Jan–Jun 2025"
+    ],
+    [
+     "Manual work avoidance",
+     "$2,680",
+     "0.12 FTE"
+    ]
+   ],
+   "charts": [
+    {
+     "t": "Deceased volume, Jan–Jun",
+     "cats": [
+      "2023",
+      "2024",
+      "2025"
+     ],
+     "v": [
+      4449,
+      2259,
+      1462
+     ],
+     "f": "n"
+    },
+    {
+     "t": "Deceased collections, Jan–Jun",
+     "cats": [
+      "2023",
+      "2024",
+      "2025"
+     ],
+     "v": [
+      12615,
+      13484,
+      7636
+     ],
+     "f": "$"
+    }
+   ],
+   "trend": "dc"
+  },
+  "rm": {
+   "name": "Return Mail",
+   "sub": "Return mail scrubbing and corrected-address collections",
+   "src": "Workbook · Return Mail tab",
+   "kpis": [
+    [
+     "Return mail results",
+     "176,881",
+     "Jan–Jun 2025"
+    ],
+    [
+     "Collections",
+     "$64,228",
+     "Patient payments after update"
+    ],
+    [
+     "Statement / manual work avoidance",
+     "$324,282",
+     "ROI Summary"
+    ],
+    [
+     "FTE equivalent",
+     "14.17",
+     "Manual work avoided"
+    ]
+   ],
+   "charts": [
+    {
+     "t": "Return mail collections, Jan–Jun",
+     "cats": [
+      "2023",
+      "2024",
+      "2025"
+     ],
+     "v": [
+      66447,
+      82194,
+      64228
+     ],
+     "f": "$"
+    }
+   ],
+   "trend": "rm"
+  },
+  "mc": {
+   "name": "Medicaid",
+   "sub": "Self-pay converted to Medicaid coverage",
+   "src": "Workbook · Medicaid tab",
+   "kpis": [
+    [
+     "Records scrubbed",
+     "281,558",
+     "$21.7M balance"
+    ],
+    [
+     "Active coverage found",
+     "28,642",
+     "10.2% of records"
+    ],
+    [
+     "Active balance",
+     "$3,112,404",
+     "14.3% of balance"
+    ],
+    [
+     "Medicaid payments",
+     "$608,915",
+     "Jan–Jun 2025"
+    ]
+   ],
+   "table": {
+    "h": [
+     "Value lever",
+     "Workbook value"
+    ],
+    "r": [
+     [
+      "Medicaid payments (in ROI)",
+      "$608,915"
+     ],
+     [
+      "Statement cost savings (additional benefit)",
+      "$45,827"
+     ]
+    ]
+   },
+   "charts": [
+    {
+     "t": "Medicaid payments, Jan–Jun",
+     "cats": [
+      "2023",
+      "2024",
+      "2025"
+     ],
+     "v": [
+      368073,
+      1417255,
+      608915
+     ],
+     "f": "$"
+    },
+    {
+     "t": "Hit rate, Jan–Jun",
+     "cats": [
+      "2023",
+      "2024",
+      "2025"
+     ],
+     "v": [
+      0.105,
+      0.08,
+      0.102
+     ],
+     "f": "p"
+    }
+   ],
+   "trend": "mc"
+  },
+  "ch": {
+   "name": "Charity",
+   "sub": "Presumptive charity qualification",
+   "src": "Workbook · Charity tab",
+   "kpis": [
+    [
+     "Qualified accounts",
+     "30,214",
+     "Jan–Jun 2025"
+    ],
+    [
+     "Qualified balance",
+     "$14.3M",
+     "Patient balance"
+    ],
+    [
+     "Manual work avoidance",
+     "$110,785",
+     "4.84 FTE"
+    ],
+    [
+     "Statement cost avoidance",
+     "$48,342",
+     "Additional benefit"
+    ]
+   ],
+   "charts": [
+    {
+     "t": "Qualified accounts, Jan–Jun",
+     "cats": [
+      "2023",
+      "2024",
+      "2025"
+     ],
+     "v": [
+      15603,
+      23421,
+      30214
+     ],
+     "f": "n"
+    },
+    {
+     "t": "Qualified balance, Jan–Jun",
+     "cats": [
+      "2023",
+      "2024",
+      "2025"
+     ],
+     "v": [
+      7384819,
+      11284586,
+      14305184
+     ],
+     "f": "$"
+    }
+   ],
+   "trend": "ch"
+  }
+ }
+}
