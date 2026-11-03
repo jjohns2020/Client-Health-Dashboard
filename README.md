@@ -33,7 +33,7 @@ src/
     dateRange.ts        Presets, range label, truncation of monthly series, rolling averages
     visibility.ts       Nav per client profile, internal-only views, PFC filtering, insight audience
     dataChecks.ts       Pre-export checklist and overall status
-    exportPlan.ts       PowerPoint slide list (preview only)
+    exportPlan.ts       PowerPoint slide list and export gate
     medicaid.ts         Medicaid detail re-stated by delivery source
     format.ts           Number / currency / percent formatting
   state/
@@ -50,6 +50,15 @@ src/
   never listed in the export.
 - Presentation mode also hides the client profile panel, locks the client selector, and removes internal insights,
   data-load tables, source notes, data flags and illustrative-split labels that the prototype marks as internal.
+
+## PowerPoint export
+
+Export to PowerPoint downloads a `.pptx` (widescreen) with the Utilization Review slides for the selected client:
+title, agenda, executive highlights, ROI summary, workflow slides for the client profile, cash impact, trend,
+and — when the profile calls for them — segmentation, agency, and dialer. Portfolio, Opportunity Sizing, Data Checks,
+other clients, and internal notes are not in the file. Illustrative sample figures keep that label. Data Checks status
+NOT READY (a FIX item) disables the download; REVIEW does not. The file is built in the browser with PptxGenJS. No
+Microsoft 365 connection is used.
 
 ## Connecting real data later
 
