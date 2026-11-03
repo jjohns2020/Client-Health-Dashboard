@@ -1,22 +1,61 @@
+import { useEffect, useState } from 'react';
 import { overallStatus, runChecks } from '../../lib/dataChecks';
-import { buildSlidePlan } from '../../lib/exportPlan';
+import { buildClientDeck, presentationDetails } from '../../lib/pptx/buildDeck';
+import { buildSlidePlan, canExport } from '../../lib/exportPlan';
 import { useDashboard } from '../../state/DashboardContext';
 import { Chip } from '../common/Chip';
 
 /**
- * PowerPoint export preview. This build only lists the slides; it does not generate a .pptx.
+ * PowerPoint export. Lists the Utilization Review slides, then downloads a .pptx.
+ * Internal pages and notes are not included. Illustrative figures stay labeled in the file.
  */
 export function ExportModal() {
-  const { ds, state, dispatch, client, details } = useDashboard();
-  const plan = buildSlidePlan(client, Object.values(details));
+  const dash = useDashboard();
+  const { ds, state, dispatch, client, details, medSplit, usesEin, medF, insights, rangeLabel, guarRatio } = dash;
+  const slides = presentationDetails(details, medSplit, usesEin, state.medSrc, medF);
+  const plan = buildSlidePlan(client, slides);
   const ov = overallStatus(runChecks(state.clientKey, client, ds));
+  const blocked = !canExport(ov);
+  const [busy, setBusy] = useState(false);
+  const [message, setMessage] = useState<string | null>(null);
+  useEffect(() => {
+    if (state.exportOpen) setMessage(null);
+  }, [state.exportOpen]);
+
+  async function download() {
+    if (blocked || busy) return;
+    setBusy(true);
+    setMessage(null);
+    try {
+      const pptx = buildClientDeck({
+        client,
+        range: state.range,
+        rangeLabel,
+        monthly: ds.monthly[state.clientKey],
+        details: slides,
+        insights,
+        scrub: ds.scrubData[state.clientKey],
+        medSrc: state.medSrc,
+        usesEin,
+        rmLevel: state.rmLevel,
+        guarRatio,
+      });
+      await pptx.writeFile({ fileName: plan.fileName });
+      setMessage('Downloaded ' + plan.fileName + '.');
+    } catch (err) {
+      setMessage(err instanceof Error ? err.message : 'The PowerPoint could not be created.');
+    } finally {
+      setBusy(false);
+    }
+  }
+
   return (
     <div className={`modal ${state.exportOpen ? 'open' : ''}`} id="modal">
       <div className="box">
         <h3 style={{ color: 'var(--blue)', marginTop: 0 }} id="mTitle">
           {plan.fileName}
         </h3>
-        <p style={{ fontSize: 13, color: 'var(--gray)' }}>Slides the export would build from the Utilization Review template for this client's profile:</p>
+        <p style={{ fontSize: 13, color: 'var(--gray)' }}>Slides the export builds from the Utilization Review template for this client's profile:</p>
         <p id="mStatus" style={{ fontSize: 13 }}>
           Data check status: <Chip status={ov} /> {ov === 'NOT READY' ? '— fix the FIX items on the Data Checks page before exporting.' : ''}
         </p>
@@ -30,11 +69,19 @@ export function ExportModal() {
             </li>
           ))}
         </ol>
-        <p className="note">
-          In the real tool this button creates the .pptx. In this mockup it only previews the slide list. The Portfolio, Opportunity Sizing and Data
-          Checks pages, other clients' data and internal notes are never included in a client ROI export.
+        <p className="note" id="exportNote">
+          Download creates the .pptx. The Portfolio, Opportunity Sizing and Data Checks pages, other clients' data and internal notes are never included.
+          Illustrative sample figures stay labeled in the file.
         </p>
-        <button className="btn primary" id="closeModal" type="button" onClick={() => dispatch({ type: 'closeExport' })}>
+        {message && (
+          <p className="note" id="exportMessage">
+            {message}
+          </p>
+        )}
+        <button className="btn primary" id="downloadPptx" type="button" disabled={blocked || busy} onClick={() => void download()}>
+          {busy ? 'Building…' : 'Download PowerPoint'}
+        </button>{' '}
+        <button className="btn" id="closeModal" type="button" style={{ border: '1px solid #005EB8' }} onClick={() => dispatch({ type: 'closeExport' })}>
           Close
         </button>
       </div>

@@ -1,4 +1,8 @@
 import type { Client, WorkflowDetail } from '../data/types';
+import type { OverallStatus } from './dataChecks';
+
+/** A client deck downloads unless Data Checks found a FIX (status NOT READY). REVIEW does not block. */
+export const canExport = (status: OverallStatus) => status !== 'NOT READY';
 
 export interface SlidePlan {
   fileName: string;

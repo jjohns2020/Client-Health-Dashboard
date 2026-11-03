@@ -74,7 +74,8 @@ const snapshot = (page) =>
       'font-style', 'margin', 'padding', 'text-align', 'white-space', 'gap', 'flex-wrap', 'align-items', 'width', 'height',
     ];
     const modalOpen = document.querySelector('#modal').classList.contains('open');
-    const styleSig = [...document.querySelectorAll('header *, nav *, #main *' + (modalOpen ? ', #modal *' : ''))]
+    // The export dialog's download action is app-only; the slide list (#mList) and status (#mStatus) stay comparable.
+    const styleSig = [...document.querySelectorAll('header *, nav *, #main *')]
       .filter((el) => !el.closest('svg'))
       .map((el) => {
         const cs = getComputedStyle(el);
@@ -82,12 +83,11 @@ const snapshot = (page) =>
         const v = (p) => (p === 'width' || p === 'height' ? String(Math.round(parseFloat(cs.getPropertyValue(p)))) : cs.getPropertyValue(p));
         return el.tagName + '.' + el.className + '{' + STYLE_PROPS.map(v).join(';') + '}';
       });
-    const modal = document.querySelector('#modal');
     return {
       nav: norm(document.querySelector('nav').innerText),
       main: norm(document.querySelector('#main').innerText),
       svg: svgSig,
-      modal: modal.classList.contains('open') ? norm(modal.innerText) : '',
+      modal: modalOpen ? norm(document.querySelector('#mList').innerText) + '\n' + norm(document.querySelector('#mStatus').innerText) : '',
       clientDisabled: document.querySelector('#client').disabled,
       internalPanel: visible(document.querySelector('#internalPanel')),
       presBanner: visible(document.querySelector('#presBanner')),
