@@ -1,10 +1,12 @@
 /**
  * Client ROI PowerPoint.
  *
- * The slide list is the Utilization Review plan from `buildSlidePlan`. The file uses the same
- * figures as the dashboard and never includes internal-only pages (Portfolio, Opportunity Sizing,
- * Data Checks), other clients, internal insights, data-load notes, or the Medicaid attribution note.
- * Illustrative sample figures keep that label.
+ * The slide list is the Utilization Review plan from `buildSlidePlan`. Slide geometry follows
+ * `Utilization Review Template_2025.pptx`: 20 × 11.25 inches, Arial, and that deck's Experian colors.
+ * Positions below are authored on a 13.33 × 7.5 canvas and scaled onto the template when drawn.
+ * The file uses the dashboard figures and never includes internal-only pages, other clients,
+ * internal insights, data-load notes, or the Medicaid attribution note.
+ * Illustrative sample figures keep that label. Example figures printed in the template are not copied.
  */
 import PptxGenJS from 'pptxgenjs';
 import type { Client, Insight, MedicaidSplit, MonthlySeries, ScrubData, WorkflowDetail, WorkflowKey } from '../../data/types';
@@ -15,13 +17,14 @@ import { medicaidDetail } from '../medicaid';
 import { pctChange, returnMailScale, roiRatio, totalValueCreation, type MedicaidSource, type ReturnMailLevel } from '../roi';
 import { audienceFilter, usesPfc, visibleScrubs } from '../visibility';
 
-const FONT = 'Segoe UI';
-const BLUE = '005EB8';
-const PURPLE = '662D91';
-const MAGENTA = 'D6007B';
-const TEAL = '00B4AA';
+const FONT = 'Arial';
+/** Experian colors from the Utilization Review template theme and ExperianColorPalette.pptx. */
+const BLUE = '1D4F91';
+const PURPLE = '6D2077';
+const MAGENTA = 'E63888';
+const TEAL = '0081A6';
 const ORANGE = 'FF8D1B';
-const GRAY = '53565A';
+const GRAY = '63666A';
 const MUTED = '8A8D91';
 const INK = '262626';
 const LINE = 'E1E3E6';
@@ -29,7 +32,10 @@ const WHITE = 'FFFFFF';
 const TOTAL = 'F0EAF6';
 const TAKE_BG = 'F7F2FB';
 const ROW_H = 0.3;
-const PAGE_W = 13.33;
+/** Authored canvas. Drawing multiplies inches and type sizes onto the 20 × 11.25 template. */
+const SCALE = 1.5;
+const PAGE_W = 20;
+const PAGE_H = 11.25;
 const CONTENT_X = 0.4;
 const CONTENT_W = 12.53;
 
@@ -65,9 +71,35 @@ export function presentationDetails(
     .map(([k, d]) => (k === 'mc' ? medicaidDetail(d, medSplit, ein, medSrc, medF) : d));
 }
 
+function scaleOptions<T extends Record<string, unknown> | undefined>(options: T): T {
+  if (!options) return options;
+  const next = { ...options } as Record<string, unknown>;
+  for (const key of ['x', 'y', 'w', 'h', 'rowH'] as const) {
+    if (typeof next[key] === 'number') next[key] = (next[key] as number) * SCALE;
+  }
+  if (typeof next.fontSize === 'number') next.fontSize = Math.round((next.fontSize as number) * SCALE);
+  if (Array.isArray(next.colW)) next.colW = (next.colW as number[]).map((n) => n * SCALE);
+  return next as T;
+}
+
+/** Scale authored inches onto the Utilization Review template page. */
+function onTemplate(slide: Slide): Slide {
+  return new Proxy(slide, {
+    get(target, prop, receiver) {
+      const value = Reflect.get(target, prop, receiver);
+      if (prop === 'addText' || prop === 'addShape' || prop === 'addTable') {
+        return (content: unknown, options?: Record<string, unknown>) =>
+          (value as (content: unknown, options?: Record<string, unknown>) => unknown).call(target, content, scaleOptions(options));
+      }
+      return typeof value === 'function' ? (value as (...args: unknown[]) => unknown).bind(target) : value;
+    },
+  });
+}
+
 export function buildClientDeck(input: DeckInput): PptxGenJS {
   const pptx = new PptxGenJS();
-  pptx.layout = 'LAYOUT_WIDE';
+  pptx.defineLayout({ name: 'UTILIZATION_REVIEW', width: PAGE_W, height: PAGE_H });
+  pptx.layout = 'UTILIZATION_REVIEW';
   pptx.author = 'Experian Health';
   pptx.company = 'Experian Health';
   pptx.title = `${input.client.name} ROI Review`;
@@ -93,22 +125,22 @@ function defineMaster(pptx: PptxGenJS, client: Client) {
     title: 'CONTENT',
     background: { color: WHITE },
     objects: [
-      { rect: { x: 0, y: 0, w: PAGE_W, h: 0.08, fill: { color: BLUE } } },
-      { rect: { x: 0, y: 7.22, w: PAGE_W, h: 0.28, fill: { color: 'F4F6F9' } } },
+      { rect: { x: 0, y: 0, w: PAGE_W, h: 0.12, fill: { color: BLUE } } },
+      { rect: { x: 0, y: 10.83, w: PAGE_W, h: 0.42, fill: { color: 'F4F6F9' } } },
       {
         text: {
-          text: 'Experian Health  ·  Collections Optimization  ·  Client review',
-          options: { x: 0.4, y: 7.24, w: 7.4, h: 0.24, fontFace: FONT, fontSize: 10, color: MUTED, margin: 0 },
+          text: 'Experian Health  ·  Collections Optimization  ·  Utilization Review',
+          options: { x: 0.6, y: 10.86, w: 11.1, h: 0.36, fontFace: FONT, fontSize: 15, color: MUTED, margin: 0 },
         },
       },
       {
         text: {
           text: `${client.name}  ·  ${client.period}`,
-          options: { x: 7.6, y: 7.24, w: 4.5, h: 0.24, fontFace: FONT, fontSize: 10, color: MUTED, align: 'right', margin: 0 },
+          options: { x: 11.4, y: 10.86, w: 6.75, h: 0.36, fontFace: FONT, fontSize: 15, color: MUTED, align: 'right', margin: 0 },
         },
       },
     ],
-    slideNumber: { x: 12.3, y: 7.24, w: 0.7, h: 0.24, fontFace: FONT, fontSize: 10, color: MUTED, align: 'right' },
+    slideNumber: { x: 18.45, y: 10.86, w: 1.05, h: 0.36, fontFace: FONT, fontSize: 15, color: MUTED, align: 'right' },
   });
 }
 
@@ -120,7 +152,7 @@ function addPlannedSlide(
 ) {
   const { title } = item;
   if (title === 'Title') return addTitleSlide(pptx, input);
-  const slide = pptx.addSlide({ masterName: 'CONTENT' });
+  const slide = onTemplate(pptx.addSlide({ masterName: 'CONTENT' }));
   if (title === 'Agenda') return addAgenda(slide, titles);
   if (title === 'Executive Highlights') return addExecutive(slide, input);
   if (title === 'ROI Summary') return addRoi(slide, input);
@@ -210,7 +242,7 @@ function clientInsights(input: DeckInput, areas: string[]) {
 function addTitleSlide(pptx: PptxGenJS, input: DeckInput) {
   const { client: c, rangeLabel } = input;
   const roi = roiRatio(c.quantified, c.sub);
-  const slide = pptx.addSlide();
+  const slide = onTemplate(pptx.addSlide());
   slide.addShape('rect', { x: 0, y: 0, w: 6.35, h: 7.5, fill: { color: BLUE } });
   slide.addShape('rect', { x: 6.35, y: 0, w: 0.1, h: 7.5, fill: { color: PURPLE } });
   slide.addShape('rect', { x: 0.45, y: 0.55, w: 1.15, h: 0.32, fill: { color: ORANGE }, rectRadius: 0.08 });
@@ -220,8 +252,8 @@ function addTitleSlide(pptx: PptxGenJS, input: DeckInput) {
   slide.addText('COLLECTIONS OPTIMIZATION', {
     x: 0.45, y: 1.7, w: 5.5, h: 0.3, fontFace: FONT, fontSize: 13, bold: true, color: 'D6E6F7', margin: 0,
   });
-  slide.addText('ROI Review', {
-    x: 0.45, y: 2.05, w: 5.5, h: 0.7, fontFace: FONT, fontSize: 40, bold: true, color: WHITE, margin: 0,
+  slide.addText('Utilization Review', {
+    x: 0.45, y: 2.05, w: 5.5, h: 0.7, fontFace: FONT, fontSize: 36, bold: true, color: WHITE, margin: 0,
   });
   slide.addText(c.name, { x: 0.45, y: 3.0, w: 5.5, h: 0.5, fontFace: FONT, fontSize: 26, color: WHITE, margin: 0 });
   slide.addText(c.period, { x: 0.45, y: 3.55, w: 5.5, h: 0.35, fontFace: FONT, fontSize: 16, color: 'D6E6F7', margin: 0 });
@@ -308,7 +340,7 @@ function addRoi(slide: Slide, input: DeckInput) {
   const roi = roiRatio(c.quantified, c.sub);
   let y = heading(slide, 'ROI Summary', `${c.name} · ${c.period} — value delivered against subscription investment`);
   const rows: Row[] = [
-    cells(['Value lever', 'Dollars'], 'header'),
+    cells(['Process', 'Value'], 'header'),
     ...visibleScrubs(c).map((r) => cells([r[0], moneyFull(r[1])], 'body')),
     cells(['Total Quantified Benefit', moneyFull(c.quantified)], 'total'),
     ...c.addl.map((r) => cells(['Additional: ' + r[0], moneyFull(r[1])], 'body')),
@@ -610,7 +642,7 @@ function addValueSummary(slide: Slide, input: DeckInput) {
 
 function addSuccess(slide: Slide, input: DeckInput) {
   const colors = [BLUE, PURPLE, MAGENTA, TEAL, ORANGE];
-  let y = heading(slide, 'Success Plan & Recommendations', `${input.client.name} · ${input.client.period} — prioritized next steps`);
+  let y = heading(slide, 'SUCCESS PLAN', `${input.client.name} · ${input.client.period} — recommendations`);
   input.client.recs.forEach((rec, i) => {
     slide.addText(`${i + 1}.   ${rec}`, {
       x: 0.55, y, w: 12, h: 0.42, fontFace: FONT, fontSize: 20, bold: true, color: colors[i % colors.length], margin: 0,

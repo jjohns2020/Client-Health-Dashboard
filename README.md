@@ -53,7 +53,7 @@ src/
 
 ## PowerPoint export
 
-Export to PowerPoint downloads a `.pptx` (widescreen) with the Utilization Review slides for the selected client:
+Export to PowerPoint downloads a `.pptx` in the 20 × 11.25 inch format used by `Utilization Review Template_2025.pptx`, with Arial and the Experian colors in that template and `ExperianColorPalette.pptx`. The file contains the Utilization Review slides for the selected client:
 title, agenda, executive highlights, ROI summary, workflow slides for the client profile, cash impact, trend,
 and — when the profile calls for them — segmentation, agency, and dialer. Portfolio, Opportunity Sizing, Data Checks,
 other clients, and internal notes are not in the file. Illustrative sample figures keep that label. Data Checks status

@@ -83,11 +83,18 @@ describe('PowerPoint export', () => {
     const all = slides.join('\n');
     const plan = buildSlidePlan(input.client, input.details);
     expect(slides).toHaveLength(plan.slides.length + plan.profileSlides.length);
+    const pres = await JSZip.loadAsync(await buildClientDeck(input).write({ outputType: 'nodebuffer' }) as Uint8Array);
+    const presXml = await pres.file('ppt/presentation.xml')!.async('string');
+    expect(presXml).toContain('cx="18288000"');
+    expect(presXml).toContain('cy="10287000"');
+    const first = await pres.file('ppt/slides/slide1.xml')!.async('string');
+    expect(first).toContain('1D4F91');
     expect(all).toContain('MaineHealth');
     expect(all).toContain('3.4 : 1');
     expect(all).toContain('$485,089');
     expect(all).toContain('$485K');
     expect(all).toContain('Return Mail Automation');
+    expect(all).toContain('Utilization Review');
     expect(all).toContain('MOCKUP');
     expect(all).toContain('not validated production results');
     expect(all).toContain('Monthly split is illustrative; period totals are from the workbook.');
