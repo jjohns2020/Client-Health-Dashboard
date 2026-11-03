@@ -31,6 +31,8 @@ jobs:
         run: npm run build
         env:
           VITE_BASE: /ROI-Dashboard/
+      - name: Confirm the built page
+        run: grep -q '/ROI-Dashboard/assets/' dist/index.html
       - name: Configure Pages
         uses: actions/configure-pages@v5
         with:
