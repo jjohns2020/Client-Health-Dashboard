@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { sampleDataSource } from '../../data/dataSource';
 import type { WorkflowDetail } from '../../data/types';
 import { overallStatus, runChecks } from '../dataChecks';
-import { buildSlidePlan, canExport } from '../exportPlan';
+import { canExport } from '../exportPlan';
 import { visibleDetails, visibleInsights } from '../visibility';
 import { buildClientDeck, presentationDetails, type DeckInput } from './buildDeck';
 
@@ -81,25 +81,21 @@ describe('PowerPoint export', () => {
     const input = inputFor('maine');
     const slides = await slideTexts(input);
     const all = slides.join('\n');
-    const plan = buildSlidePlan(input.client, input.details);
-    expect(slides).toHaveLength(plan.slides.length + plan.profileSlides.length);
-    const pres = await JSZip.loadAsync(await buildClientDeck(input).write({ outputType: 'nodebuffer' }) as Uint8Array);
-    const presXml = await pres.file('ppt/presentation.xml')!.async('string');
-    expect(presXml).toContain('cx="18288000"');
-    expect(presXml).toContain('cy="10287000"');
-    const first = await pres.file('ppt/slides/slide1.xml')!.async('string');
-    expect(first).toContain('1D4F91');
     expect(all).toContain('MaineHealth');
+    expect(all).toContain('Collection Optimization Utilization Review');
     expect(all).toContain('3.4 : 1');
     expect(all).toContain('$485,089');
-    expect(all).toContain('$485K');
     expect(all).toContain('Return Mail Automation');
-    expect(all).toContain('Utilization Review');
-    expect(all).toContain('MOCKUP');
     expect(all).toContain('not validated production results');
     expect(all).toContain('Monthly split is illustrative; period totals are from the workbook.');
+    const packed = await JSZip.loadAsync((await buildClientDeck(input).write()) as Uint8Array);
+    const presXml = await packed.file('ppt/presentation.xml')!.async('string');
+    expect(presXml).toContain('cx="18288000"');
+    expect(presXml).toContain('cy="10287000"');
+    expect(packed.file('ppt/slides/slide2.xml')).toBeNull();
+    expect(all).not.toContain('$5,276,613,542');
     expect(all).not.toContain('WashU');
-    expect(all).not.toContain('Medicaid Results');
+    expect(all).not.toContain('Medicaid Scrub');
     for (const phrase of INTERNAL) expect(all, phrase).not.toContain(phrase);
   });
 
@@ -107,7 +103,7 @@ describe('PowerPoint export', () => {
     const withDialer = inputFor('washu', { client: { ...ds.clients.washu, dialer: true } });
     const slides = await slideTexts(withDialer);
     const all = slides.join('\n');
-    expect(all).toContain('Medicaid Results');
+    expect(all).toContain('Medicaid Scrub');
     expect(all).toContain('Agency Performance vs. Benchmark');
     expect(all).toContain('Agency A');
     expect(all).toContain('ILLUSTRATIVE SAMPLE DATA');
@@ -120,7 +116,7 @@ describe('PowerPoint export', () => {
   it('omits Patient Financial Clearance when the profile flag is off', async () => {
     const all = (await slideTexts(inputFor('washu', { client: { ...ds.clients.washu, pfc: false } }))).join('\n');
     expect(all).not.toContain('Patient Financial Clearance');
-    expect(all).toContain('Medicaid Results');
+    expect(all).toContain('Medicaid Scrub');
   });
 
   it('labels a Medicaid delivery split as illustrative and keeps the ROI on all payments', async () => {
@@ -149,6 +145,6 @@ describe('PowerPoint export', () => {
     expect(details.find((d) => d.name === 'Medicaid')!.empty).toBeTruthy();
     const names = (await slideTexts(inputFor('maine'))).join('\n');
     const workflows = details.filter((d): d is WorkflowDetail => !d.empty);
-    for (const d of workflows) expect(names).toContain(d.name + ' Results');
+    for (const d of workflows) expect(names).toContain(d.name.split(' / ')[0]);
   });
 });

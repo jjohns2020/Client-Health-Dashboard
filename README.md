@@ -53,12 +53,7 @@ src/
 
 ## PowerPoint export
 
-Export to PowerPoint downloads a `.pptx` in the 20 × 11.25 inch format used by `Utilization Review Template_2025.pptx`, with Arial and the Experian colors in that template and `ExperianColorPalette.pptx`. The file contains the Utilization Review slides for the selected client:
-title, agenda, executive highlights, ROI summary, workflow slides for the client profile, cash impact, trend,
-and — when the profile calls for them — segmentation, agency, and dialer. Portfolio, Opportunity Sizing, Data Checks,
-other clients, and internal notes are not in the file. Illustrative sample figures keep that label. Data Checks status
-NOT READY (a FIX item) disables the download; REVIEW does not. The file is built in the browser with PptxGenJS. No
-Microsoft 365 connection is used.
+Export to PowerPoint downloads a copy of `Utilization Review Template_2025.pptx` with this client's name, period, ROI, and recommendations written in. Slides for workflows the profile does not use are removed, along with the consultant instruction slide and slides that still contain another example's dollar figures. Portfolio, Opportunity Sizing, Data Checks, other clients, and internal notes are not added. Illustrative sample figures keep that label. Data Checks status NOT READY (a FIX item) disables the download; REVIEW does not. The file is filled in the browser from the template. No Microsoft 365 connection is used.
 
 ## Connecting real data later
 
