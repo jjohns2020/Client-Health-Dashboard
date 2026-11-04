@@ -1201,7 +1201,8 @@ function loadClientJira(id){
     if(!row){el.remove();return}
     var issues=row.issues||[];
     var when=file.pulledAt?String(file.pulledAt).slice(0,16).replace('T',' ')+' UTC':'';
-    el.innerHTML=`<div class="card"><h4>Jira</h4><p class="note" style="margin-block-start:0">Pulled from Jira for this client${when?' · '+esc(when):''}. Not read from email.</p>${issues.length?`<table><tr><th>Key</th><th>Summary</th><th>Status</th><th>Updated</th><th>Assignee</th></tr>${issues.map(i=>`<tr><td>${i.url?`<a href="${esc(i.url)}" target="_blank" rel="noopener">${esc(i.key)}</a>`:esc(i.key)}</td><td>${esc(i.summary)}</td><td>${esc(i.status)}</td><td>${esc(i.updated)}</td><td>${esc(i.assignee||'—')}</td></tr>`).join('')}</table>`:'<p class="note">No issues matched this client’s Jira query.</p>'}</div>`;
+    var note=file.source==='mock'?'Sample issues for this client. A Jira pull replaces this sample.':'Pulled from Jira for this client'+(when?' · '+esc(when):'')+'.';
+    el.innerHTML=`<div class="card"><h4>Jira</h4><p class="note" style="margin-block-start:0">${note}</p>${issues.length?`<table><tr><th>Key</th><th>Summary</th><th>Status</th><th>Updated</th><th>Assignee</th></tr>${issues.map(i=>`<tr><td>${i.url?`<a href="${esc(i.url)}" target="_blank" rel="noopener">${esc(i.key)}</a>`:esc(i.key)}</td><td>${esc(i.summary)}</td><td>${esc(i.status)}</td><td>${esc(i.updated)}</td><td>${esc(i.assignee||'—')}</td></tr>`).join('')}</table>`:'<p class="note">No issues matched this client’s Jira query.</p>'}</div>`;
   }
   if(jiraFile!==undefined){paint(jiraFile);return}
   if(!jiraLoad)jiraLoad=fetch(new URL('jira-clients.json',location.href),{cache:'no-store'}).then(function(r){return r.ok?r.json():null}).catch(function(){return null}).then(function(d){jiraFile=d;return d});

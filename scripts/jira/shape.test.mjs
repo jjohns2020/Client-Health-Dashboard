@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import test from 'node:test';
 import { issueFromApi, toSnapshot } from './shape.mjs';
 
@@ -37,4 +38,20 @@ test('toSnapshot groups issues by client id', () => {
   assert.equal(snapshot.clients.maine.issues[0].summary, 'One');
   assert.deepEqual(snapshot.clients.washu.issues, []);
   assert.equal(snapshot.site, 'https://example.atlassian.net');
+  assert.equal(snapshot.source, 'jira');
+});
+
+test('mock issues cover every configured client and stay labeled sample', () => {
+  const config = JSON.parse(readFileSync(new URL('../../jira/clients.json', import.meta.url), 'utf8'));
+  const mock = JSON.parse(readFileSync(new URL('../../jira/mock-clients.json', import.meta.url), 'utf8'));
+  assert.equal(mock.source, 'mock');
+  for (const row of config.clients) {
+    const issues = mock.clients[row.id] && mock.clients[row.id].issues;
+    assert.ok(issues && issues.length, `${row.id} has sample issues`);
+    for (const issue of issues) {
+      assert.match(issue.key, /^SAMPLE-/);
+      assert.match(issue.summary, /^Sample:/);
+      assert.equal(issue.url, '');
+    }
+  }
 });

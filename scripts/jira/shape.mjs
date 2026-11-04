@@ -25,5 +25,5 @@ export function toSnapshot({ pulledAt, site, results }) {
       issues: (row.issues || []).map((issue) => issueFromApi(issue, site)),
     };
   }
-  return { pulledAt, site: site.replace(/\/$/, ''), clients };
+  return { source: 'jira', pulledAt, site: site.replace(/\/$/, ''), clients };
 }

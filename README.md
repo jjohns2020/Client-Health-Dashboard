@@ -5,8 +5,8 @@ Command Center. `CO_Command_Center.html` is the source of truth for the platform
 client health, and client success). `CO_ROI_Dashboard_Mockup (1).html` remains the source of truth for the ROI workspace.
 
 All data is **sample data** from the prototypes. Values labelled *illustrative* / *sample* in the UI are not validated
-production data. No production systems, Microsoft 365, databases or client data are connected. Jira is optional:
-issues show on a client only after a pull (below). The workspace does not read email.
+production data. No production systems, Microsoft 365, databases or client data are connected. Each client’s
+health tab includes sample Jira issues until a real pull replaces them. The workspace does not read email.
 
 The app opens on the command center sign-in. Choose **Sign in with Microsoft**, then a sample account. Nothing is sent
 to a directory, and the workspace does not read email, Outlook, or calendars. Reviews on the home page are ROI reviews
@@ -71,8 +71,8 @@ The Executive Highlights page has its own download: a Word document (`.docx`) wi
 
 Each client in `jira/clients.json` can have a JQL query. The pull calls Jira’s API and writes
 `public/jira-clients.json`. The command center loads that file and shows the matching issues on that
-client’s health tab. An empty `jql` leaves the client unlinked. The API token stays in the environment
-and is never written into the page.
+client’s health tab and replaces the sample file `jira/mock-clients.json`. An empty `jql` leaves that client
+on the sample issues. The API token stays in the environment and is never written into the page.
 
 ```bash
 export JIRA_BASE_URL=https://your-site.atlassian.net
@@ -84,7 +84,7 @@ npm run jira:pull
 ```
 
 GitHub Pages runs the same pull during deploy when the repository secrets `JIRA_BASE_URL`, `JIRA_EMAIL`,
-and `JIRA_API_TOKEN` are set. Without those secrets the site builds with no Jira card.
+and `JIRA_API_TOKEN` are set. Without those secrets the site keeps the sample issues.
 
 ## Connecting real data later
 
