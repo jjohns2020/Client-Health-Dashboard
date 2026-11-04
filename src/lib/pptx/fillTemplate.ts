@@ -1,7 +1,8 @@
 import JSZip from 'jszip';
 import { overlaps, sumRange } from '../dateRange';
 import { int, money, moneyFull } from '../format';
-import { returnMailScale, roiRatio } from '../roi';
+import { returnMailScale, roiRatio, totalValueCreation } from '../roi';
+import { visibleScrubs } from '../visibility';
 import type { DeckInput } from './buildDeck';
 
 const TEMPLATE_FILE = 'Utilization Review Template_2025.pptx';
@@ -166,6 +167,89 @@ function fillBenefitSummary(xml: string, input: DeckInput) {
   return replaceExact(xml, '(ROI)', `(ROI) No ROI review loaded for ${input.rangeLabel}.`);
 }
 
+/** Same headline figures as the Executive Highlights page. Client-facing notes only. */
+function executiveLines(input: DeckInput): string[] {
+  const roi = roiRatio(input.client.quantified, input.client.sub);
+  const lines = [
+    `Quantified benefit ${moneyFull(input.client.quantified)}`,
+    `Additional value ${moneyFull(input.client.additional)}`,
+    `Total value creation ${moneyFull(totalValueCreation(input.client))}`,
+    `ROI ${roi.toFixed(1)} : 1`,
+  ];
+  const latest = input.client.trend.reviews[input.client.trend.reviews.length - 1];
+  if (latest && !overlaps(latest.s, latest.e, input.range)) {
+    lines.push(`Headline ROI is from the ${input.client.period} review, outside ${input.rangeLabel}.`);
+  }
+  const sources = visibleScrubs(input.client)
+    .slice()
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 4);
+  for (const [name, value] of sources) lines.push(`${name}: ${moneyFull(value)}`);
+  return lines;
+}
+
+function replaceActionList(xml: string, lines: string[]): string {
+  return xml.replace(/<p:txBody>([\s\S]*?)<\/p:txBody>/g, (full, inner: string) => {
+    if (!inner.includes('Insert proposed action')) return full;
+    const paragraphs = inner.match(/<a:p[\s\S]*?<\/a:p>/g);
+    if (!paragraphs?.length) return full;
+    const size = lines.length > 8 ? '1400' : '1800';
+    const template = paragraphs[0].replace(/sz="2700"/g, `sz="${size}"`);
+    const built = lines
+      .map((line) => template.replace(/<a:t(?:\s[^>]*)?>[\s\S]*?<\/a:t>/, `<a:t>${escapeText(line)}</a:t>`))
+      .join('');
+    return `<p:txBody>${inner.replace(/<a:p[\s\S]*<\/a:p>/, built)}</p:txBody>`;
+  });
+}
+
+function fillExecutive(xml: string, input: DeckInput): string {
+  let next = replaceExact(xml, 'Closer Look', 'Executive Highlights');
+  next = replaceExact(next, 'What does Best-in-Class look like for ', `${input.client.name} · ${input.client.period}`);
+  next = replaceExact(next, '<<Insert>>', '');
+  next = replaceExact(next, '?', '');
+  const roi = roiRatio(input.client.quantified, input.client.sub);
+  next = replaceExact(next, 'Notable accomplishments:', 'Executive message');
+  next = replaceExact(
+    next,
+    'Insert ',
+    `For every $1 invested, ${input.client.name} realized approximately $${roi.toFixed(2)} in measurable financial benefit during the review period.`,
+  );
+  return replaceActionList(next, executiveLines(input));
+}
+
+/** Place a filled Executive Highlights slide immediately after the title slide. */
+async function addExecutiveSlide(zip: JSZip, input: DeckInput) {
+  const source = await zip.file('ppt/slides/slide49.xml')?.async('string');
+  const rels = await zip.file('ppt/slides/_rels/slide49.xml.rels')?.async('string');
+  if (!source || !rels) return;
+  const number = 51;
+  zip.file(`ppt/slides/slide${number}.xml`, fillExecutive(source, input));
+  zip.file(`ppt/slides/_rels/slide${number}.xml.rels`, rels);
+
+  let contentTypes = await zip.file('[Content_Types].xml')!.async('string');
+  const part = `/ppt/slides/slide${number}.xml`;
+  if (!contentTypes.includes(part)) {
+    contentTypes = contentTypes.replace(
+      '</Types>',
+      `<Override PartName="${part}" ContentType="application/vnd.openxmlformats-officedocument.presentationml.slide+xml"/></Types>`,
+    );
+  }
+  let relationships = await zip.file('ppt/_rels/presentation.xml.rels')!.async('string');
+  const used = [...relationships.matchAll(/\bId="rId(\d+)"/g)].map((match) => Number(match[1]));
+  const rId = `rId${Math.max(...used) + 1}`;
+  relationships = relationships.replace(
+    '</Relationships>',
+    `<Relationship Id="${rId}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/slide" Target="slides/slide${number}.xml"/></Relationships>`,
+  );
+  let presentation = await zip.file('ppt/presentation.xml')!.async('string');
+  const sldIds = [...presentation.matchAll(/<p:sldId\b[^>]*\bid="(\d+)"/g)].map((match) => Number(match[1]));
+  const sldId = Math.max(...sldIds) + 1;
+  presentation = presentation.replace(/<p:sldId\b[^>]*\/>/, (first) => `${first}<p:sldId id="${sldId}" r:id="${rId}"/>`);
+  zip.file('[Content_Types].xml', contentTypes);
+  zip.file('ppt/_rels/presentation.xml.rels', relationships);
+  zip.file('ppt/presentation.xml', presentation);
+}
+
 function fillClosing(xml: string, input: DeckInput) {
   return replaceTextNodes(xml, (text) => {
     let next = text.split('University of Utah Health').join(input.client.name);
@@ -240,5 +324,6 @@ export async function fillReviewTemplate(input: DeckInput): Promise<Uint8Array> 
     zip.file(path, xml);
   }
   await removeSlides(zip, dropped);
+  await addExecutiveSlide(zip, input);
   return zip.generateAsync({ type: 'uint8array' });
 }

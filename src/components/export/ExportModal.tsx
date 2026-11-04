@@ -56,7 +56,7 @@ export function ExportModal() {
           {plan.fileName}
         </h3>
         <p style={{ fontSize: 13, color: 'var(--gray)' }}>
-          Download fills the uploaded Utilization Review template with this client's figures. Template example numbers are removed.
+          Download fills the uploaded Utilization Review template with this client's figures, including the Executive Highlights page. Template example numbers are removed.
         </p>
         <p id="mStatus" style={{ fontSize: 13 }}>
           Data check status: <Chip status={ov} /> {ov === 'NOT READY' ? '— fix the FIX items on the Data Checks page before exporting.' : ''}
