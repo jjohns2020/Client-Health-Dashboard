@@ -66,6 +66,7 @@ tr.click:hover td{background:#F5F9FD}
 svg text{font-family:"Segoe UI",Arial,sans-serif}
 @media (max-width:900px){.layout{grid-template-columns:1fr}.grid2{grid-template-columns:1fr}}
 @media print{nav,header select{display:none}.layout{grid-template-columns:1fr}}
+[hidden]{display:none !important}
 #login{min-height:100vh;display:grid;place-items:center;background:linear-gradient(135deg,var(--blue),var(--purple) 60%,var(--magenta));padding:24px}
 .lg-card{background:#fff;border-radius:14px;padding:32px;inline-size:min(440px,100%);box-shadow:0 10px 40px rgba(0,0,0,.25)}
 .lg-card h1{font-size:22px;color:var(--blue);margin:14px 0 0}
@@ -241,7 +242,7 @@ const OPS_CLIENTS=[
 const COMP=['Bankruptcy','Deceased','Presumptive Charity','Medicaid','Return Mail','Segmentation','Routing – Basic / Intermediate','Routing – Advanced','AR Management Reporting','Vendor Management Reporting','Vendor Reconciliation','Monitoring','Compliance Manager','Patient Dial','Patient Text'];
 const TC='To confirm';
 const PROFILES={
- mcleod:{src:'2025 ROI Stats, McLeod Health 2025 Business Review, mail and calendar',
+ mcleod:{src:'2025 ROI Stats, McLeod Health 2025 Business Review',
   overview:[['Corporate location(s)','South Carolina (address to confirm)'],['Contractual annual patient volume & current',TC],['CO revenue annual',TC],['CO revenue monthly',TC],['HIS/PMS','Epic – HB and PB'],['Contract expiration date',TC],['Sales executive & engagement',TC],['Relationship manager & engagement',TC],['How long live?',TC],['Last scrub review','Feb 9, 2026 (2025 full-year business review)'],['Last review health rating','Not rated yet']],
   why:'Early-out client: CO automates the Medicaid, deceased, bankruptcy, return mail and presumptive charity scrubs into Epic, and supports agency reconciliation. Segmentation is not used.',
   comp:{'Bankruptcy':'Y','Deceased':'Y','Presumptive Charity':'Y','Medicaid':'Y','Return Mail':'Y','Segmentation':'NA','Vendor Reconciliation':'Y'},
@@ -254,7 +255,7 @@ const PROFILES={
   ar:['Presumptive charity 300–400% FPL expansion (BIR-20254)','Guarantor status 121 rule change (BIR-20238 done) and follow-up review'],
   bd:['Agency reconciliation with RSI (Latitude inventory, CCR/LTPP accounts)','Harris & Harris file validation and review timing'],
   summary:'Strong Medicaid value (5x ROI). Watch agency onboarding and the repeat late deceased file.'},
- rush:{src:'Rush Consulting Review 2026 (your review deck), 2025 ROI Stats, mail and calendar',
+ rush:{src:'Rush Consulting Review 2026 (your review deck), 2025 ROI Stats',
   overview:[['Corporate location(s)','1650 W. Harrison, Chicago, IL 60612'],['Contractual annual patient volume & current',TC],['CO revenue annual','$312,000'],['CO revenue monthly','$26,000'],['HIS/PMS','Epic – PB and HB'],['Contract expiration date','Automatically renewed every year'],['Sales executive & engagement','Jennifer McGuinness – low'],['Relationship manager & engagement','Kathy Gibbs – low'],['How long live?','1 year (per 2026 review)'],['Last scrub review','Oct 31, 2025'],['Last review health rating','Green']],
   why:'Minimize manual work and increase automation in Epic, decrease AR days and increase patient collections, and use every feature they pay for.',
   comp:{'Bankruptcy':'Y','Deceased':'N','Presumptive Charity':'Y','Medicaid':'Y','Return Mail':'Y','Segmentation':'Y','Routing – Basic / Intermediate':'Y','Routing – Advanced':'N','AR Management Reporting':'Y','Vendor Management Reporting':'Y','Vendor Reconciliation':'Y','Monitoring':'N','Compliance Manager':'N','Patient Dial':'Y','Patient Text':'N'},
@@ -267,7 +268,7 @@ const PROFILES={
   ar:['Guarantor cell phone field for HB and PB (BIR-20257)','Dialer campaigns (broken plan, segment-based)'],
   bd:['Second-half 2025 ROI review','Location-level and parent-level performance reporting'],
   summary:'Client in overall good health with CO as they are utilizing most scrubs. Working on building trust and more utilization of reporting.'},
- washu:{src:'2025 ROI Stats, Washington University 2024 review, mail and calendar',
+ washu:{src:'2025 ROI Stats, Washington University 2024 review',
   overview:[['Corporate location(s)','St. Louis, MO (address to confirm)'],['Contractual annual patient volume & current',TC],['CO revenue annual',TC],['CO revenue monthly',TC],['HIS/PMS','Epic (SBO conversion to Epic PB)'],['Contract expiration date',TC],['Sales executive & engagement',TC],['Relationship manager & engagement',TC],['How long live?',TC],['Last scrub review','Nov 13, 2025 (Jan–Jun 2025 ROI)'],['Last review health rating','Not rated yet']],
   why:'Collection lift through segmentation and agency strategy, plus Medicaid, charity, return mail, deceased and bankruptcy automation.',
   comp:{'Bankruptcy':'Y','Deceased':'Y','Presumptive Charity':'Y','Medicaid':'Y','Return Mail':'Y','Segmentation':'Y','Vendor Management Reporting':'Y'},
@@ -293,7 +294,7 @@ const PROFILES={
   ar:['Presumptive charity automation','Medicaid results adoption'],
   bd:['Marcam agency implementation (BAA review)','FPL / propensity-to-pay bucket analysis'],
   summary:'Value is real but modest; adoption of Medicaid and charity results is the lever for the December review.'},
- bjc:{src:'2025 ROI Stats (implementation), Jira, mail and calendar',
+ bjc:{src:'2025 ROI Stats (implementation), Jira',
   overview:[['Corporate location(s)','St. Louis, MO (address to confirm)'],['Contractual annual patient volume & current',TC],['CO revenue annual',TC],['CO revenue monthly',TC],['HIS/PMS','Epic – HB and PB'],['Contract expiration date',TC],['Sales executive & engagement',TC],['Relationship manager & engagement',TC],['How long live?','In implementation'],['Last scrub review','None yet (implementation)'],['Last review health rating','Not rated yet']],
   why:'New implementation: segmentation, presumptive charity, bankruptcy, deceased, return mail and Medicaid are in build, with an AR file for e-Insights.',
   comp:{'Bankruptcy':'P','Deceased':'P','Presumptive Charity':'P','Medicaid':'P','Return Mail':'P','Segmentation':'P'},
@@ -306,7 +307,7 @@ const PROFILES={
   ar:['Six master build tickets (segmentation, charity, bankruptcy, deceased, return mail, Medicaid)','Medicaid fields vs. single excludeFromMedicaidFlag'],
   bd:['BJC AR file additional fields for e-Insights'],
   summary:'Implementation on a weekly cadence; health depends on hitting build milestones.'},
- stl:{src:'Consulting Client Review – Saint Luke\'s MO (Dec 16, 2024, your deck), 2025 ROI Stats, mail and calendar',
+ stl:{src:'Consulting Client Review – Saint Luke\'s MO (Dec 16, 2024, your deck), 2025 ROI Stats',
   overview:[['Corporate location(s)','901 E. 104th St, Kansas City, MO'],['Contractual annual patient volume & current','2,700,000 APV per contract'],['CO revenue annual','$804,024 (including dialer fees)'],['CO revenue monthly','$67,002'],['HIS/PMS','Epic'],['Contract expiration date','Dec 31, 2026 (per Dec 2024 review; confirm renewal)'],['Sales executive & engagement','Jeff Misch – high'],['Relationship manager & engagement','Marque Guest-Lee – low'],['How long live?','6 years as of Dec 2024'],['Last scrub review','Feb 16, 2026 (2025 full year)'],['Last review health rating','Green (Dec 2024)']],
   why:'Segmentation-driven collections with dialer and IVR, plus Medicaid, return mail, deceased and bankruptcy automation.',
   comp:{'Bankruptcy':'Y','Deceased':'Y','Presumptive Charity':'N','Medicaid':'Y','Return Mail':'Y','Segmentation':'Y','Routing – Basic / Intermediate':'Y','Routing – Advanced':'N','AR Management Reporting':'Y','Vendor Management Reporting':'Y','Vendor Reconciliation':'Y','Monitoring':'Y','Compliance Manager':'Y','Patient Dial':'P','Patient Text':'N'},
@@ -473,8 +474,7 @@ function buildData(){
     people:p.people.map(x=>[...x]),engStrategy:[...p.engStrategy],freq:p.freq,risk:p.risk.map(x=>[x[0],x[1],x[2],'']),riskStrategy:[...p.riskStrategy],ar:[...p.ar],bd:[...p.bd],summary:p.summary,src:p.src};
   }else if(DECKS[r.n]){const d=DECKS[r.n];c.review=JSON.parse(JSON.stringify(d));c.review.src='Consulting Client Review deck ('+d.by+')';}
   CLIENTS.push(c)});
- LOG=[{t:'Nov 3, 2026 9:55 AM',u:'System',x:'Calendar: client meeting dates for the next 14 days (meeting dates and titles only)'},
-  {t:'Nov 3, 2026 9:50 AM',u:'System',x:'Imported 8 Consulting Client Review decks (Cone, SLUHN, TGH, UVAMC, Essentia, UHS, Weill Cornell, Rush)'},
+ LOG=[{t:'Nov 3, 2026 9:50 AM',u:'System',x:'Imported 8 Consulting Client Review decks (Cone, SLUHN, TGH, UVAMC, Essentia, UHS, Weill Cornell, Rush)'},
   {t:'Nov 3, 2026 8:05 AM',u:'Jessica Johns',x:'Updated the CO Daily Tracker'}];
 }
 /* ---------- scoring ---------- */
@@ -483,7 +483,6 @@ function opsScores(o){const s={},w={};
  s.feeds=Math.max(0,100-30*open-10*rep);w.feeds=open?`${open} open feed alert${open>1?'s':''}`:'No open feed alerts';
  const acts=ACTIONS.filter(a=>a.cid===o.id&&!a.done),od=acts.filter(isOverdue).length,wo=acts.filter(a=>a.cat==='Waiting on Others').length,mine=acts.length-wo;
  s.commit=Math.max(0,100-35*od-8*mine-6*wo);w.commit=`${acts.length} open item${acts.length===1?'':'s'}${od?`, ${od} overdue`:''}`;
- const m=o.meetings.filter(x=>x[2]==='Client call').length;s.engage=m>=2?100:m===1?80:40;w.engage=m?`${m} client meeting${m>1?'s':''} in 14 days`:'No client meeting in 14 days';
  s.change=Math.max(0,100-25*o.change.length);w.change=`${o.change.length} active change${o.change.length===1?'':'s'}`;return {s,w}}
 const isOverdue=a=>!a.done&&a.due&&a.due<TODAY;
 function adoption(rv){if(!rv)return null;const v=COMP.map(k=>rv.comp[k]).filter(x=>['Y','N','P'].includes(x));if(!v.length)return null;return Math.round(100*v.reduce((a,x)=>a+(x==='Y'?1:x==='P'?.5:0),0)/v.length)}
@@ -497,7 +496,7 @@ function score(c){
  const ad=adoption(rv);
  if(ad!=null){p.utilization=ad;w.utilization=(ad==null?'Components not confirmed':ad+'% of confirmed components live')}else{p.utilization=null;w.utilization='No client review yet'}
  const st=rv?avgRag(rv.people.map(x=>x[3])):null;
- if(st!=null||o){p.engagement=Math.round(o?(st==null?o.s.engage:.6*o.s.engage+.4*st):st);w.engagement=(o?o.w.engage:'')+(st!=null?(o?' · ':'')+'stakeholders '+st:o?' · stakeholders not rated':'')}else{p.engagement=null;w.engagement='No stakeholder ratings yet'}
+ if(st!=null){p.engagement=st;w.engagement='Stakeholder ratings '+st}else{p.engagement=null;w.engagement='No stakeholder ratings yet'}
  const rk=rv?avgRag(rv.risk.map(x=>x[1])):null;
  if(rk!=null){p.risk=rk;const fl=rv?rv.risk.filter(x=>x[1]==='Y'||x[1]==='R').map(x=>x[0]):[];w.risk=fl.length?'Flagged: '+fl.join(', '):'No risk category flagged'}else{p.risk=null;w.risk='No risk review yet'}
  let tw=0,sum=0;DIM.forEach(([k])=>{if(p[k]!=null){tw+=W[k];sum+=p[k]*W[k]}});
@@ -515,7 +514,7 @@ function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');setT
 function showLogin(){
  $('#app').hidden=true;$('#login').hidden=false;
  $('#login').innerHTML=`<div class="lg-card"><div class="lg-brand"><span class="lg-logo">experian<span>.</span></span><span class="lg-health">Health</span></div>
- <h1>Collections Optimization Command Center</h1><p class="p" style="margin-block:6px 18px;color:var(--gray)">One place to understand your portfolio, drill into client health, quantify ROI, spot risks and prepare for the next client conversation.</p>
+ <h1>Collections Optimization Command Center</h1><p class="p" style="margin-block:6px 18px;color:var(--gray)">One place to understand your portfolio, drill into client health, quantify ROI and spot risks.</p>
  
  <button type="button" class="ms-btn" id="msBtn"><span class="ms-sq"><i></i><i></i><i></i><i></i></span>Sign in with Microsoft</button>
  <div id="picker" hidden><p class="lg-lbl">Pick an account</p>${USERS.map(u=>`<button type="button" class="acct" data-u="${u.id}"><span class="av">${u.init}</span><span><b>${esc(u.name)}</b><br><span class="note" style="margin:0">${esc(u.title)} · ${ROLE[u.role]}</span></span></button>`).join('')}</div>
@@ -589,7 +588,7 @@ function vReview(){
  const c=CLIENTS.find(x=>x.id===cur),h=health(c),s=h.s,o=c.ops;
  const rv=editing?draft:c.review;const ed=editing;
  const opts=list.map(x=>`<option value="${x.id}" ${x.id===cur?'selected':''}>${esc(x.name)}${ME.role!=='consultant'?' — '+esc(FULL[x.con]||x.con):''}</option>`).join('');
- let bar=`<button type="button" class="btn" id="goPrep">Prepare for next conversation →</button>`;
+ let bar='';
  if(!c.review&&canEdit(c))bar=`<button type="button" class="btn on" id="startRv">Start client review</button>`;
  else if(c.review&&!ed&&canEdit(c))bar=`<button type="button" class="btn on" id="editRv">Edit review</button>${['Draft','Changes requested'].includes(c.review.status)?`<button type="button" class="btn" id="submitRv">Submit for manager review</button>`:''}`;
  else if(ed)bar=`<button type="button" class="btn on" id="saveRv">Save</button><button type="button" class="btn" id="cancelRv">Cancel</button>`;
@@ -613,8 +612,7 @@ function vReview(){
  <div class="grid2"><div class="card"><h4>Utilization strategy</h4>${listField('utilStrategy',rv,ed)}</div><div class="card"><h4>Data feed health</h4>${o?(o.alerts.length?`<table><tr><th>Date</th><th>Alert</th><th>Status</th></tr>${o.alerts.map(a=>`<tr><td>${a[0]}</td><td>${esc(a[1])}: ${esc(a[2])}</td><td>${esc(a[3])}</td></tr>`).join('')}</table>`:'<p class="note">No open feed alerts.</p>'):'<p class="note">Feed monitoring not connected for this client in the prototype.</p>'}</div></div>
  ${sec(5,'Client engagement')}<div class="grid2"><div class="card"><h4>Stakeholders</h4><table><tr><th>Name</th><th>Role</th><th>Influence</th><th>Engagement</th>${ed?'<th></th>':''}</tr>${rv.people.map((x,i)=>ed?`<tr><td><input class="in" data-f="people.${i}.0" value="${esc(x[0])}" aria-label="Name"></td><td><input class="in" data-f="people.${i}.1" value="${esc(x[1])}" aria-label="Role"></td><td><input class="in" data-f="people.${i}.2" value="${esc(x[2])}" aria-label="Influence"></td><td>${ragSel('people.'+i+'.3',x[3])}</td><td><button type="button" class="x" data-del="people.${i}" aria-label="Remove">✕</button></td></tr>`:`<tr><td>${esc(x[0])}</td><td>${tcv(x[1])}</td><td>${tcv(x[2])}</td><td>${rag(x[3])}</td></tr>`).join('')||`<tr><td colspan="4" class="note">No stakeholders listed yet.</td></tr>`}</table>${ed?`<button type="button" class="btn sm" id="addPerson">+ Add stakeholder</button>`:''}
  <p class="note">Meeting frequency: ${ed?`<input class="in" style="inline-size:220px" data-f="freq" value="${esc(rv.freq)}" aria-label="Meeting frequency">`:tcv(rv.freq)}</p><h4 style="margin-block-start:12px">Engagement strategy</h4>${listField('engStrategy',rv,ed)}</div>
- <div class="card"><h4>Upcoming meetings (14 days)</h4>${o?(o.meetings.length?`<table><tr><th>When (CT)</th><th>Meeting</th><th>Type</th></tr>${o.meetings.map(m=>`<tr><td style="white-space:nowrap">${esc(m[0])}</td><td>${esc(m[1])}</td><td>${esc(m[2])}</td></tr>`).join('')}</table>`:'<p class="note">No meetings in the next 14 days.</p>'):'<p class="note">Calendar not connected for this client in the prototype.</p>'}
- <h4 style="margin-block-start:14px">Open action items</h4>${actTable(ACTIONS.filter(a=>a.cid===c.id&&!a.done),false)}</div></div>
+ <div class="card"><h4>Open action items</h4>${actTable(ACTIONS.filter(a=>a.cid===c.id&&!a.done),false)}</div></div>
  ${sec(6,'Risk')}<div class="grid2"><div class="card"><table><tr><th>Risk category</th><th>Rating</th><th>Details</th><th>Next step</th>${ed?'<th></th>':''}</tr>${rv.risk.map((x,i)=>ed?`<tr><td><select class="in" data-f="risk.${i}.0" aria-label="Risk category">${[...new Set([...RISKCATS,x[0]])].map(k=>`<option ${k===x[0]?'selected':''}>${esc(k)}</option>`).join('')}</select></td><td>${ragSel('risk.'+i+'.1',x[1])}</td><td><input class="in" data-f="risk.${i}.2" value="${esc(x[2])}" aria-label="Details"></td><td><input class="in" data-f="risk.${i}.3" value="${esc(x[3])}" aria-label="Next step"></td><td><button type="button" class="x" data-del="risk.${i}" aria-label="Remove">✕</button></td></tr>`:`<tr><td class="k">${esc(x[0])}</td><td>${rag(x[1])}</td><td>${esc(x[2])}</td><td>${esc(x[3])}</td></tr>`).join('')}</table>${ed?`<button type="button" class="btn sm" id="addRisk">+ Add risk</button>`:''}</div>
  <div class="card"><h4>Risk strategy</h4>${listField('riskStrategy',rv,ed)}${o&&o.jira.length?`<h4 style="margin-block-start:14px">Active Jira</h4><table><tr><th>Ticket</th><th>Summary</th></tr>${o.jira.map(j=>`<tr><td>${j[0]}</td><td>${esc(j[1])}</td></tr>`).join('')}</table>`:''}</div></div>
  ${sec(7,'Current initiatives')}<div class="grid2"><div class="card"><h4>Top active AR initiatives</h4>${listField('ar',rv,ed)}</div><div class="card"><h4>Top bad debt and other initiatives</h4>${listField('bd',rv,ed)}</div></div>
@@ -672,7 +670,7 @@ function vRisks(){const list=visible();const items=[];
  const areas=['All',...new Set(items.map(i=>i[2]))];const fl=fRisk==='All'?items:items.filter(i=>i[2]===fRisk);
  const sev={3:['High','#FBE0EE','#A0005C'],2:['Medium','#FFF1E0','#B35F00'],1:['Low','#F3F4F6','#53565A']};
  $('#main').innerHTML=`<div class="banner">🔒 <b>INTERNAL ONLY.</b> Cross-client watchlist.</div><p class="title">Risks & watchlist</p><p class="subtitle">${items.length} items, highest severity first</p>
- <div class="card" style="border-inline-start:4px solid var(--purple)"><h4>Early warning signs (from the client review guide)</h4><p class="p">Leadership or decision-maker change · a new competitor (Epic, HealthFuse, Waystar, TransUnion and others) · fewer discussions, frustration or silence · disputing the data or ROI · skipped or cancelled meetings · budget-cut talk. Update the review when these appear; don’t wait for the ROI.</p></div>
+ <div class="card" style="border-inline-start:4px solid var(--purple)"><h4>Early warning signs (from the client review guide)</h4><p class="p">Leadership or decision-maker change · a new competitor (Epic, HealthFuse, Waystar, TransUnion and others) · fewer discussions, frustration or silence · disputing the data or ROI · budget-cut talk. Update the review when these appear; don’t wait for the ROI.</p></div>
  <div class="filters"><label for="farea" class="note" style="margin:0">Area</label><select id="farea" class="sel">${areas.map(a=>`<option ${a===fRisk?'selected':''}>${esc(a)}</option>`).join('')}</select></div>
  <div class="card"><table><tr><th>Severity</th><th>Client</th>${ME.role!=='consultant'?'<th>Consultant</th>':''}<th>Area</th><th>Detail</th></tr>${fl.map(i=>`<tr class="click" data-c="${i[1].id}"><td><span class="chip" style="background:${sev[i[0]][1]};color:${sev[i[0]][2]}">${sev[i[0]][0]}</span></td><td>${esc(i[1].name)}</td>${ME.role!=='consultant'?`<td>${esc(FULL[i[1].con]||i[1].con)}</td>`:''}<td>${esc(i[2])}</td><td>${esc(i[3])}</td></tr>`).join('')}</table></div>`;
  $('#farea').addEventListener('change',e=>{fRisk=e.target.value;render()});bindOpen()}
@@ -696,9 +694,9 @@ function vUsers(){$('#main').innerHTML=`<p class="title">Users & roles</p><p cla
  <div class="card"><h4>Permissions</h4><table><tr><th>Capability</th><th>Consultant</th><th>Manager</th><th>Leadership</th></tr>
  ${[['See own clients','✔','✔','✔'],['See every consultant’s clients','—','✔','✔'],['Edit own client reviews','✔','✔ (own book)','—'],['Submit a review for approval','✔','—','—'],['Approve or request changes','—','✔','—'],['Comment on reviews','✔','✔','—'],['Change scoring weights (session only)','✔','✔','✔']].map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td></tr>`).join('')}</table>
  <p class="note">No client-facing role exists. Health data stays internal.</p></div>
- <div class="card" style="border-inline-start:4px solid var(--teal)"><h4>Data sources and privacy</h4><table><tr><th>Source</th><th>Used for</th></tr><tr><td>Client reviews entered in the workspace</td><td>Overview, stakeholders, utilization, risks, goals and initiatives</td></tr><tr><td>All Client 2024 and 2025 ROI Stats files</td><td>ROI, benefit, cash impact and trends</td></tr><tr><td>Consultant calendar (client meeting dates and titles only)</td><td>Next client conversation and meeting cadence</td></tr></table><p class="note">The workspace does not read anyone’s email, Teams chats or files. Nothing in a mailbox feeds a score, alert or page.</p></div>`}
+ <div class="card" style="border-inline-start:4px solid var(--teal)"><h4>Data sources and privacy</h4><table><tr><th>Source</th><th>Used for</th></tr><tr><td>Client reviews entered in the workspace</td><td>Overview, stakeholders, utilization, risks, goals and initiatives</td></tr><tr><td>All Client 2024 and 2025 ROI Stats files</td><td>ROI, benefit, cash impact and trends</td></tr></table><p class="note">The workspace does not connect to email, Outlook or calendars. Scores and pages use client reviews and ROI files entered here.</p></div>`}
 function vModel(){const tw=Object.values(W).reduce((a,b)=>a+b,0);
- const rules={results:'60% ROI value (≥10x = 100 · ≥5x = 80 · ≥3x = 60 · ≥1x = 40 · none yet = 50) + 40% ROI cadence',utilization:'Share of confirmed CO components live (partial = half)',engagement:'Stakeholder engagement ratings, plus client meeting cadence where connected',risk:'Risk categories in the client review (Green 100 · Yellow 60 · Red 20)'};
+ const rules={results:'60% ROI value (≥10x = 100 · ≥5x = 80 · ≥3x = 60 · ≥1x = 40 · none yet = 50) + 40% ROI cadence',utilization:'Share of confirmed CO components live (partial = half)',engagement:'Stakeholder engagement ratings in the client review',risk:'Risk categories in the client review (Green 100 · Yellow 60 · Red 20)'};
  const list=visible();
  $('#main').innerHTML=`<p class="title">Scoring model</p><p class="subtitle">Four pillars from the Consulting Client Review. Pillars with no data are left out and the rest re-weighted. Weights total ${tw}%.</p>
  <div class="grid2"><div class="card"><h4>Pillar weights</h4>${DIM.map(([k,l])=>`<div class="sl"><label for="w_${k}">${l}</label><input type="range" min="0" max="50" step="5" id="w_${k}" data-k="${k}" value="${W[k]}"><b id="o_${k}">${W[k]}%</b></div><p class="note" style="margin-block:-6px 8px">${rules[k]}</p>`).join('')}<button type="button" class="btn" id="reset">Reset</button></div>
@@ -714,8 +712,8 @@ showLogin();
 
 /* ================= CONSULTANT WORKSPACE ================= */
 function views(){
- if(ME.role==='consultant')return [['home','My portfolio'],['review','Client 360'],['roi','ROI'],['risks','Risks'],['actions','Commitments'],['prep','Meeting prep'],['model','How health is scored']];
- if(ME.role==='manager')return [['home','Team overview'],['portfolio','All clients'],['review','Client 360'],['roi','ROI'],['risks','Risks'],['actions','Commitments'],['prep','Meeting prep'],['queue','Review approvals'],['activity','Activity'],['users','Users & roles'],['model','How health is scored']];
+ if(ME.role==='consultant')return [['home','My portfolio'],['review','Client 360'],['roi','ROI'],['risks','Risks'],['actions','Commitments'],['model','How health is scored']];
+ if(ME.role==='manager')return [['home','Team overview'],['portfolio','All clients'],['review','Client 360'],['roi','ROI'],['risks','Risks'],['actions','Commitments'],['queue','Review approvals'],['activity','Activity'],['users','Users & roles'],['model','How health is scored']];
  return [['home','Team overview'],['portfolio','All clients'],['review','Client 360'],['roi','ROI'],['risks','Risks'],['model','How health is scored']]}
 const KEY={mcleod:/mcleod/i,rush:/\brush\b/i,washu:/washu|wash\/|washington/i,maine:/maine/i,bjc:/\bbjc\b/i,stl:/saint luke|st\.? luke/i};
 const parseMt=s=>{const d=new Date(s.replace(/(\d)(AM|PM)/,'$1 $2'));return isNaN(d)?null:d};
@@ -736,15 +734,12 @@ function vHome(){
  if(ME.role!=='consultant')return vTeam();
  const list=visible();const rows=[...list].sort((a,b)=>(score(a).overall??999)-(score(b).overall??999));
  const open=ACTIONS.filter(a=>!a.done&&list.some(c=>c.id===a.cid));const urgent=open.filter(a=>isOverdue(a)||a.cat==='Do Today');
- const calls=list.map(c=>({c,n:nextCall(c)})).filter(x=>x.n).sort((a,b)=>a.n.d-b.n.d);
  const risks=riskItems(list).filter(i=>i[0]>=2).slice(0,6);const hasLive=list.some(c=>c.ops);
  const tot=list.reduce((a,c)=>a+(roiOf(c).total||0),0);
  $('#main').innerHTML=`<div class="banner">🔒 <b>INTERNAL ONLY.</b> Your book of business, side by side. Never screen-share with a client.</div>
  <p class="title">Good morning, ${esc(ME.name.split(' ')[0])}</p><p class="subtitle">${list.length} clients · ${fm(tot)} in 2025 ROI value · ${hasLive?'signals as of Nov 3, 2026 9:55 AM CT':'scored from your client reviews and the 2025 ROI file'}</p>
  ${kpis(list)}
  <div class="grid3">
-  <div class="card"><h4>Next client conversations</h4>${calls.length?calls.map(x=>`<div class="row"><div><b>${esc(x.c.name)}</b><br><span class="note" style="margin:0">${esc(x.n.m[0])} · ${esc(x.n.m[1])}</span></div><button type="button" class="btn sm" data-prep="${x.c.id}">Prep →</button></div>`).join(''):'<p class="note">No client calls on the calendar in the next 14 days.</p>'}
-   ${list.filter(c=>c.ops&&!nextCall(c)).map(c=>`<p class="warnline">No call booked: ${esc(c.name)}</p>`).join('')}</div>
   <div class="card"><h4>Commitments needing attention</h4>${urgent.length?urgent.slice(0,6).map(a=>`<div class="row"><div><b>${esc(CLIENTS.find(c=>c.id===a.cid).name)}</b><br><span style="font-size:12.5px">${esc(a.text)}</span></div>${isOverdue(a)?'<span class="chip" style="background:#FBE0EE;color:#A0005C">Overdue</span>':'<span class="chip" style="background:#FFF1E0;color:#B35F00">Today</span>'}</div>`).join(''):'<p class="note">Nothing urgent.</p>'}<p class="note"><span class="link" data-go="actions">All ${open.length} commitments →</span></p></div>
   <div class="card"><h4>Top risks</h4>${risks.length?risks.map(i=>`<div class="row" data-c="${i[1].id}" style="cursor:pointer"><div><b>${esc(i[1].name)}</b> · <span class="note" style="margin:0">${esc(i[2])}</span><br><span style="font-size:12.5px">${esc(i[3])}</span></div><span class="chip" style="background:${SEV[i[0]][1]};color:${SEV[i[0]][2]}">${SEV[i[0]][0]}</span></div>`).join(''):'<p class="note">No medium or high risks.</p>'}<p class="note"><span class="link" data-go="risks">Full watchlist →</span></p></div>
  </div>
@@ -783,7 +778,7 @@ function vROI(){
  $('#cost').addEventListener('input',e=>{S.cost=+e.target.value;recalc()});
  $('#rpick').addEventListener('change',e=>{cur=e.target.value;render()});
  $$('[data-c]').forEach(b=>b.addEventListener('click',()=>{cur=b.dataset.c;render()}))}
-/* ---------- Meeting prep ---------- */
+/* ---------- Client brief ---------- */
 const NOTES={};
 function brief(c){const o=c.ops,rv=c.review,n=nextCall(c);const kw=KEY[c.id];
  const since=kw?CHANGES.flatMap(x=>x.replace(/<\/?b>/g,'').replace(/&amp;/g,'&').split(/ · |: (?=[A-Z])/)).filter(x=>kw.test(x)&&x.length>25&&!/overdue|tracker|commitment/i.test(x)).slice(0,8):[];
@@ -792,7 +787,7 @@ function brief(c){const o=c.ops,rv=c.review,n=nextCall(c);const kw=KEY[c.id];
  const risks=rv?rv.risk.filter(x=>x[1]==='Y'||x[1]==='R'):[];const ppl=rv?rv.people:[];
  const alerts=o?o.alerts.filter(a=>a[3]!=='Resolved'):[];const jira=o?o.jira:[];
  const clean=t=>t.replace(/\s*\((verify|check)\)/gi,'').replace(/Owner needs to be assigned( \(verify\))?/,'');
- const ag=[`${c.name} / Experian Collections Optimization${n?' – '+n.m[0]:''}`,'',
+ const ag=[`${c.name} / Experian Collections Optimization`,'',
   '1. Welcome and introductions',
   '2. Data files and feeds','   • [Add any file updates]',
   '3. Projects and enhancements',...(rv?rv.ar.map(x=>'   • '+x):[]),
@@ -803,9 +798,9 @@ function vPrep(){
  const list=visible();if(!cur||!list.some(c=>c.id===cur)){const up=list.map(c=>({c,n:nextCall(c)})).filter(x=>x.n).sort((a,b)=>a.n.d-b.n.d);cur=(up[0]||{c:list[0]}).c.id}
  const c=CLIENTS.find(x=>x.id===cur),b=brief(c),h=health(c),rv=c.review;NOTES[c.id]=NOTES[c.id]||[];
  const li=(a,f)=>a.length?`<ul class="ul">${a.map(f).join('')}</ul>`:'<p class="note">None.</p>';
- $('#main').innerHTML=`<p class="title">Prepare for the next conversation</p>
- <div class="filters"><label class="note" for="ppick" style="margin:0">Client</label><select id="ppick" class="sel">${list.map(x=>{const n=nextCall(x);return `<option value="${x.id}" ${x.id===cur?'selected':''}>${esc(x.name)}${n?' · '+esc(n.m[0]):''}</option>`}).join('')}</select><span class="spacer"></span><button type="button" class="btn" id="printB">Print brief</button></div>
- <div class="card" style="border-inline-start:4px solid var(--blue)"><div class="rv-head">${ring(h.s.overall,64)}<div><p style="font-size:18px;font-weight:700;margin:0;color:var(--blue)">${esc(c.name)}</p><p class="note" style="margin:2px 0 0">${b.n?`Next call: <b>${esc(b.n.m[0])}</b> · ${esc(b.n.m[1])}`:c.ops?'<span style="color:#A0005C">No client call booked in the next 14 days</span>':'Calendar not connected for this client in the prototype'}</p><div style="margin-block-start:6px">${rag(h.final)} ${pillarDots(h.s)}</div></div></div></div>
+ $('#main').innerHTML=`<p class="title">Client brief</p>
+ <div class="filters"><label class="note" for="ppick" style="margin:0">Client</label><select id="ppick" class="sel">${list.map(x=>`<option value="${x.id}" ${x.id===cur?'selected':''}>${esc(x.name)}</option>`).join('')}</select><span class="spacer"></span><button type="button" class="btn" id="printB">Print brief</button></div>
+ <div class="card" style="border-inline-start:4px solid var(--blue)"><div class="rv-head">${ring(h.s.overall,64)}<div><p style="font-size:18px;font-weight:700;margin:0;color:var(--blue)">${esc(c.name)}</p><p class="note" style="margin:2px 0 0">${esc(c.loc)}</p><div style="margin-block-start:6px">${rag(h.final)} ${pillarDots(h.s)}</div></div></div></div>
  <div class="grid2">
   <div class="card"><h4>Client-safe agenda</h4><p class="note" style="margin-block-start:0">Edit before sending. It leaves out health ratings, internal risks, opportunity sizing and other clients.</p><textarea class="in" id="agenda" rows="18" aria-label="Agenda">${esc(b.agenda)}</textarea>
    <div class="filters" style="margin-block-start:8px"><button type="button" class="btn on" id="copyB">Copy agenda</button><span class="note" id="copyMsg" style="margin:0"></span></div></div>
@@ -817,18 +812,18 @@ function vPrep(){
    <p class="lbl">Risks to probe</p>${li(b.risks,x=>`<li><b>${esc(x[0])}</b> ${rag(x[1])} ${esc(x[2])}</li>`)}
    <p class="lbl">Who to engage</p>${li(b.ppl,p=>`<li>${esc(p[0])} · ${tcv(p[1])} ${rag(p[3])}</li>`)}
    ${rv&&rv.help?`<p class="lbl">Where I need help</p><p class="p">${esc(rv.help)}</p>`:''}</div></div>
- <div class="card"><h4>Meeting notes and follow-ups</h4>
+ <div class="card"><h4>Notes</h4>
   ${NOTES[c.id].map(n=>`<div class="cmt"><span class="note" style="margin:0">${esc(n.t)}</span><br>${esc(n.x)}</div>`).join('')}
-  ${ME.role!=='leader'?`<textarea class="in" id="note" rows="3" placeholder="Capture notes during or after the call…" aria-label="Meeting notes"></textarea><button type="button" class="btn" id="saveNote" style="margin-block:8px">Save notes</button>
+  ${ME.role!=='leader'?`<textarea class="in" id="note" rows="3" placeholder="Add a note for this client…" aria-label="Notes"></textarea><button type="button" class="btn" id="saveNote" style="margin-block:8px">Save notes</button>
   <div class="form"><label style="grid-column:span 2">Follow-up<input class="in" id="fuT" placeholder="e.g., Send the location-level breakdown"></label><label>Who owes it<select class="in" id="fuK"><option value="Do This Week">Experian (us)</option><option value="Waiting on Others">${esc(c.name)}</option></select></label><label>Owner<input class="in" id="fuO" value="${esc(ME.name)}"></label><label>Confirmed due date<input class="in" id="fuD" type="date"></label></div><button type="button" class="btn on" id="addFu" style="margin-block-start:8px">Add to commitments</button>`:''}</div>`;
  $('#ppick').addEventListener('change',e=>{cur=e.target.value;render()});
  $('#printB').addEventListener('click',()=>{try{window.print()}catch(e){toast('Printing is not available here')}});
  $('#copyB').addEventListener('click',async()=>{const t=$('#agenda');let ok=false;try{await navigator.clipboard.writeText(t.value);ok=true}catch(e){try{t.select();ok=document.execCommand('copy')}catch(e2){}}$('#copyMsg').textContent=ok?'Copied':'Select the text and copy it (clipboard blocked here)'});
- const sn=$('#saveNote');if(sn)sn.addEventListener('click',()=>{const x=$('#note').value.trim();if(!x)return;NOTES[c.id].push({t:nowStamp(),x});log('Saved meeting notes for '+c.name);toast('Notes saved');render()});
- const af=$('#addFu');if(af)af.addEventListener('click',()=>{const t=$('#fuT').value.trim();if(!t){toast('Describe the follow-up first');return}ACTIONS.unshift({id:aid++,cid:c.id,text:t,owner:$('#fuO').value.trim()||ME.name,cat:$('#fuK').value,due:$('#fuD').value,done:false,src:'Meeting prep'});log('Added follow-up for '+c.name+': '+t);toast('Added to commitments');render()})}
+ const sn=$('#saveNote');if(sn)sn.addEventListener('click',()=>{const x=$('#note').value.trim();if(!x)return;NOTES[c.id].push({t:nowStamp(),x});log('Saved a note for '+c.name);toast('Notes saved');render()});
+ const af=$('#addFu');if(af)af.addEventListener('click',()=>{const t=$('#fuT').value.trim();if(!t){toast('Describe the follow-up first');return}ACTIONS.unshift({id:aid++,cid:c.id,text:t,owner:$('#fuO').value.trim()||ME.name,cat:$('#fuK').value,due:$('#fuD').value,done:false,src:'Added in the workspace'});log('Added follow-up for '+c.name+': '+t);toast('Added to commitments');render()})}
 function vRisks2(){const list=visible();const items=riskItems(list);const areas=['All',...new Set(items.map(i=>i[2]))];const fl=fRisk==='All'?items:items.filter(i=>i[2]===fRisk);
  $('#main').innerHTML=`<div class="banner">🔒 <b>INTERNAL ONLY.</b> Cross-client watchlist.</div><p class="title">Risks</p><p class="subtitle">${items.length} items, highest severity first · from client reviews, file alerts, commitments and ROI cadence</p>
- <div class="card" style="border-inline-start:4px solid var(--purple)"><h4>Early warning signs</h4><p class="p">Leadership or decision-maker change · a new competitor (Epic, HealthFuse, Waystar, TransUnion and others) · fewer discussions, frustration or silence · disputing the data or ROI · skipped or cancelled meetings · budget-cut talk. Update the client when these appear; don’t wait for the ROI.</p></div>
+ <div class="card" style="border-inline-start:4px solid var(--purple)"><h4>Early warning signs</h4><p class="p">Leadership or decision-maker change · a new competitor (Epic, HealthFuse, Waystar, TransUnion and others) · fewer discussions, frustration or silence · disputing the data or ROI · budget-cut talk. Update the client when these appear; don’t wait for the ROI.</p></div>
  <div class="filters"><label for="farea" class="note" style="margin:0">Area</label><select id="farea" class="sel">${areas.map(a=>`<option ${a===fRisk?'selected':''}>${esc(a)}</option>`).join('')}</select></div>
  <div class="card"><table><tr><th>Severity</th><th>Client</th>${ME.role!=='consultant'?'<th>Consultant</th>':''}<th>Area</th><th>Detail</th></tr>${fl.map(i=>`<tr class="click" data-c="${i[1].id}"><td><span class="chip" style="background:${SEV[i[0]][1]};color:${SEV[i[0]][2]}">${SEV[i[0]][0]}</span></td><td>${esc(i[1].name)}</td>${ME.role!=='consultant'?`<td>${esc(FULL[i[1].con]||i[1].con)}</td>`:''}<td>${esc(i[2])}</td><td>${esc(i[3])}</td></tr>`).join('')}</table></div>`;
  $('#farea').addEventListener('change',e=>{fRisk=e.target.value;render()});bindOpen()}
@@ -837,11 +832,11 @@ function render(){renderNav();({home:vHome,team:vTeam,portfolio:vPortfolio,queue
 let tab='success',q='',fConL='All';
 function goClient(id,t){if(editing){editing=false;draft=null}cur=id;tab=t||'success';view='client';render()}
 function goHome(){editing=false;draft=null;view='home';hubFrom='home';render()}
-function clientTile(c){const h=health(c),R=roiOf(c),n=nextCall(c),rv=c.review;
+function clientTile(c){const h=health(c),R=roiOf(c),rv=c.review;
  const eng=h.s.p.engagement;const open=ACTIONS.filter(a=>a.cid===c.id&&!a.done),od=open.filter(isOverdue).length;
  return `<div class="ct"><div class="ct-top" data-open="${c.id}" data-t="success"><div><div class="nm">${esc(c.name)}</div><div class="meta">${esc(c.loc)}${ME.role!=='consultant'?' · '+esc(FULL[c.con]||c.con):''}</div></div>${rag(h.final)}</div>
  <div class="ct-tiles">
-  <button type="button" class="tile" data-open="${c.id}" data-t="success"><span class="tl">Client success</span><span class="tv">${n?esc(n.m[0].replace(', 2026','')):c.ops?'No call booked':'—'}</span><span class="ts">${open.length} commitment${open.length===1?'':'s'}${od?` · <b style="color:#A0005C">${od} overdue</b>`:''}</span></button>
+  <button type="button" class="tile" data-open="${c.id}" data-t="success"><span class="tl">Client success</span><span class="tv">${open.length}</span><span class="ts">open commitment${open.length===1?'':'s'}${od?` · <b style="color:#A0005C">${od} overdue</b>`:''}</span></button>
   <button type="button" class="tile" data-open="${c.id}" data-t="health"><span class="tl">Client health</span><span class="tv" style="color:${band(h.s.overall)[3]}">${h.s.overall??'—'}</span><span class="ts">${pillarMini(h.s)}</span></button>
   <button type="button" class="tile" data-open="${c.id}" data-t="roi"><span class="tl">Client ROI</span><span class="tv" style="color:${C.purple}">${R.total?fm(R.total):'—'}</span><span class="ts">${R.ratio!=null&&R.total?(+R.ratio).toFixed(1)+':1':c.row.g}</span></button>
  </div>${h.mismatch?`<p class="warnline" style="margin:6px 12px 10px">⚠ Rating (${RAGC[h.cr][0]}) differs from the data (${RAGC[h.calc][0]})</p>`:''}</div>`}
@@ -851,7 +846,7 @@ function vLanding(){
  const list=all.filter(c=>(fConL==='All'||c.con===fConL)&&(!q||c.name.toLowerCase().includes(q.toLowerCase())));
  const rows=[...list].sort((a,b)=>(score(a).overall??999)-(score(b).overall??999));
  const open=ACTIONS.filter(a=>!a.done&&list.some(c=>c.id===a.cid));const urgent=open.filter(a=>isOverdue(a)||a.cat==='Do Today');
- const calls=list.map(c=>({c,n:nextCall(c)})).filter(x=>x.n).sort((a,b)=>a.n.d-b.n.d);const risks=riskItems(list).filter(i=>i[0]>=2).slice(0,6);
+ const risks=riskItems(list).filter(i=>i[0]>=2).slice(0,6);
  const tot=list.reduce((a,c)=>a+(roiOf(c).total||0),0);const hasLive=list.some(c=>c.ops);
  const qn=CLIENTS.filter(c=>c.review&&c.review.status==='Submitted'&&canApprove(c)).length;const XR=execReview(list);
  $('#main').innerHTML=`<div class="banner">🔒 <b>INTERNAL ONLY.</b> Portfolio view across clients. Never screen-share with a client.</div>
@@ -862,7 +857,6 @@ function vLanding(){
  ${alertBlock(list)}
  ${kpis(list)}
  <div class="grid3">
-  <div class="card"><h4>Next client conversations</h4>${calls.length?calls.slice(0,6).map(x=>`<div class="row"><div><b>${esc(x.c.name)}</b><br><span class="note" style="margin:0">${esc(x.n.m[0])}</span></div><button type="button" class="btn sm" data-open="${x.c.id}" data-t="success">Prep →</button></div>`).join(''):`<p class="note">${hasLive?'No client calls in the next 14 days.':'Calendar is connected for Jessica Johns’ book in this prototype.'}</p>`}${list.filter(c=>c.ops&&!nextCall(c)).map(c=>`<p class="warnline">No call booked: ${esc(c.name)}</p>`).join('')}</div>
   <div class="card"><h4>Commitments needing attention</h4>${urgent.length?urgent.slice(0,6).map(a=>`<div class="row" data-open="${a.cid}" data-t="success" style="cursor:pointer"><div><b>${esc(CLIENTS.find(c=>c.id===a.cid).name)}</b><br><span style="font-size:12.5px">${esc(a.text)}</span></div>${isOverdue(a)?'<span class="chip" style="background:#FBE0EE;color:#A0005C">Overdue</span>':'<span class="chip" style="background:#FFF1E0;color:#B35F00">Today</span>'}</div>`).join(''):'<p class="note">Nothing urgent.</p>'}</div>
   <div class="card"><h4>Top risks</h4>${risks.length?risks.map(i=>`<div class="row" data-open="${i[1].id}" data-t="health" style="cursor:pointer"><div><b>${esc(i[1].name)}</b> · <span class="note" style="margin:0">${esc(i[2])}</span><br><span style="font-size:12.5px">${esc(i[3])}</span></div><span class="chip" style="background:${SEV[i[0]][1]};color:${SEV[i[0]][2]}">${SEV[i[0]][0]}</span></div>`).join(''):'<p class="note">No medium or high risks.</p>'}</div>
  </div>
@@ -908,14 +902,14 @@ function tSuccess(c,rv,ed,h){const b=brief(c);NOTES[c.id]=NOTES[c.id]||[];const 
   ${live.length?`<p class="p" style="margin-block-start:6px">✔ ${live.length} CO components live: ${esc(live.join(', '))}</p>`:''}
   ${rv?`<p class="lbl">Why they use CO</p>${ed?`<textarea class="in" rows="3" data-f="why" aria-label="Why the client uses CO">${esc(rv.why)}</textarea>`:`<p class="p">${esc(rv.why)||'<span class="tc">To confirm</span>'}</p>`}
   <p class="lbl">Relationship summary</p>${ed?`<textarea class="in" rows="2" data-f="summary" aria-label="Summary">${esc(rv.summary)}</textarea>`:`<div class="takeaway">${esc(rv.summary)}</div>`}`:''}</div>
- <div class="card" style="border-inline-start:4px solid var(--blue)"><h4>Next conversation</h4><p class="p">${b.n?`<b>${esc(b.n.m[0])}</b> · ${esc(b.n.m[1])}`:c.ops?'<span style="color:#A0005C">No client call booked in the next 14 days.</span>':'Calendar not connected for this client in the prototype.'}</p>
+ <div class="card" style="border-inline-start:4px solid var(--blue)"><h4>Client-safe summary</h4>
   <p class="lbl">Client-safe agenda</p><p class="note" style="margin:0 0 4px">Leaves out health ratings, internal risks, opportunity sizing and other clients. Edit before sending.</p><textarea class="in" id="agenda" rows="12" aria-label="Agenda">${esc(b.agenda)}</textarea>
   <div class="filters" style="margin-block-start:8px"><button type="button" class="btn on" id="copyB">Copy agenda</button><button type="button" class="btn" id="printB">Print</button><span class="note" id="copyMsg" style="margin:0"></span></div>
   ${b.risks.length?`<p class="lbl">🔒 Internal: risks to probe</p>${li(b.risks,x=>`<li><b>${esc(x[0])}</b> · ${esc(x[2])}</li>`)}`:''}</div></div>
  <div class="card"><h4>Stakeholders & engagement</h4>${rv?stakeholders(rv,ed):'<p class="note">No client profile yet.</p>'}</div>
  ${rv?`<div class="grid2"><div class="card"><h4>Current initiatives · AR</h4>${listField('ar',rv,ed)}</div><div class="card"><h4>Current initiatives · bad debt and other</h4>${listField('bd',rv,ed)}</div></div>`:''}
- <div class="card"><h4>Meeting notes</h4>${NOTES[c.id].map(n=>`<div class="cmt"><span class="note" style="margin:0">${esc(n.t)} · ${esc(n.u)}</span><br>${esc(n.x)}</div>`).join('')||'<p class="note">No notes yet.</p>'}
-  ${ME.role!=='leader'?`<textarea class="in" id="note" rows="3" placeholder="Capture notes during or after the call…" aria-label="Meeting notes"></textarea><button type="button" class="btn" id="saveNote" style="margin-block-start:8px">Save notes</button>`:''}</div>
+ <div class="card"><h4>Notes</h4>${NOTES[c.id].map(n=>`<div class="cmt"><span class="note" style="margin:0">${esc(n.t)} · ${esc(n.u)}</span><br>${esc(n.x)}</div>`).join('')||'<p class="note">No notes yet.</p>'}
+  ${ME.role!=='leader'?`<textarea class="in" id="note" rows="3" placeholder="Add a note for this client…" aria-label="Notes"></textarea><button type="button" class="btn" id="saveNote" style="margin-block-start:8px">Save notes</button>`:''}</div>
  ${comments(c)}`}
 function stakeholders(rv,ed){return `<table><tr><th>Name</th><th>Role</th><th>Influence</th><th>Engagement</th>${ed?'<th></th>':''}</tr>${rv.people.map((x,i)=>ed?`<tr><td><input class="in" data-f="people.${i}.0" value="${esc(x[0])}" aria-label="Name"></td><td><input class="in" data-f="people.${i}.1" value="${esc(x[1])}" aria-label="Role"></td><td><input class="in" data-f="people.${i}.2" value="${esc(x[2])}" aria-label="Influence"></td><td>${ragSel('people.'+i+'.3',x[3])}</td><td><button type="button" class="x" data-del="people.${i}" aria-label="Remove">✕</button></td></tr>`:`<tr><td>${esc(x[0])}</td><td>${tcv(x[1])}</td><td>${tcv(x[2])}</td><td>${rag(x[3])}</td></tr>`).join('')||`<tr><td colspan="4" class="note">No stakeholders listed yet.</td></tr>`}</table>${ed?`<button type="button" class="btn sm" id="addPerson">+ Add stakeholder</button>`:''}
  <p class="note">Meeting frequency: ${ed?`<input class="in" style="inline-size:220px" data-f="freq" value="${esc(rv.freq)}" aria-label="Meeting frequency">`:tcv(rv.freq)}</p><p class="lbl">Engagement strategy</p>${listField('engStrategy',rv,ed)}`}
@@ -927,7 +921,7 @@ function tHealth(c,rv,ed,h){const s=h.s,o=c.ops;
  <p class="note">✔ live · ◐ partial or in build · ✕ not live · – not applicable · ? to confirm. ${ed?'':esc(rv.compNote)}</p>${ed?`<input class="in" data-f="compNote" value="${esc(rv.compNote)}" aria-label="Component notes">`:''}<p class="lbl">Utilization strategy</p>${listField('utilStrategy',rv,ed)}</div>`:''}
  ${rv?`<div class="grid2"><div class="card"><h4>Risk register</h4><table><tr><th>Category</th><th>Rating</th><th>Details</th><th>Next step</th>${ed?'<th></th>':''}</tr>${rv.risk.map((x,i)=>ed?`<tr><td><select class="in" data-f="risk.${i}.0" aria-label="Risk category">${[...new Set([...RISKCATS,x[0]])].map(k=>`<option ${k===x[0]?'selected':''}>${esc(k)}</option>`).join('')}</select></td><td>${ragSel('risk.'+i+'.1',x[1])}</td><td><input class="in" data-f="risk.${i}.2" value="${esc(x[2])}" aria-label="Details"></td><td><input class="in" data-f="risk.${i}.3" value="${esc(x[3])}" aria-label="Next step"></td><td><button type="button" class="x" data-del="risk.${i}" aria-label="Remove">✕</button></td></tr>`:`<tr><td class="k">${esc(x[0])}</td><td>${rag(x[1])}</td><td>${esc(x[2])}</td><td>${esc(x[3])}</td></tr>`).join('')}</table>${ed?`<button type="button" class="btn sm" id="addRisk">+ Add risk</button>`:''}</div>
  <div class="card"><h4>Risk strategy</h4>${listField('riskStrategy',rv,ed)}<p class="lbl">I need help with</p>${ed?`<textarea class="in" rows="2" data-f="help" aria-label="I need help with">${esc(rv.help)}</textarea>`:`<p class="p">${esc(rv.help)||'<span class="note">Nothing raised.</span>'}</p>`}
-  <p class="lbl">Early warning signs to watch</p><p class="p" style="font-size:12.5px;color:var(--gray)">Leadership change · new competitor · fewer discussions or silence · disputing the ROI · cancelled meetings · budget-cut talk.</p></div></div>`:'<div class="card"><p class="note">No client profile yet, so health is scored on ROI only.</p></div>'}`}
+  <p class="lbl">Early warning signs to watch</p><p class="p" style="font-size:12.5px;color:var(--gray)">Leadership change · new competitor · fewer discussions or silence · disputing the ROI · budget-cut talk.</p></div></div>`:'<div class="card"><p class="note">No client profile yet, so health is scored on ROI only.</p></div>'}`}
 function tROI(c,rv,ed){const S=scn(c),R=roiOf(c);const val=S.mix.reduce((a,x)=>a+(+x[1]||0),0),opp=S.opp.reduce((a,x)=>a+(+x[1]||0),0);
  return `<div class="grid2"><div class="card"><h4>ROI on file</h4>${roiTable(c)}${ed?`<p class="lbl">ROI notes</p><textarea class="in" rows="2" data-f="roiNote" aria-label="ROI notes">${esc(rv.roiNote)}</textarea>`:rv&&rv.roiNote?`<p class="p" style="margin-block-start:8px">${esc(rv.roiNote)}</p>`:''}</div>
  <div class="card"><h4>Value by workflow</h4>${mixBars(c)}</div></div>
@@ -945,7 +939,7 @@ function wireClient(c){const on=(id,fn)=>{const el=$('#'+id);if(el)el.addEventLi
  on('approveRv',()=>{c.review.status='Approved';c.comments.push({u:ME.name,t:nowStamp(),x:'Approved.'});log('Approved the '+c.name+' review');toast('Approved');render()});
  on('changesRv',()=>{const t=$('#cmt');const x=(t&&t.value.trim())||'Please update before approval.';c.review.status='Changes requested';c.comments.push({u:ME.name,t:nowStamp(),x});log('Requested changes on '+c.name);toast('Changes requested');render()});
  on('addCmt',()=>{const t=$('#cmt');if(!t.value.trim())return;c.comments.push({u:ME.name,t:nowStamp(),x:t.value.trim()});log('Commented on '+c.name);render()});
- on('saveNote',()=>{const x=$('#note').value.trim();if(!x)return;NOTES[c.id].push({t:nowStamp(),u:ME.name,x});log('Saved meeting notes for '+c.name);toast('Notes saved');render()});
+ on('saveNote',()=>{const x=$('#note').value.trim();if(!x)return;NOTES[c.id].push({t:nowStamp(),u:ME.name,x});log('Saved a note for '+c.name);toast('Notes saved');render()});
  on('addFu',()=>{const t=$('#fuT').value.trim();if(!t){toast('Describe the commitment first');return}ACTIONS.unshift({id:aid++,cid:c.id,text:t,owner:$('#fuO').value.trim()||ME.name,cat:$('#fuK').value,due:$('#fuD').value,done:false,src:'Client page'});log('Added commitment for '+c.name+': '+t);toast('Commitment added');render()});
  on('printB',()=>{try{window.print()}catch(e){toast('Printing is not available here')}});
  on('copyB',async()=>{const t=$('#agenda');let ok=false;try{await navigator.clipboard.writeText(t.value);ok=true}catch(e){try{t.select();ok=document.execCommand('copy')}catch(e2){}}$('#copyMsg').textContent=ok?'Copied':'Select the text and copy it (clipboard blocked here)'});
@@ -1011,7 +1005,7 @@ function vRules(){const ed=ME.role==='manager';
  <div class="card"><table><tr><th>On</th><th>Trigger when…</th><th>Threshold</th><th>Severity</th><th>Clients it catches now</th></tr>${RULES.map((r,i)=>{const hit=new Set(triggers(CLIENTS.filter(c=>ME.role==='consultant'?c.con===ME.con:true)).filter(a=>a.key.startsWith(r.k+'|')).map(a=>a.c.id)).size;return `<tr><td><input type="checkbox" data-ron="${i}" ${r.on?'checked':''} ${ed?'':'disabled'} aria-label="Turn rule on or off"></td><td>${esc(r.label)}<br><span class="note" style="margin:0">${esc(r.hint)}</span></td><td><input class="in num" type="number" data-rv="${i}" value="${r.val}" style="inline-size:90px" ${ed?'':'disabled'} aria-label="Threshold"> ${esc(r.unit)}</td><td><span class="chip" style="background:${SEV[r.sev][1]};color:${SEV[r.sev][2]}">${SEV[r.sev][0]}</span></td><td class="num">${hit}</td></tr>`}).join('')}</table>
  <p class="note">Score drops compare with the last daily snapshot (${esc(SNAPT)}). Edits to a client profile or its ratings re-check every rule right away.</p>${ed?`<button type="button" class="btn" id="snapB">Take a new snapshot now</button>`:''}</div>
  <div class="card"><h4>Who gets notified</h4><table><tr><th>Channel</th><th>Consultant</th><th>Manager</th><th>In this prototype</th></tr>
- <tr><td>Bell and landing page</td><td>✔ own clients</td><td>✔ whole team</td><td>Working</td></tr><tr><td>Daily email digest</td><td>✔</td><td>✔</td><td>Planned for the production version</td></tr><tr><td>Teams message for High alerts</td><td>✔</td><td>✔</td><td>Planned for the production version</td></tr></table></div>`;
+ <tr><td>Bell and landing page</td><td>✔ own clients</td><td>✔ whole team</td><td>Working</td></tr></table></div>`;
  $('#back').addEventListener('click',goHome);
  $$('[data-ron]').forEach(el=>el.addEventListener('change',()=>{RULES[+el.dataset.ron].on=el.checked;log('Alert rule '+(el.checked?'turned on':'turned off')+': '+RULES[+el.dataset.ron].label);render()}));
  $$('[data-rv]').forEach(el=>el.addEventListener('change',()=>{const r=RULES[+el.dataset.rv];r.val=+el.value;log('Alert rule changed: '+r.label+' '+r.val+r.unit);render()}));
@@ -1040,7 +1034,7 @@ function execReview(list){
  const ren=renewals(list);const mism=hs.filter(x=>x.h.mismatch);
  const open=ACTIONS.filter(a=>!a.done&&list.some(c=>c.id===a.cid)),od=open.filter(isOverdue),doneS=ACTIONS.filter(a=>a.done&&list.some(c=>c.id===a.cid));
  const noRev=list.filter(c=>!c.review).length,stale=list.filter(c=>c.review&&(ageMonths(c.review.date)||0)>6).length;
- const nocall=list.filter(c=>c.ops&&!nextCall(c));const helps=list.filter(c=>c.review&&c.review.help);
+ const helps=list.filter(c=>c.review&&c.review.help);
  const pend=list.filter(c=>c.ops?c.ops.roi.cadence!=='full'&&c.ops.roi.cadence!=='imp':['Pending','Partial','No ROI / incomplete'].includes(c.row.g));
  const approved=list.filter(c=>c.review&&c.review.status==='Approved'&&c.review.date===TODAY);
  const N=x=>esc(x.c?x.c.name:x.name);
@@ -1053,7 +1047,6 @@ function execReview(list){
  if(od.length)next.push(`Clear ${od.length} overdue commitment${od.length>1?'s':''}, starting with ${CLIENTS.find(c=>c.id===od[0].cid).name}: ${od[0].text}`);
  ren.slice(0,2).forEach(x=>next.push(`Confirm the renewal plan for ${x.c.name} with Sales`));
  Rr.slice(0,2).forEach(x=>next.push(x.h.s.cov===1?`Start a client review for ${x.c.name}; it shows Red on ROI alone`:`Build a recovery plan for ${x.c.name}`));
- nocall.slice(0,2).forEach(c=>next.push(`Book a client call with ${c.name}; none in the next 14 days`));
  if(pend.length)next.push(`Schedule ${pend.length} outstanding 2025 ROI review${pend.length>1?'s':''} (${pend.slice(0,3).map(c=>c.name).join(', ')}${pend.length>3?'…':''})`);
  if(noRev+stale)next.push(`Complete ${noRev} missing and ${stale} outdated client review${noRev+stale>1?'s':''}`);
  const sec=(t,a,e)=>`<div class="xr-sec"><p class="lbl">${t}</p>${a.length?`<ul class="ul">${a.slice(0,6).map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`:`<p class="note" style="margin:0">${e}</p>`}</div>`;
@@ -1082,7 +1075,6 @@ function earlyWarnings(c){const w=[],rv=c.review,s=score(c);
  if(x=rk('Not recognizing value'))w.push(['Questioning value or the ROI',x[2],x[1]==='R'?3:2]);
  if(x=rk('Budget/Cost cut'))w.push(['Budget-cut talk',x[2],x[1]==='R'?3:2]);
  if(rv)rv.people.filter(p=>p[3]==='R').forEach(p=>w.push(['Disengaged stakeholder',p[0]+' · '+p[1],/decision/i.test(p[2])?3:2]));
- if(c.ops&&!nextCall(c))w.push(['No client meeting booked','None in the next 14 days',2]);
  const k=contractDate(c);if(k&&!k.auto){const dd=Math.round((k.d-new Date(TODAY+'T12:00:00'))/864e5);if(dd<=120&&dd>=-180)w.push(['Contract renewal',dd<0?'End date passed '+(-dd)+' days ago':'Ends in '+dd+' days',dd<=60?3:2])}
  const t=r24(c);if(t&&t.tot&&c.row.h2d&&tot25(c)&&tot25(c)<t.tot*.6)w.push(['ROI value falling',`${fm(t.tot)} in 2024 → ${fm(tot25(c))} in 2025`,2]);
  if(BASE[c.id]!=null&&s.overall!=null&&BASE[c.id]-s.overall>=5)w.push(['Health dropping',`${BASE[c.id]} → ${s.overall}`,2]);
@@ -1098,7 +1090,6 @@ function vCommand(){
  const G=hs.filter(x=>x.h.final==='G').length,Y=hs.filter(x=>x.h.final==='Y'),R=hs.filter(x=>x.h.final==='R');
  const tr=triggers(list),hi=tr.filter(a=>a.sev>=3).length,nr=newRisks(list).length;
  const open=ACTIONS.filter(a=>!a.done&&list.some(c=>c.id===a.cid)),od=open.filter(isOverdue).length,today=open.filter(a=>a.cat==='Do Today').length;
- const calls=list.map(c=>({c,n:nextCall(c)})).filter(x=>x.n).sort((a,b)=>a.n.d-b.n.d);
  const pend=list.filter(c=>c.ops?['partial','blocked'].includes(c.ops.roi.cadence):['Pending','Partial'].includes(c.row.g));
  const due=list.filter(c=>!c.review||(ageMonths(c.review.date)||0)>6).length;
  const withR=list.filter(c=>tot25(c));const T=withR.reduce((a,c)=>a+tot25(c),0);const both=withR.filter(c=>r24(c)&&r24(c).tot&&c.row.h2d);const t24=both.reduce((a,c)=>a+r24(c).tot,0),t25=both.reduce((a,c)=>a+tot25(c),0);
@@ -1116,7 +1107,7 @@ function vCommand(){
  <div class="strip">
   ${tile('snapshot','📊','Portfolio snapshot',avg??'—',`${band(avg)[0]} average health · ${list.length} clients`,`<span class="xr-bar sm">${[[G,C.teal],[Y.length,C.orange],[R.length,C.magenta]].map(([n,col])=>n?`<span style="flex:${n};background:${col}">${n}</span>`:'').join('')}</span><span class="st-go">Executive review →</span>`,C.blue)}
   ${tile('alerts','🔔','Alerts',hi+nr,`${hi} high health trigger${hi===1?'':'s'} · ${nr} new risk${nr===1?'':'s'}`,'<span class="st-go">Open alerts →</span>',C.magenta)}
-  ${tile('reviews','🗓','Upcoming reviews',calls.length,`client calls in 14 days · ${pend.length} ROI review${pend.length===1?'':'s'} outstanding · ${due} client review${due===1?'':'s'} due`,calls[0]?`<span class="st-s">Next: <b>${esc(calls[0].c.name)}</b> ${esc(calls[0].n.m[0].replace(', 2026',''))}</span>`:'',C.purple)}
+  ${tile('reviews','📋','Reviews due',pend.length+due,`${pend.length} ROI review${pend.length===1?'':'s'} outstanding · ${due} client review${due===1?'':'s'} due`,'',C.purple)}
   ${tile('health:risk','⚠','Clients at risk',R.length+' / '+Y.length,'Red / Yellow',`<span class="st-s">${atRisk.slice(0,3).map(x=>esc(x.c.name)).join(' · ')||'None'}</span>`,C.orange)}
   ${tile('roi','💲','CO results',fm(T),`2025 quantified value · ${strong} of ${withR.length} at 5:1+`,both.length?`<span class="st-s">Same ${both.length} clients: ${fm(t24)} in 2024 → ${fm(t25)} in 2025 (${t24?((t25/t24-1)*100).toFixed(0):0}%)</span>`:'',C.purple)}
  </div>
@@ -1134,13 +1125,11 @@ function vSnapshot(){const list=scopeList();const XR=execReview(list);
  $('#main').innerHTML=hubHead('Portfolio snapshot','Executive review · '+list.length+' clients',[])+XR.html;wireHub();wireExec(XR);$$('[data-tcon]').forEach(b=>b.addEventListener('click',()=>{fConL=b.dataset.tcon;render()}))}
 /* ---- upcoming reviews ---- */
 function vReviews(){const list=scopeList();
- const calls=list.flatMap(c=>c.ops?c.ops.meetings.filter(m=>m[2]==='Client call').map(m=>({c,m,d:parseMt(m[0])})):[]).filter(x=>x.d).sort((a,b)=>a.d-b.d);
  const cad=c=>c.ops?c.ops.roi.cadNote:(c.row.h2d?'Full year delivered '+fmtD(c.row.h2):c.row.h1d?'First half delivered '+fmtD(c.row.h1)+' · second half pending':c.row.g);
  const pend=list.filter(c=>c.ops?['partial','blocked'].includes(c.ops.roi.cadence):['Pending','Partial','No ROI / incomplete'].includes(c.row.g));
  const due=list.filter(c=>!c.review||(ageMonths(c.review.date)||0)>6);
- $('#main').innerHTML=hubHead('Upcoming reviews','Client conversations, ROI reviews and client reviews coming due',[])+
- `<div class="grid2"><div class="card"><h4>Client conversations · next 14 days</h4>${calls.length?`<table><tr><th>When (CT)</th><th>Client</th><th>Meeting</th><th></th></tr>${calls.map(x=>`<tr class="click" data-cl="${x.c.id}" data-t="success"><td style="white-space:nowrap">${esc(x.m[0])}</td><td><b>${esc(x.c.name)}</b></td><td>${esc(x.m[1])}</td><td><span class="link">Prep →</span></td></tr>`).join('')}</table>`:'<p class="note">Calendar is connected for Jessica Johns’ book in this prototype.</p>'}</div>
- <div class="card"><h4>2025 ROI reviews outstanding</h4>${pend.length?`<table><tr><th>Client</th>${ME.role!=='consultant'?'<th>Consultant</th>':''}<th>Status</th></tr>${pend.map(c=>`<tr class="click" data-cl="${c.id}" data-t="roi"><td><b>${esc(c.name)}</b></td>${ME.role!=='consultant'?`<td>${esc(FULL[c.con]||c.con)}</td>`:''}<td style="font-size:12.5px">${esc(cad(c))}</td></tr>`).join('')}</table>`:'<p class="note">All 2025 ROI reviews delivered.</p>'}</div></div>
+ $('#main').innerHTML=hubHead('Reviews due','ROI reviews outstanding and client reviews that are missing or older than 6 months',[])+
+ `<div class="grid2"><div class="card"><h4>2025 ROI reviews outstanding</h4>${pend.length?`<table><tr><th>Client</th>${ME.role!=='consultant'?'<th>Consultant</th>':''}<th>Status</th></tr>${pend.map(c=>`<tr class="click" data-cl="${c.id}" data-t="roi"><td><b>${esc(c.name)}</b></td>${ME.role!=='consultant'?`<td>${esc(FULL[c.con]||c.con)}</td>`:''}<td style="font-size:12.5px">${esc(cad(c))}</td></tr>`).join('')}</table>`:'<p class="note">All 2025 ROI reviews delivered.</p>'}</div></div>
  <div class="card"><h4>Client reviews due (missing or older than 6 months)</h4>${due.length?`<table><tr><th>Client</th>${ME.role!=='consultant'?'<th>Consultant</th>':''}<th>Last client review</th><th>Health</th></tr>${due.map(c=>`<tr class="click" data-cl="${c.id}" data-t="health"><td><b>${esc(c.name)}</b></td>${ME.role!=='consultant'?`<td>${esc(FULL[c.con]||c.con)}</td>`:''}<td>${c.review?fmtD(c.review.date):'Not started'}</td><td>${rag(health(c).final)}</td></tr>`).join('')}</table>`:'<p class="note">All client reviews are current.</p>'}</div>`;wireHub()}
 /* ---- CLIENT HEALTH hub ---- */
 function vHealthHub(){const all=scopeList();let list=all.filter(c=>hFilter==='all'||(hFilter==='risk'?['R','Y'].includes(health(c).final):health(c).final==='R'));
@@ -1155,25 +1144,25 @@ function vHealthHub(){const all=scopeList();let list=all.filter(c=>hFilter==='al
  <div class="card" id="h-risks"><h4>Risks</h4>${risks.length?`<table><tr><th>Severity</th><th>Client</th><th>Area</th><th>Detail</th></tr>${risks.slice(0,25).map(i=>`<tr class="click" data-cl="${i[1].id}"><td><span class="chip" style="background:${SEV[i[0]][1]};color:${SEV[i[0]][2]}">${SEV[i[0]][0]}</span></td><td>${esc(i[1].name)}</td><td>${esc(i[2])}</td><td>${esc(i[3])}</td></tr>`).join('')}</table>`:'<p class="note">No medium or high risks.</p>'}</div>
  <div class="grid2"><div class="card" id="h-eng"><h4>Engagement</h4><div class="kpis" style="grid-template-columns:repeat(3,1fr)"><div class="kpi" style="border-block-start-color:${C.teal}"><div class="l">Green stakeholders</div><div class="v" style="color:${C.teal}">${engCnt('G')}</div></div><div class="kpi" style="border-block-start-color:${C.orange}"><div class="l">Yellow</div><div class="v" style="color:${C.orange}">${engCnt('Y')}</div></div><div class="kpi" style="border-block-start-color:${C.magenta}"><div class="l">Red</div><div class="v" style="color:${C.magenta}">${engCnt('R')}</div></div></div>
   <p class="lbl">Decision makers</p>${dm.length?`<table><tr><th>Client</th><th>Decision maker</th><th>Engagement</th></tr>${dm.map(x=>`<tr class="click" data-cl="${x.c.id}" data-t="success"><td>${esc(x.c.name)}</td><td>${esc(x.p[0])} · <span class="note" style="margin:0">${esc(x.p[1])}</span></td><td>${rag(x.p[3])}</td></tr>`).join('')}</table>`:'<p class="note">No decision makers recorded.</p>'}
-  ${list.filter(c=>c.ops&&!nextCall(c)).map(c=>`<p class="warnline">No client call booked in 14 days: ${esc(c.name)}</p>`).join('')}</div>
+  </div>
  <div class="card" id="h-ew"><h4>Early warnings</h4>${ewAll.length?ewAll.slice(0,20).map(x=>`<div class="row click" data-cl="${x.c.id}"><div><b>${esc(x.c.name)}</b> · ${esc(x.w[0])}<br><span style="font-size:12.5px;color:var(--gray)">${esc(x.w[1])}</span></div><span class="chip" style="background:${SEV[x.w[2]][1]};color:${SEV[x.w[2]][2]}">${SEV[x.w[2]][0]}</span></div>`).join(''):'<p class="note">No early warnings.</p>'}
   <p class="note">Signals: leadership change, competitor, questioning value, budget talk, disengaged stakeholders, no meeting booked, renewal inside 120 days, ROI value falling, health dropping, out-of-date review.</p></div></div>
  <div class="card" id="h-util"><h4>Utilization</h4><div style="overflow-x:auto"><table><tr><th>Client</th>${COMP.map(k=>`<th class="cth">${esc(k)}</th>`).join('')}<th style="text-align:center">Adoption</th></tr>${list.filter(c=>c.review).map(c=>`<tr class="click" data-cl="${c.id}"><td><b>${esc(c.name)}</b></td>${COMP.map(k=>{const x=compCell(c.review.comp[k]);return `<td class="cell" title="${esc(k)}: ${x[3]}" style="background:${x[1]};color:${x[2]}">${x[0]}</td>`}).join('')}<td class="cell">${adoption(c.review)??'—'}${adoption(c.review)!=null?'%':''}</td></tr>`).join('')}</table></div><p class="note">✔ live · ◐ partial or in build · ✕ not live · – not applicable · ? to confirm. ${list.filter(c=>!c.review).length} clients without a client review are not shown.</p></div>`;
  $$('[data-hf]').forEach(b=>b.addEventListener('click',()=>{hFilter=b.dataset.hf;render()}));wireHub()}
 /* ---- CLIENT SUCCESS hub ---- */
-function successPlan(c){const rv=c.review,h=health(c),n=nextCall(c),ew=earlyWarnings(c);const steps=[];
+function successPlan(c){const rv=c.review,h=health(c),ew=earlyWarnings(c);const steps=[];
  if(rv)rv.risk.filter(r=>r[1]==='R'||r[1]==='Y').slice(0,2).forEach(r=>{if(r[3])steps.push(r[3])});
  if(rv)steps.push(...rv.utilStrategy.slice(0,1));
  if(!rv)steps.push('Complete the client review: overview, stakeholders, utilization and risks');
  const target=h.final==='R'?'Move to Yellow':h.final==='Y'?'Move to Green':'Stay Green';
- return {n,steps:[...new Set(steps)].slice(0,4),target,ew}}
+ return {steps:[...new Set(steps)].slice(0,4),target,ew}}
 function vSuccessHub(){const list=scopeList();const rvd=list.filter(c=>c.review);const ids=new Set(list.map(c=>c.id));
  const acts=ACTIONS.filter(a=>ids.has(a.cid));const fl=acts.filter(a=>cFilter==='open'?!a.done:cFilter==='we'?!a.done&&a.cat!=='Waiting on Others':cFilter==='they'?!a.done&&a.cat==='Waiting on Others':cFilter==='overdue'?isOverdue(a):a.done);
  const stk=rvd.flatMap(c=>c.review.people.map(p=>({c,p})));const editable=list.filter(canEdit);
  $('#main').innerHTML=hubHead('Client success',`Goals, initiatives, success plans and stakeholders · ${list.length} clients`,[['s-goals','Goals'],['s-init','Initiatives'],['s-plan','Success plan'],['s-stk','Stakeholders']])+
  `<div class="card" id="s-goals"><h4>Goals</h4>${rvd.length?`<div class="goalgrid">${rvd.map(c=>`<div class="goal click" data-cl="${c.id}"><b>${esc(c.name)}</b>${ME.role!=='consultant'?` <span class="note" style="margin:0">· ${esc(FULL[c.con]||c.con)}</span>`:''}<p class="p" style="margin-block:4px;color:var(--gray)">${esc(c.review.why||'')}</p>${ul(c.review.utilStrategy.slice(0,3))}</div>`).join('')}</div>`:'<p class="note">No client goals recorded yet.</p>'}</div>
  <div class="card" id="s-init"><h4>Initiatives</h4>${rvd.length?`<table><tr><th>Client</th><th>Active AR initiatives</th><th>Bad debt and other initiatives</th></tr>${rvd.map(c=>`<tr class="click" data-cl="${c.id}"><td><b>${esc(c.name)}</b></td><td>${ul(c.review.ar)}</td><td>${ul(c.review.bd)}</td></tr>`).join('')}</table>`:'<p class="note">None recorded.</p>'}</div>
- <div class="card" id="s-plan"><h4>Success plan</h4><table><tr><th>Client</th><th>Health</th><th>Target</th><th>Next conversation</th><th>Plan</th></tr>${list.map(c=>({c,p:successPlan(c),h:health(c)})).sort((a,b)=>(a.h.s.overall??999)-(b.h.s.overall??999)).slice(0,30).map(({c,p,h})=>`<tr class="click" data-cl="${c.id}"><td><b>${esc(c.name)}</b></td><td>${rag(h.final)}</td><td style="white-space:nowrap">${p.target}</td><td style="white-space:nowrap">${p.n?esc(p.n.m[0].replace(', 2026','')):c.ops?'<span style="color:#A0005C">Not booked</span>':'—'}</td><td>${ul(p.steps)}</td></tr>`).join('')}</table></div>
+ <div class="card" id="s-plan"><h4>Success plan</h4><table><tr><th>Client</th><th>Health</th><th>Target</th><th>Plan</th></tr>${list.map(c=>({c,p:successPlan(c),h:health(c)})).sort((a,b)=>(a.h.s.overall??999)-(b.h.s.overall??999)).slice(0,30).map(({c,p,h})=>`<tr class="click" data-cl="${c.id}"><td><b>${esc(c.name)}</b></td><td>${rag(h.final)}</td><td style="white-space:nowrap">${p.target}</td><td>${ul(p.steps)}</td></tr>`).join('')}</table></div>
  <div class="card" id="s-stk"><h4>Stakeholders</h4>${stk.length?`<table><tr><th>Name</th><th>Role</th><th>Client</th><th>Influence</th><th>Engagement</th></tr>${stk.sort((a,b)=>(RAGV[a.p[3]]??70)-(RAGV[b.p[3]]??70)).map(x=>`<tr class="click" data-cl="${x.c.id}"><td><b>${esc(x.p[0])}</b></td><td>${tcv(x.p[1])}</td><td>${esc(x.c.name)}</td><td>${tcv(x.p[2])}</td><td>${rag(x.p[3])}</td></tr>`).join('')}</table>`:'<p class="note">No stakeholders recorded.</p>'}</div>`;
  $$('[data-cf]').forEach(b=>b.addEventListener('click',()=>{cFilter=b.dataset.cf;render();const el=document.getElementById('commitments');if(el&&el.scrollIntoView)el.scrollIntoView()}));
  $$('[data-act]').forEach(b=>b.addEventListener('click',()=>{const a=ACTIONS.find(x=>x.id===+b.dataset.id);a.done=b.dataset.act==='done';log((a.done?'Completed: ':'Reopened: ')+a.text);render();const el=document.getElementById('commitments');if(el&&el.scrollIntoView)el.scrollIntoView()}));
@@ -1201,7 +1190,7 @@ function vROIHub(){const list=scopeList();const withR=list.filter(c=>tot25(c)).s
 /* ---- client page additions ---- */
 function tHealthX(c,rv,ed,h){const ew=earlyWarnings(c);return tHealth(c,rv,ed,h)+`<div class="card"><h4>Early warnings</h4>${ew.length?ew.map(w=>`<div class="row"><div><b>${esc(w[0])}</b><br><span style="font-size:12.5px;color:var(--gray)">${esc(w[1])}</span></div><span class="chip" style="background:${SEV[w[2]][1]};color:${SEV[w[2]][2]}">${SEV[w[2]][0]}</span></div>`).join(''):'<p class="note">No early warning signs right now.</p>'}</div>`}
 function tSuccessX(c,rv,ed,h){const p=successPlan(c);return `<div class="grid2"><div class="card" style="border-inline-start:4px solid var(--purple)"><h4>Goals</h4>${rv?`<p class="p" style="color:var(--gray)">${esc(rv.why||'')}</p><p class="lbl">Organizational goals for CO</p>${listField('utilStrategy',rv,ed)}`:'<p class="note">No client profile yet.</p>'}</div>
- <div class="card" style="border-inline-start:4px solid var(--teal)"><h4>Success plan</h4><p class="p">Health today: ${rag(h.final)} → target: <b>${p.target}</b></p><p class="p" style="margin-block-start:4px">Next conversation: ${p.n?`<b>${esc(p.n.m[0])}</b>`:c.ops?'<span style="color:#A0005C">not booked</span>':'calendar not connected'}</p><p class="lbl">Plan</p>${ul(p.steps)}</div></div>`+tSuccess(c,rv,ed,h)}
+ <div class="card" style="border-inline-start:4px solid var(--teal)"><h4>Success plan</h4><p class="p">Health today: ${rag(h.final)} → target: <b>${p.target}</b></p><p class="lbl">Plan</p>${ul(p.steps)}</div></div>`+tSuccess(c,rv,ed,h)}
 function tROIX(c,rv,ed){const p=r24(c),t=tot25(c);const cash=(c.row.seg||0)+(c.row.med||0)+(c.row.rm||0)+(c.row.db||0);
  return tROI(c,rv,ed)+`<div class="grid2"><div class="card"><h4>Trend · 2024 vs 2025</h4>${p&&p.tot&&t?`<table><tr><th></th><th class="num">2024</th><th class="num">2025</th></tr><tr><td class="k">Benefit</td><td class="num">${fm(p.tot)}</td><td class="num">${fm(t)}</td></tr><tr><td class="k">ROI</td><td class="num">${p.ratio?(+p.ratio).toFixed(1)+':1':'—'}</td><td class="num">${(+c.row.ratio).toFixed(1)}:1</td></tr><tr><td class="k">Segmentation</td><td class="num">${fm(p.seg)}</td><td class="num">${fm(c.row.seg)}</td></tr><tr><td class="k">Medicaid</td><td class="num">${fm(p.med)}</td><td class="num">${fm(c.row.med)}</td></tr><tr><td class="k">Return mail</td><td class="num">${fm(p.rm)}</td><td class="num">${fm(c.row.rm)}</td></tr>${p.inv?`<tr><td class="k">2024 invoice</td><td class="num">${fm(p.inv)}</td><td></td></tr>`:''}</table>${c.row.h2d?'':'<p class="note">2025 is a partial year, so the change is not comparable yet.</p>'}<p class="note">Change: <b style="color:${t>=p.tot?'#00756E':'#A0005C'}">${((t/p.tot-1)*100).toFixed(0)}%</b>. Methods can differ between years; check what was counted before presenting a change.</p>`:`<p class="note">${p&&p.st?'2024 status: '+esc(p.st)+'. ':''}No two-year comparison available.</p>`}</div>
  <div class="card"><h4>Cash impact · 2025</h4>${t?`<p class="big" style="color:${C.teal}">${fm(cash)}</p><p class="p">${Math.round(cash/t*100)}% of the ${fm(t)} benefit is cash (collection lift, Medicaid payments, return mail and deceased/bankruptcy collections).</p>${c.row.ftec?`<p class="p" style="margin-block-start:6px">FTE cost avoided: ${fm(c.row.ftec)} (${Math.round(c.row.fteh||0).toLocaleString('en-US')} hours)</p>`:''}`:'<p class="note">No 2025 ROI yet.</p>'}</div></div>`}
