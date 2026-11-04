@@ -1,0 +1,10 @@
+{
+  "clients": [
+    { "id": "maine", "name": "MaineHealth", "jql": "" },
+    { "id": "washu", "name": "WashU", "jql": "" },
+    { "id": "rush", "name": "Rush", "jql": "" },
+    { "id": "bjc", "name": "BJC HealthCare", "jql": "" },
+    { "id": "mcleod", "name": "McLeod Health", "jql": "" },
+    { "id": "stl", "name": "Saint Luke's Health", "jql": "" }
+  ]
+}

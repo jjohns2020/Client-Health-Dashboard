@@ -883,7 +883,8 @@ function vClient(){
  $('#tabbody').innerHTML=tab==='success'?tSuccessX(c,rv,ed,h):tab==='health'?tHealthX(c,rv,ed,h):tROIX(c,rv,ed);
  $('#back').addEventListener('click',()=>{editing=false;draft=null;view=['health','success','roi'].includes(hubFrom)?hubFrom:'home';render()});
  $$('[data-tab]').forEach(b=>b.addEventListener('click',()=>{if(editing)syncLists();tab=b.dataset.tab;render()}));
- wireClient(c)}
+ wireClient(c);
+ if(tab==='health')loadClientJira(c.id)}
 const li=(a,f,e)=>a.length?`<ul class="ul">${a.map(f).join('')}</ul>`:`<p class="note">${e||'None.'}</p>`;
 function tSuccess(c,rv,ed,h){const b=brief(c);NOTES[c.id]=NOTES[c.id]||[];const R=roiOf(c);
  const live=rv?COMP.filter(k=>rv.comp[k]==='Y'):[];const acts=ACTIONS.filter(a=>a.cid===c.id);const open=acts.filter(a=>!a.done);
@@ -1182,13 +1183,30 @@ function vROIHub(){const list=scopeList();const withR=list.filter(c=>tot25(c)).s
  <div class="grid2"><div class="card" id="r-trend"><h4>Trends · 2024 vs 2025 benefit</h4><div class="legend2"><span><i style="background:#9CC3EA"></i>2024</span><span><i style="background:${C.purple}"></i>2025</span></div>${tr.map(x=>`<div class="trow click" data-cl="${x.c.id}"><span>${esc(x.c.name)}</span><div><div class="bar"><span style="inline-size:${x.a/tmx*100}%;background:#9CC3EA"></span></div><div class="bar" style="margin-block-start:3px"><span style="inline-size:${x.b/tmx*100}%;background:${C.purple}"></span></div></div><b style="text-align:end;color:${x.b>=x.a?'#00756E':'#A0005C'}">${x.a?((x.b/x.a-1)*100>=0?'+':'')+((x.b/x.a-1)*100).toFixed(0)+'%':'—'}</b></div>`).join('')||'<p class="note">No clients with both years.</p>'}</div>
  <div class="card" id="r-wf"><h4>Workflow value · 2025</h4>${wf.map(w=>`<div class="drv" style="grid-template-columns:190px 1fr 70px"><span>${esc(w[0])}</span><div class="bar"><span style="inline-size:${w[1]/wmx*100}%;background:${w[2]}"></span></div><b style="text-align:end">${fm(w[1])}</b></div>`).join('')}<p class="note">Context, not ROI: presumptive charity identified ${fm(charity)}.</p></div></div>`;wireHub()}
 /* ---- client page additions ---- */
-function tHealthX(c,rv,ed,h){const ew=earlyWarnings(c);return tHealth(c,rv,ed,h)+`<div class="card"><h4>Early warnings</h4>${ew.length?ew.map(w=>`<div class="row"><div><b>${esc(w[0])}</b><br><span style="font-size:12.5px;color:var(--gray)">${esc(w[1])}</span></div><span class="chip" style="background:${SEV[w[2]][1]};color:${SEV[w[2]][2]}">${SEV[w[2]][0]}</span></div>`).join(''):'<p class="note">No early warning signs right now.</p>'}</div>`}
+function tHealthX(c,rv,ed,h){const ew=earlyWarnings(c);return tHealth(c,rv,ed,h)+`<div class="card"><h4>Early warnings</h4>${ew.length?ew.map(w=>`<div class="row"><div><b>${esc(w[0])}</b><br><span style="font-size:12.5px;color:var(--gray)">${esc(w[1])}</span></div><span class="chip" style="background:${SEV[w[2]][1]};color:${SEV[w[2]][2]}">${SEV[w[2]][0]}</span></div>`).join(''):'<p class="note">No early warning signs right now.</p>'}</div><div id="jira-slot"></div>`}
 function tSuccessX(c,rv,ed,h){const p=successPlan(c);return `<div class="grid2"><div class="card" style="border-inline-start:4px solid var(--purple)"><h4>Goals</h4>${rv?`<p class="p" style="color:var(--gray)">${esc(rv.why||'')}</p><p class="lbl">Organizational goals for CO</p>${listField('utilStrategy',rv,ed)}`:'<p class="note">No client profile yet.</p>'}</div>
  <div class="card" style="border-inline-start:4px solid var(--teal)"><h4>Success plan</h4><p class="p">Health today: ${rag(h.final)} → target: <b>${p.target}</b></p><p class="lbl">Plan</p>${ul(p.steps)}</div></div>`+tSuccess(c,rv,ed,h)}
 function tROIX(c,rv,ed){const p=r24(c),t=tot25(c);const cash=(c.row.seg||0)+(c.row.med||0)+(c.row.rm||0)+(c.row.db||0);
  return tROI(c,rv,ed)+`<div class="grid2"><div class="card"><h4>Trend · 2024 vs 2025</h4>${p&&p.tot&&t?`<table><tr><th></th><th class="num">2024</th><th class="num">2025</th></tr><tr><td class="k">Benefit</td><td class="num">${fm(p.tot)}</td><td class="num">${fm(t)}</td></tr><tr><td class="k">ROI</td><td class="num">${p.ratio?(+p.ratio).toFixed(1)+':1':'—'}</td><td class="num">${(+c.row.ratio).toFixed(1)}:1</td></tr><tr><td class="k">Segmentation</td><td class="num">${fm(p.seg)}</td><td class="num">${fm(c.row.seg)}</td></tr><tr><td class="k">Medicaid</td><td class="num">${fm(p.med)}</td><td class="num">${fm(c.row.med)}</td></tr><tr><td class="k">Return mail</td><td class="num">${fm(p.rm)}</td><td class="num">${fm(c.row.rm)}</td></tr>${p.inv?`<tr><td class="k">2024 invoice</td><td class="num">${fm(p.inv)}</td><td></td></tr>`:''}</table>${c.row.h2d?'':'<p class="note">2025 is a partial year, so the change is not comparable yet.</p>'}<p class="note">Change: <b style="color:${t>=p.tot?'#00756E':'#A0005C'}">${((t/p.tot-1)*100).toFixed(0)}%</b>. Methods can differ between years; check what was counted before presenting a change.</p>`:`<p class="note">${p&&p.st?'2024 status: '+esc(p.st)+'. ':''}No two-year comparison available.</p>`}</div>
  <div class="card"><h4>Cash impact · 2025</h4>${t?`<p class="big" style="color:${C.teal}">${fm(cash)}</p><p class="p">${Math.round(cash/t*100)}% of the ${fm(t)} benefit is cash (collection lift, Medicaid payments, return mail and deceased/bankruptcy collections).</p>${c.row.ftec?`<p class="p" style="margin-block-start:6px">FTE cost avoided: ${fm(c.row.ftec)} (${Math.round(c.row.fteh||0).toLocaleString('en-US')} hours)</p>`:''}`:'<p class="note">No 2025 ROI yet.</p>'}</div></div>`}
 
+
+var jiraFile, jiraLoad;
+function loadClientJira(id){
+  var slot=$('#jira-slot'); if(!slot)return;
+  slot.dataset.client=id;
+  function paint(file){
+    var el=$('#jira-slot'); if(!el||el.dataset.client!==id)return;
+    var row=file&&file.clients&&file.clients[id];
+    if(!row){el.remove();return}
+    var issues=row.issues||[];
+    var when=file.pulledAt?String(file.pulledAt).slice(0,16).replace('T',' ')+' UTC':'';
+    el.innerHTML=`<div class="card"><h4>Jira</h4><p class="note" style="margin-block-start:0">Pulled from Jira for this client${when?' · '+esc(when):''}. Not read from email.</p>${issues.length?`<table><tr><th>Key</th><th>Summary</th><th>Status</th><th>Updated</th><th>Assignee</th></tr>${issues.map(i=>`<tr><td>${i.url?`<a href="${esc(i.url)}" target="_blank" rel="noopener">${esc(i.key)}</a>`:esc(i.key)}</td><td>${esc(i.summary)}</td><td>${esc(i.status)}</td><td>${esc(i.updated)}</td><td>${esc(i.assignee||'—')}</td></tr>`).join('')}</table>`:'<p class="note">No issues matched this client’s Jira query.</p>'}</div>`;
+  }
+  if(jiraFile!==undefined){paint(jiraFile);return}
+  if(!jiraLoad)jiraLoad=fetch(new URL('jira-clients.json',location.href),{cache:'no-store'}).then(function(r){return r.ok?r.json():null}).catch(function(){return null}).then(function(d){jiraFile=d;return d});
+  jiraLoad.then(paint);
+}
 
 (function(){
   if (window.parent === window) return;

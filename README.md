@@ -5,7 +5,8 @@ Command Center. `CO_Command_Center.html` is the source of truth for the platform
 client health, and client success). `CO_ROI_Dashboard_Mockup (1).html` remains the source of truth for the ROI workspace.
 
 All data is **sample data** from the prototypes. Values labelled *illustrative* / *sample* in the UI are not validated
-production data. No production systems, Microsoft 365, APIs, databases or client data are connected.
+production data. No production systems, Microsoft 365, databases or client data are connected. Jira is optional:
+issues show on a client only after a pull (below). The workspace does not read email.
 
 The app opens on the command center sign-in. Choose **Sign in with Microsoft**, then a sample account. Nothing is sent
 to a directory, and the workspace does not read email, Outlook, or calendars. Reviews on the home page are ROI reviews
@@ -65,6 +66,25 @@ src/
 Export to PowerPoint downloads a copy of `Utilization Review Template_2025.pptx` with this client's name, period, ROI, and recommendations written in. Slides for workflows the profile does not use are removed, along with the consultant instruction slide and slides that still contain another example's dollar figures. Portfolio, Opportunity Sizing, Data Checks, other clients, and internal notes are not added. Illustrative sample figures keep that label. Data Checks status NOT READY (a FIX item) disables the download; REVIEW does not. The file is filled in the browser from the template. No Microsoft 365 connection is used.
 
 The Executive Highlights page has its own download: a Word document (`.docx`) with the headline figures, value sources, analyst highlights, and executive message. It is not a slide in the PowerPoint. The same file can be downloaded from the export dialog. Internal notes are left out, and NOT READY disables it the same way.
+
+## Jira, per client
+
+Each client in `jira/clients.json` can have a JQL query. The pull calls Jira’s API and writes
+`public/jira-clients.json`. The command center loads that file and shows the matching issues on that
+client’s health tab. An empty `jql` leaves the client unlinked. The API token stays in the environment
+and is never written into the page.
+
+```bash
+export JIRA_BASE_URL=https://your-site.atlassian.net
+export JIRA_EMAIL=you@experian.com
+export JIRA_API_TOKEN=...
+# example query in jira/clients.json:
+# "jql": "text ~ \"MaineHealth\" ORDER BY updated DESC"
+npm run jira:pull
+```
+
+GitHub Pages runs the same pull during deploy when the repository secrets `JIRA_BASE_URL`, `JIRA_EMAIL`,
+and `JIRA_API_TOKEN` are set. Without those secrets the site builds with no Jira card.
 
 ## Connecting real data later
 
