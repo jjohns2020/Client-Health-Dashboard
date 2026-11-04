@@ -104,11 +104,10 @@ describe('date filtering', () => {
 describe('visibility rules', () => {
   it('hides internal-only views in presentation mode', () => {
     const keys = (p: boolean) => navItems(maine, p).map((x) => x.key);
-    expect(keys(false)).toEqual(expect.arrayContaining(['opps', 'checks', 'portfolio', 'brief']));
+    expect(keys(false)).toEqual(expect.arrayContaining(['opps', 'checks', 'portfolio']));
     expect(keys(true)).not.toEqual(expect.arrayContaining(['opps']));
     expect(keys(true)).not.toContain('checks');
     expect(keys(true)).not.toContain('portfolio');
-    expect(keys(true)).not.toContain('brief');
   });
 
   it('shows profile-driven views only when the profile flag is set', () => {

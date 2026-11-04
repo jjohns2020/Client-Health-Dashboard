@@ -75,23 +75,16 @@ const snapshot = (page) =>
     ];
     const modalOpen = document.querySelector('#modal').classList.contains('open');
     // The export dialog's download action is app-only; the slide list (#mList) and status (#mStatus) stay comparable.
-    // Executive Brief is an app-only internal page. Drop its nav control so the prototype nav still matches.
-    const appOnly = (el) => el.closest('[data-v="brief"]');
-    const navEl = document.querySelector('nav');
-    const brief = navEl.querySelector('[data-v="brief"]');
-    const navText = brief ? navEl.innerText.replace(brief.innerText, '') : navEl.innerText;
     const styleSig = [...document.querySelectorAll('header *, nav *, #main *')]
-      .filter((el) => !el.closest('svg') && !appOnly(el))
+      .filter((el) => !el.closest('svg'))
       .map((el) => {
         const cs = getComputedStyle(el);
         // Sizes are rounded: React splits interpolated text into several text nodes, which shifts sub-pixel widths.
-        // The extra internal tab makes the tab list taller. Ignore that container's height.
-        const v = (p) =>
-          el.id === 'tabs' && p === 'height' ? '' : p === 'width' || p === 'height' ? String(Math.round(parseFloat(cs.getPropertyValue(p)))) : cs.getPropertyValue(p);
+        const v = (p) => (p === 'width' || p === 'height' ? String(Math.round(parseFloat(cs.getPropertyValue(p)))) : cs.getPropertyValue(p));
         return el.tagName + '.' + el.className + '{' + STYLE_PROPS.map(v).join(';') + '}';
       });
     return {
-      nav: norm(navText),
+      nav: norm(document.querySelector('nav').innerText),
       main: norm(document.querySelector('#main').innerText),
       svg: svgSig,
       modal: modalOpen ? norm(document.querySelector('#mList').innerText) + '\n' + norm(document.querySelector('#mStatus').innerText) : '',

@@ -18,7 +18,6 @@ describe('dashboard state', () => {
   it('presentation mode leaves internal views for Executive Summary', () => {
     expect(run({ type: 'setView', view: 'opps' }, { type: 'setPresent', present: true }).view).toBe('exec');
     expect(run({ type: 'setView', view: 'portfolio' }, { type: 'setPresent', present: true }).view).toBe('exec');
-    expect(run({ type: 'setView', view: 'brief' }, { type: 'setPresent', present: true }).view).toBe('exec');
   });
 
   it('falls back to Executive Summary when the client has no such view', () => {
