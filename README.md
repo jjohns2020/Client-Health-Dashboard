@@ -6,6 +6,15 @@ React + TypeScript (Vite) build of the CO ROI Dashboard. The single-file prototy
 All data is **sample data** from the prototype. Values labelled *illustrative* / *sample* in the UI are not validated
 production data. No production systems, Microsoft 365, APIs, databases or client data are connected.
 
+## Links
+
+The ROI dashboard stays at the site root: https://jjohns2020.github.io/ROI-Dashboard/
+
+The client library is a separate page that links to the dashboard and to each client's information page:
+https://jjohns2020.github.io/ROI-Dashboard/landing.html
+
+`?client=maine` or `?client=washu` opens the dashboard on that client. An unknown client is ignored.
+
 ## Run
 
 ```bash

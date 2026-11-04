@@ -1,5 +1,6 @@
 import type { Client, ClientKey, ClientProfileFlags, Dataset, ScrubKey, WorkflowKey } from '../data/types';
 import { applyPreset, setFrom, setTo, type DatePreset, type MonthRange } from '../lib/dateRange';
+import { clientFromSearch } from '../lib/siteLinks';
 import type { MedicaidSource, ReturnMailLevel } from '../lib/roi';
 import { INTERNAL_VIEWS, navItems, usesPfc, visibleDetails, type ViewId, type ViewKey } from '../lib/visibility';
 
@@ -44,8 +45,10 @@ export function initialState(ds: Dataset): DashboardState {
   const profiles = Object.fromEntries(
     Object.entries(ds.clients).map(([k, c]) => [k, { agency: c.agency, dialer: c.dialer, pfc: c.pfc, ein: c.ein }]),
   );
+  const keys = Object.keys(ds.clients);
+  const requested = typeof window === 'undefined' ? null : clientFromSearch(window.location.search, keys);
   return {
-    clientKey: Object.keys(ds.clients)[0],
+    clientKey: requested ?? keys[0],
     view: 'exec',
     range: { fI: 0, tI: calendarOf(ds).length - 1 },
     preset: 'all',
