@@ -17,12 +17,13 @@ export type ViewKey =
   | 'recs'
   | 'opps'
   | 'checks'
-  | 'portfolio';
+  | 'portfolio'
+  | 'brief';
 
 /** A view key, or `d_<workflow>` for a workflow detail page. */
 export type ViewId = ViewKey | `d_${WorkflowKey}`;
 
-export const INTERNAL_VIEWS: ViewKey[] = ['portfolio', 'opps', 'checks'];
+export const INTERNAL_VIEWS: ViewKey[] = ['portfolio', 'opps', 'checks', 'brief'];
 
 export interface NavItem {
   key: ViewKey;
@@ -44,6 +45,7 @@ export function navItems(c: Client, present: boolean): NavItem[] {
   v.push({ key: 'insights', label: 'Analyst Insights' });
   v.push({ key: 'recs', label: 'Success Plan' });
   if (!present) {
+    v.push({ key: 'brief', label: 'Executive Brief', tag: 'Internal only' });
     v.push({ key: 'opps', label: 'Opportunities', tag: 'Internal only' });
     v.push({ key: 'checks', label: 'Data Checks', tag: 'Internal only' });
     v.push({ key: 'portfolio', label: 'Portfolio', tag: 'Internal only' });
