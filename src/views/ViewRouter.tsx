@@ -8,6 +8,7 @@ import { CashImpact } from './CashImpact';
 import { DialerPerformance } from './DialerPerformance';
 import { ExecutiveSummary } from './ExecutiveSummary';
 import { DataChecks } from './internal/DataChecks';
+import { ExecutiveBrief } from './internal/ExecutiveBrief';
 import { OpportunitySizing } from './internal/OpportunitySizing';
 import { Portfolio } from './internal/Portfolio';
 import { RoiDetail } from './RoiDetail';
@@ -28,6 +29,7 @@ const VIEWS: Record<ViewKey, ComponentType> = {
   dialer: DialerPerformance,
   insights: AnalystInsights,
   recs: SuccessPlan,
+  brief: ExecutiveBrief,
   opps: OpportunitySizing,
   checks: DataChecks,
   portfolio: Portfolio,

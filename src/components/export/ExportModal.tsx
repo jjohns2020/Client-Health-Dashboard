@@ -72,7 +72,7 @@ export function ExportModal() {
           ))}
         </ol>
         <p className="note" id="exportNote">
-          Download creates the .pptx. The Portfolio, Opportunity Sizing and Data Checks pages, other clients' data and internal notes are never included.
+          Download creates the .pptx. The Executive Brief, Portfolio, Opportunity Sizing and Data Checks pages, other clients' data and internal notes are never included.
           Illustrative sample figures stay labeled in the file.
         </p>
         {message && (

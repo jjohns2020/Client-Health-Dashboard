@@ -40,20 +40,20 @@ src/
     dashboardState.ts   Reducer + normalization (presentation-mode and profile fallbacks)
     DashboardContext.tsx
   components/           Layout (header, sidebar), charts (SVG), shared widgets, scrub trends, export modal
-  views/                One component per page; views/internal/ holds Opportunity Sizing, Data Checks, Portfolio
+  views/                One component per page; views/internal/ holds the Executive Brief, Opportunity Sizing, Data Checks, Portfolio
   styles/global.css     Prototype CSS, unchanged
 ```
 
 ## Internal vs client-facing
 
-- Opportunity Sizing, Data Checks and Portfolio are internal only: hidden from navigation in presentation mode and
-  never listed in the export.
+- The Executive Brief, Opportunity Sizing, Data Checks and Portfolio are internal only: hidden from navigation in presentation mode and
+  never listed in the export. The brief is a consultant prep page: the client headline, internal notes, open opportunities, and data-check items.
 - Presentation mode also hides the client profile panel, locks the client selector, and removes internal insights,
   data-load tables, source notes, data flags and illustrative-split labels that the prototype marks as internal.
 
 ## PowerPoint export
 
-Export to PowerPoint downloads a copy of `Utilization Review Template_2025.pptx` with this client's name, period, ROI, and recommendations written in. Slides for workflows the profile does not use are removed, along with the consultant instruction slide and slides that still contain another example's dollar figures. Portfolio, Opportunity Sizing, Data Checks, other clients, and internal notes are not added. Illustrative sample figures keep that label. Data Checks status NOT READY (a FIX item) disables the download; REVIEW does not. The file is filled in the browser from the template. No Microsoft 365 connection is used.
+Export to PowerPoint downloads a copy of `Utilization Review Template_2025.pptx` with this client's name, period, ROI, and recommendations written in. Slides for workflows the profile does not use are removed, along with the consultant instruction slide and slides that still contain another example's dollar figures. Portfolio, Opportunity Sizing, Data Checks, other clients, the Executive Brief, and internal notes are not added. Illustrative sample figures keep that label. Data Checks status NOT READY (a FIX item) disables the download; REVIEW does not. The file is filled in the browser from the template. No Microsoft 365 connection is used.
 
 ## Connecting real data later
 
