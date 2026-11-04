@@ -1,11 +1,11 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { ClientHealthApp } from './platform/ClientHealthApp';
+import { CommandCenterHost } from './platform/CommandCenterHost';
 import './styles/global.css';
 import './styles/platform.css';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <ClientHealthApp />
+    <CommandCenterHost />
   </StrictMode>,
 );

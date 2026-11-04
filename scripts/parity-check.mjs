@@ -42,9 +42,17 @@ async function openPage(path) {
   page.on('console', (m) => m.type() === 'error' && errors.push(m.text()));
   await page.goto(base + path, { waitUntil: 'load' });
   if (process.env.PARITY_VERBOSE) console.log('loaded', path);
-  // The built app opens on Client Health sign-in. The internal sample account reveals the same working dashboard.
-  if (await page.$('#ch-login')) {
-    await page.$eval('[data-account="internal"]', (el) => el.click());
+  // The built app opens on the CO Command Center. Entering ROI reveals the same working dashboard.
+  const frameEl = await page.$('#cc-frame');
+  if (frameEl) {
+    let frame = await frameEl.contentFrame();
+    if (!frame) frame = await page.waitForFrame((f) => f.url().includes('command-center.html'));
+    await frame.waitForSelector('#msBtn', { timeout: 15000 });
+    await frame.click('#msBtn');
+    await frame.waitForSelector('.acct[data-u="tr"]');
+    await frame.click('.acct[data-u="tr"]');
+    await frame.waitForSelector('.mod-go[data-go="roi"]');
+    await frame.click('.mod-go[data-go="roi"]');
   }
   await page.waitForSelector('#main .title, #main p', { timeout: 15000 });
   return { page, errors };

@@ -3,3 +3,4 @@ dist/
 *.tsbuildinfo
 parity-output/
 public/utilization-review-template.pptx
+public/command-center.html

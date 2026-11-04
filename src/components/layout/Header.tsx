@@ -1,18 +1,16 @@
 import { DATE_PRESETS, type DatePreset } from '../../lib/dateRange';
-import { useOptionalSession } from '../../platform/SessionContext';
+import { useRoiFrame } from '../../platform/roiFrame';
 import { useDashboard } from '../../state/DashboardContext';
 
 export function Header() {
   const { ds, state, dispatch, calendar } = useDashboard();
-  const session = useOptionalSession();
-  const clientLocked = state.present || session?.role === 'client';
+  const frame = useRoiFrame();
+  const clientLocked = state.present || frame.lockClient;
   return (
     <header>
       <div>
         <h1>Collections Optimization · ROI Dashboard</h1>
-        <div className="sub">
-          {session?.role === 'client' ? `Experian Health · ${session.organization}` : 'Experian Health · Internal use only'}
-        </div>
+        <div className="sub">{frame.organization ? `Experian Health · ${frame.organization}` : 'Experian Health · Internal use only'}</div>
       </div>
       <span className="mock">MOCKUP</span>
       <div className="spacer"></div>

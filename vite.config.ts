@@ -6,6 +6,7 @@ function publishReviewTemplate(): Plugin {
   const copy = () => {
     mkdirSync('public', { recursive: true });
     copyFileSync('Utilization Review Template_2025.pptx', 'public/utilization-review-template.pptx');
+    copyFileSync('CO_Command_Center.html', 'public/command-center.html');
   };
   return { name: 'publish-review-template', buildStart: copy, configureServer: copy };
 }
