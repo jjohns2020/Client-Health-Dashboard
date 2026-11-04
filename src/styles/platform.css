@@ -1,0 +1,57 @@
+.cc-frame {
+  display: block;
+  width: 100%;
+  height: 100vh;
+  border: 0;
+  background: #f4f6f9;
+}
+.cc-frame[hidden] {
+  display: none !important;
+}
+.cc-return {
+  background: linear-gradient(90deg, #005eb8, #662d91);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 24px;
+  flex-wrap: wrap;
+}
+.cc-return b {
+  display: block;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+.cc-return span {
+  display: block;
+  font-size: 12px;
+  opacity: 0.88;
+}
+.cc-return button {
+  background: rgba(255, 255, 255, 0.18);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 6px;
+  padding: 6px 12px;
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+.cc-return button:hover {
+  background: rgba(255, 255, 255, 0.28);
+}
+.cc-return #cc-signout {
+  margin-left: auto;
+}
+.cc-missing {
+  margin: 0;
+  background: #fff6ec;
+  color: #262626;
+  padding: 10px 24px;
+  font-size: 13px;
+}
+.cc-return button:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}

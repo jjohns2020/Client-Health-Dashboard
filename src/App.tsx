@@ -6,10 +6,17 @@ import { sampleDataSource, type DataSource } from './data/dataSource';
 import { DashboardProvider } from './state/DashboardContext';
 import { ViewRouter } from './views/ViewRouter';
 
-export function App({ dataSource = sampleDataSource }: { dataSource?: DataSource }) {
+export function App({
+  dataSource = sampleDataSource,
+  initialClientKey,
+}: {
+  dataSource?: DataSource;
+  /** Health system opened by a Client Health sign-in. Omitted for the internal account. */
+  initialClientKey?: string;
+}) {
   const dataset = useMemo(() => dataSource.load(), [dataSource]);
   return (
-    <DashboardProvider dataset={dataset}>
+    <DashboardProvider dataset={dataset} initialClientKey={initialClientKey}>
       <Header />
       <div className="layout">
         <Sidebar />

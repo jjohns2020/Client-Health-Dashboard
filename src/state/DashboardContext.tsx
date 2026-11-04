@@ -32,9 +32,21 @@ export interface DashboardValue {
 
 const Ctx = createContext<DashboardValue | null>(null);
 
-export function DashboardProvider({ dataset, children }: { dataset: Dataset; children: ReactNode }) {
+export function DashboardProvider({
+  dataset,
+  initialClientKey,
+  children,
+}: {
+  dataset: Dataset;
+  initialClientKey?: string;
+  children: ReactNode;
+}) {
   const reducer = useMemo(() => dashboardReducer(dataset), [dataset]);
-  const [state, dispatch] = useReducer(reducer, dataset, (ds) => normalize(initialState(ds), ds));
+  const [state, dispatch] = useReducer(reducer, { dataset, initialClientKey }, (boot) => {
+    const next = initialState(boot.dataset);
+    if (boot.initialClientKey && boot.dataset.clients[boot.initialClientKey]) next.clientKey = boot.initialClientKey;
+    return normalize(next, boot.dataset);
+  });
   const value = useMemo<DashboardValue>(() => {
     const client = effectiveClient(dataset, state.profiles, state.clientKey);
     const calendar = calendarOf(dataset);

@@ -1,13 +1,16 @@
 import { DATE_PRESETS, type DatePreset } from '../../lib/dateRange';
+import { useRoiFrame } from '../../platform/roiFrame';
 import { useDashboard } from '../../state/DashboardContext';
 
 export function Header() {
   const { ds, state, dispatch, calendar } = useDashboard();
+  const frame = useRoiFrame();
+  const clientLocked = state.present || frame.lockClient;
   return (
     <header>
       <div>
         <h1>Collections Optimization · ROI Dashboard</h1>
-        <div className="sub">Experian Health · Internal use only</div>
+        <div className="sub">{frame.organization ? `Experian Health · ${frame.organization}` : 'Experian Health · Internal use only'}</div>
       </div>
       <span className="mock">MOCKUP</span>
       <div className="spacer"></div>
@@ -17,7 +20,7 @@ export function Header() {
       <select
         id="client"
         value={state.clientKey}
-        disabled={state.present}
+        disabled={clientLocked}
         onChange={(e) => dispatch({ type: 'selectClient', key: e.target.value })}
       >
         {Object.entries(ds.clients).map(([k, c]) => (

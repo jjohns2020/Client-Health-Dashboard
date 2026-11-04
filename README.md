@@ -1,10 +1,17 @@
 # Collections Optimization · ROI Dashboard
 
-React + TypeScript (Vite) build of the CO ROI Dashboard. The single-file prototype
-`CO_ROI_Dashboard_Mockup (1).html` remains in the repo as the source of truth for design and business logic.
+React + TypeScript (Vite) build of the CO ROI Dashboard, opened from the Collections Optimization
+Command Center. `CO_Command_Center.html` is the source of truth for the platform (sign-in, command center,
+client health, and client success). `CO_ROI_Dashboard_Mockup (1).html` remains the source of truth for the ROI workspace.
 
-All data is **sample data** from the prototype. Values labelled *illustrative* / *sample* in the UI are not validated
+All data is **sample data** from the prototypes. Values labelled *illustrative* / *sample* in the UI are not validated
 production data. No production systems, Microsoft 365, APIs, databases or client data are connected.
+
+The app opens on the command center sign-in. Choose **Sign in with Microsoft**, then a sample account. Nothing is sent
+to a directory. The command center home leads into client health, client success, and ROI. **ROI** is this repository's
+dashboard, not the summary tables in the command center prototype. MaineHealth and WashU open their workbooks. Other
+clients do not have a workbook in this build yet. From the ROI module itself, the client selector can move between the
+workbooks that are loaded.
 
 ## Run
 
@@ -24,6 +31,7 @@ SVG chart geometry and computed styles after each step. Set `CHROME_PATH` if Chr
 
 ```
 src/
+  platform/             Command center host; ROI opens the dashboard in this repository
   data/
     types.ts            Dataset shape the whole UI reads
     dataSource.ts       DataSource seam; sampleDataSource loads the prototype's sample data
