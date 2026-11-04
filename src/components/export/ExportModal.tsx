@@ -55,7 +55,9 @@ export function ExportModal() {
         <h3 style={{ color: 'var(--blue)', marginTop: 0 }} id="mTitle">
           {plan.fileName}
         </h3>
-        <p style={{ fontSize: 13, color: 'var(--gray)' }}>Slides the export builds from the Utilization Review template for this client's profile:</p>
+        <p style={{ fontSize: 13, color: 'var(--gray)' }}>
+          Download fills the uploaded Utilization Review template with this client's figures. Template example numbers are removed.
+        </p>
         <p id="mStatus" style={{ fontSize: 13 }}>
           Data check status: <Chip status={ov} /> {ov === 'NOT READY' ? '— fix the FIX items on the Data Checks page before exporting.' : ''}
         </p>
