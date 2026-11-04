@@ -10,7 +10,7 @@ production data. No production systems, Microsoft 365, APIs, databases or client
 
 The ROI dashboard stays at the site root: https://jjohns2020.github.io/ROI-Dashboard/
 
-The client library is a separate page that links to the dashboard and to each client's information page:
+The landing page links to the dashboard and to each client's review:
 https://jjohns2020.github.io/ROI-Dashboard/landing.html
 
 `?client=maine` or `?client=washu` opens the dashboard on that client. An unknown client is ignored.
