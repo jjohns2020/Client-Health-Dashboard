@@ -30,9 +30,9 @@ jobs:
       - name: Build dashboard
         run: npm run build
         env:
-          VITE_BASE: /ROI-Dashboard/
+          VITE_BASE: /Client-Health-Dashboard/
       - name: Confirm the built page
-        run: grep -q '/ROI-Dashboard/assets/' dist/index.html
+        run: grep -q '/Client-Health-Dashboard/assets/' dist/index.html
       - name: Configure Pages
         uses: actions/configure-pages@v5
         with:

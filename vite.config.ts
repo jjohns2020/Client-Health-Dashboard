@@ -12,7 +12,7 @@ function publishReviewTemplate(): Plugin {
 }
 
 export default defineConfig({
-  // GitHub Pages publishes this repository below /ROI-Dashboard/.
+  // GitHub Pages publishes this repository below /Client-Health-Dashboard/.
   // Local development remains available at the root URL.
   base: process.env.VITE_BASE ?? '/',
   plugins: [react(), publishReviewTemplate()],
