@@ -4,6 +4,7 @@ import { buildClientDeck, presentationDetails } from '../../lib/pptx/buildDeck';
 import { buildSlidePlan, canExport } from '../../lib/exportPlan';
 import { useDashboard } from '../../state/DashboardContext';
 import { Chip } from '../common/Chip';
+import { OverviewDownload } from './OverviewDownload';
 
 /**
  * PowerPoint export. Lists the Utilization Review slides, then downloads a .pptx.
@@ -56,7 +57,7 @@ export function ExportModal() {
           {plan.fileName}
         </h3>
         <p style={{ fontSize: 13, color: 'var(--gray)' }}>
-          Download fills the uploaded Utilization Review template with this client's figures, including the Executive Highlights page. Template example numbers are removed.
+          Download fills the uploaded Utilization Review template with this client's figures. Template example numbers are removed. The executive overview is a separate Word document, not a slide in this deck.
         </p>
         <p id="mStatus" style={{ fontSize: 13 }}>
           Data check status: <Chip status={ov} /> {ov === 'NOT READY' ? '— fix the FIX items on the Data Checks page before exporting.' : ''}
@@ -83,6 +84,12 @@ export function ExportModal() {
         <button className="btn primary" id="downloadPptx" type="button" disabled={blocked || busy} onClick={() => void download()}>
           {busy ? 'Building…' : 'Download PowerPoint'}
         </button>{' '}
+        <OverviewDownload
+          id="downloadOverviewModal"
+          className="btn"
+          label="Download executive overview (.docx)"
+          style={{ border: '1px solid #005EB8' }}
+        />{' '}
         <button className="btn" id="closeModal" type="button" style={{ border: '1px solid #005EB8' }} onClick={() => dispatch({ type: 'closeExport' })}>
           Close
         </button>

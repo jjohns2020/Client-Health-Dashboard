@@ -19,7 +19,6 @@ export function buildSlidePlan(c: Client, visibleDetails: WorkflowDetail[]): Sli
   const s = [
     'Title',
     'Agenda',
-    'Executive Highlights',
     'ROI Summary',
     'Collection Optimization Overview',
     ...visibleDetails.filter((d) => !d.empty).map((d) => d.name + ' Results'),

@@ -12,6 +12,7 @@
     "parity": "node scripts/parity-check.mjs"
   },
   "dependencies": {
+    "docx": "^9.15.2",
     "pptxgenjs": "^3.12.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"

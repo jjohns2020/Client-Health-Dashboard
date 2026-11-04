@@ -86,8 +86,6 @@ describe('PowerPoint export', () => {
     expect(all).toContain('3.4 : 1');
     expect(all).toContain('$485,089');
     expect(all).toContain('Return Mail Automation');
-    expect(all).toContain('Executive Highlights');
-    expect(all).toContain('For every $1 invested, MaineHealth realized approximately $3.43');
     expect(all).toContain('not validated production results');
     expect(all).toContain('Monthly split is illustrative; period totals are from the workbook.');
     const packed = await JSZip.loadAsync((await buildClientDeck(input).write()) as Uint8Array);
@@ -95,6 +93,7 @@ describe('PowerPoint export', () => {
     expect(presXml).toContain('cx="18288000"');
     expect(presXml).toContain('cy="10287000"');
     expect(packed.file('ppt/slides/slide2.xml')).toBeNull();
+    expect(packed.file('ppt/slides/slide51.xml')).toBeNull();
     expect(all).not.toContain('$5,276,613,542');
     expect(all).not.toContain('WashU');
     expect(all).not.toContain('Medicaid Scrub');

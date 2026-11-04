@@ -3,6 +3,7 @@ import { TrendLine } from '../components/charts/TrendLine';
 import { VBars } from '../components/charts/VBars';
 import { Kpi, KpiRow } from '../components/common/Kpi';
 import { Card, Grid2, MockTag, PageHead, Takeaway } from '../components/common/Labels';
+import { OverviewDownload } from '../components/export/OverviewDownload';
 import { overlaps, priorYearAligned } from '../lib/dateRange';
 import { money } from '../lib/format';
 import { roiRatio, totalValueCreation } from '../lib/roi';
@@ -20,6 +21,12 @@ export function ExecutiveSummary() {
   return (
     <>
       <PageHead title="Executive Highlights" subtitle="performance snapshot for executive and operational stakeholders" />
+      <div id="overviewExport" style={{ margin: '0 0 14px' }}>
+        <OverviewDownload id="downloadOverview" />
+        <p className="note" style={{ marginTop: 6 }}>
+          Word document of this page for delivery. It is separate from the PowerPoint review.
+        </p>
+      </div>
       {!overlaps(lr.s, lr.e, state.range) && (
         <div className="card" style={{ background: '#FFF6EC' }}>
           <b>Note:</b> headline ROI figures are from the {c.period} review, which falls outside the selected dates ({rangeLabel}). Trend charts
