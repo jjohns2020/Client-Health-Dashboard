@@ -1,13 +1,18 @@
 import { DATE_PRESETS, type DatePreset } from '../../lib/dateRange';
+import { useOptionalSession } from '../../platform/SessionContext';
 import { useDashboard } from '../../state/DashboardContext';
 
 export function Header() {
   const { ds, state, dispatch, calendar } = useDashboard();
+  const session = useOptionalSession();
+  const clientLocked = state.present || session?.role === 'client';
   return (
     <header>
       <div>
         <h1>Collections Optimization · ROI Dashboard</h1>
-        <div className="sub">Experian Health · Internal use only</div>
+        <div className="sub">
+          {session?.role === 'client' ? `Experian Health · ${session.organization}` : 'Experian Health · Internal use only'}
+        </div>
       </div>
       <span className="mock">MOCKUP</span>
       <div className="spacer"></div>
@@ -17,7 +22,7 @@ export function Header() {
       <select
         id="client"
         value={state.clientKey}
-        disabled={state.present}
+        disabled={clientLocked}
         onChange={(e) => dispatch({ type: 'selectClient', key: e.target.value })}
       >
         {Object.entries(ds.clients).map(([k, c]) => (

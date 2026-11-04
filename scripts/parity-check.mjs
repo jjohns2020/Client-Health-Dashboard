@@ -42,6 +42,10 @@ async function openPage(path) {
   page.on('console', (m) => m.type() === 'error' && errors.push(m.text()));
   await page.goto(base + path, { waitUntil: 'load' });
   if (process.env.PARITY_VERBOSE) console.log('loaded', path);
+  // The built app opens on Client Health sign-in. The internal sample account reveals the same working dashboard.
+  if (await page.$('#ch-login')) {
+    await page.$eval('[data-account="internal"]', (el) => el.click());
+  }
   await page.waitForSelector('#main .title, #main p', { timeout: 15000 });
   return { page, errors };
 }

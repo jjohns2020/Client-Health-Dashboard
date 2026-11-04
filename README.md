@@ -6,6 +6,12 @@ React + TypeScript (Vite) build of the CO ROI Dashboard. The single-file prototy
 All data is **sample data** from the prototype. Values labelled *illustrative* / *sample* in the UI are not validated
 production data. No production systems, Microsoft 365, APIs, databases or client data are connected.
 
+The app opens on **Client Health**, the Experian Health sign-in. The ROI dashboard is the workspace shown after sign-in.
+Sample accounts are listed on that page (password `ClientHealth1`). A client account opens that health system's ROI
+dashboard and keeps the client selector on that organization. The Experian Health internal account can switch clients.
+Presentation mode still hides internal views when it is turned on. The session stays in the browser tab. Nothing is sent
+to a server.
+
 ## Run
 
 ```bash
@@ -24,6 +30,7 @@ SVG chart geometry and computed styles after each step. Set `CHROME_PATH` if Chr
 
 ```
 src/
+  platform/             Client Health sign-in, session, and the shell around the dashboard
   data/
     types.ts            Dataset shape the whole UI reads
     dataSource.ts       DataSource seam; sampleDataSource loads the prototype's sample data
