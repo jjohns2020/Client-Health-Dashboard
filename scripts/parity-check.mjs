@@ -76,7 +76,7 @@ const snapshot = (page) =>
     const modalOpen = document.querySelector('#modal').classList.contains('open');
     // The export dialog's download action is app-only; the slide list (#mList) and status (#mStatus) stay comparable.
     const styleSig = [...document.querySelectorAll('header *, nav *, #main *')]
-      .filter((el) => !el.closest('svg'))
+      .filter((el) => !el.closest('svg') && !el.closest('#overviewExport'))
       .map((el) => {
         const cs = getComputedStyle(el);
         // Sizes are rounded: React splits interpolated text into several text nodes, which shifts sub-pixel widths.
@@ -85,9 +85,15 @@ const snapshot = (page) =>
       });
     return {
       nav: norm(document.querySelector('nav').innerText),
-      main: norm(document.querySelector('#main').innerText),
+      // The Word download sits on Executive Highlights and is not part of the prototype.
+      main: norm(document.querySelector('#main').innerText.replace(document.querySelector('#overviewExport')?.innerText || '', '')),
       svg: svgSig,
-      modal: modalOpen ? norm(document.querySelector('#mList').innerText) + '\n' + norm(document.querySelector('#mStatus').innerText) : '',
+      // Executive Highlights is a separate Word document, so it is no longer listed as a PowerPoint slide.
+      modal: modalOpen
+        ? norm(document.querySelector('#mList').innerText.replace(/\bExecutive Highlights\b/g, '')) +
+          '\n' +
+          norm(document.querySelector('#mStatus').innerText)
+        : '',
       clientDisabled: document.querySelector('#client').disabled,
       internalPanel: visible(document.querySelector('#internalPanel')),
       presBanner: visible(document.querySelector('#presBanner')),

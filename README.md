@@ -55,6 +55,8 @@ src/
 
 Export to PowerPoint downloads a copy of `Utilization Review Template_2025.pptx` with this client's name, period, ROI, and recommendations written in. Slides for workflows the profile does not use are removed, along with the consultant instruction slide and slides that still contain another example's dollar figures. Portfolio, Opportunity Sizing, Data Checks, other clients, and internal notes are not added. Illustrative sample figures keep that label. Data Checks status NOT READY (a FIX item) disables the download; REVIEW does not. The file is filled in the browser from the template. No Microsoft 365 connection is used.
 
+The Executive Highlights page has its own download: a Word document (`.docx`) with the headline figures, value sources, analyst highlights, and executive message. It is not a slide in the PowerPoint. The same file can be downloaded from the export dialog. Internal notes are left out, and NOT READY disables it the same way.
+
 ## Connecting real data later
 
 Implement `DataSource` (see `src/data/dataSource.ts`) to return a `Dataset` and pass it to `<App dataSource={…} />`.

@@ -93,6 +93,7 @@ describe('PowerPoint export', () => {
     expect(presXml).toContain('cx="18288000"');
     expect(presXml).toContain('cy="10287000"');
     expect(packed.file('ppt/slides/slide2.xml')).toBeNull();
+    expect(packed.file('ppt/slides/slide51.xml')).toBeNull();
     expect(all).not.toContain('$5,276,613,542');
     expect(all).not.toContain('WashU');
     expect(all).not.toContain('Medicaid Scrub');
