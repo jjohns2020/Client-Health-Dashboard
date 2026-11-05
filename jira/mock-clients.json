@@ -1,0 +1,51 @@
+{
+  "source": "mock",
+  "pulledAt": "2026-11-03T15:00:00.000Z",
+  "site": "",
+  "clients": {
+    "maine": {
+      "name": "MaineHealth",
+      "jql": "",
+      "issues": [
+        { "key": "SAMPLE-11", "summary": "Sample: charity file check", "status": "In Progress", "type": "Task", "assignee": "Sample assignee", "updated": "2026-11-01", "url": "" },
+        { "key": "SAMPLE-12", "summary": "Sample: deceased import confirmed", "status": "Done", "type": "Task", "assignee": "Sample assignee", "updated": "2026-10-28", "url": "" }
+      ]
+    },
+    "washu": {
+      "name": "WashU",
+      "jql": "",
+      "issues": [
+        { "key": "SAMPLE-21", "summary": "Sample: SBO file follow-up", "status": "In Review", "type": "Task", "assignee": "Sample assignee", "updated": "2026-11-02", "url": "" }
+      ]
+    },
+    "rush": {
+      "name": "Rush",
+      "jql": "",
+      "issues": [
+        { "key": "SAMPLE-31", "summary": "Sample: dialer file refresh", "status": "To Do", "type": "Task", "assignee": "Sample assignee", "updated": "2026-11-03", "url": "" }
+      ]
+    },
+    "bjc": {
+      "name": "BJC HealthCare",
+      "jql": "",
+      "issues": [
+        { "key": "SAMPLE-41", "summary": "Sample: go-live build", "status": "In Progress", "type": "Task", "assignee": "Sample assignee", "updated": "2026-10-30", "url": "" },
+        { "key": "SAMPLE-42", "summary": "Sample: Medicaid field question", "status": "To Do", "type": "Task", "assignee": "Sample assignee", "updated": "2026-10-29", "url": "" }
+      ]
+    },
+    "mcleod": {
+      "name": "McLeod Health",
+      "jql": "",
+      "issues": [
+        { "key": "SAMPLE-51", "summary": "Sample: agency file validation", "status": "In Progress", "type": "Task", "assignee": "Sample assignee", "updated": "2026-10-27", "url": "" }
+      ]
+    },
+    "stl": {
+      "name": "Saint Luke's Health",
+      "jql": "",
+      "issues": [
+        { "key": "SAMPLE-61", "summary": "Sample: Medicaid scrub file", "status": "To Do", "type": "Task", "assignee": "Sample assignee", "updated": "2026-11-01", "url": "" }
+      ]
+    }
+  }
+}

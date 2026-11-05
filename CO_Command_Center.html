@@ -168,34 +168,31 @@ const OPS_CLIENTS=[
   charity:{cy:64737132,py:72433838,note:'Charity Extract ROI'},
   meetings:[['Nov 16, 2026 1:30 PM','McLeod/Experian Collections Optimization Touchbase','Client call']],
   alerts:[['Nov 2','Late File Notification','McLeodHealthDeceasedImport late again (last file received 10/26; earlier notices 10/19 and 10/26)','Open'],['Oct 31','Suspicious Feed FAIL check','McLeodHealthEpicHB snapshot 10/31 with 412,816 records (you replied "Please process" 11/2)','Resolved'],['Nov 1','Late File Notification','McLeodHealthEpicPB (McLeod replied that the missing files were uploaded)','Resolved']],
-  jira:[['BIR-20254','Presumptive Charity 300–400% FPL expansion (Reviewing; updated 11/2; you were mentioned 10/29)','Nov 2'],['BIR-20238','EpicHB/EpicPB business rule change (Done 11/2)','Nov 2'],['COI-1414','McLeodHealthHHPR Agency AR Notes and Validation (system conversion)','Oct 27']],
-  change:['Agency AR system conversion in progress (COI-1414)','Presumptive charity FPL expansion in review (BIR-20254)'],
+  change:['Agency AR system conversion in progress','Presumptive charity FPL expansion in review'],
   actions:[['Send the McLeod / Harris & Harris group the update on when the file will be reviewed','Jessica','Do Today','Oct 27, 2026',true],
    ['Answer RSI: can CCR-status accounts in the LTPP agency code come off the Latitude inventory report? (you replied 11/2; Lynn Carricato replied twice after, so check whether it is settled)','Jessica','Waiting on Me','',false],
    ['Follow up on late McLeodHealthDeceasedImport file (late again 11/2)','Owner needs to be assigned','Do Today','',false],
    ['Test files from Columbia, McLeod & Mt Sinai: confirm next step with Wayne Pike (corrected McLeod test file pending)','Jessica','Waiting on Others','',false],
    ["Review McLeod's historical guarantor-status-121 population once McLeod pulls it (Megan's SCTASK0159659)",'Jessica','Waiting on Others','',false]],
-  next:['Close the loop with RSI on the CCR/LTPP question; Lynn replied twice after your 11/2 notes.','The deceased import has now missed three notices (10/19, 10/26, 11/2); get a firm date before the 11/16 touchbase.','Watch presumptive charity: 2025 identified is down about 11% vs 2024; BIR-20254 FPL expansion is in review.']},
+  next:['Close the loop with RSI on the CCR/LTPP question; Lynn replied twice after your 11/2 notes.','The deceased import has now missed three notices (10/19, 10/26, 11/2); get a firm date before the 11/16 touchbase.','Watch presumptive charity: 2025 identified is down about 11% vs 2024; the FPL expansion is in review.']},
  {id:'rush',name:'Rush',loc:'IL · Central',dm:'—',
   roi:{total:4646393,ratio:14,fteHrs:12332,period:'2025 first half',delivered:'Oct 31, 2025 (on site)',cadence:'partial',cadNote:'1H delivered Oct 31, 2025 · second half pending',
    mix:[['Segmentation',2578614],['Return Mail',344717],['Medicaid',229019]],src:'2025 ROI Stats',note:'FPL import used for charity; deceased scrub not yet implemented.'},
   charity:{cy:7021122,py:0,note:'Went live Apr 7, 2025 (no 2024 baseline)'},
   meetings:[['Nov 11, 2026 11:00 AM','Rush/Experian CO Meeting','Client call']],
   alerts:[['Nov 3','AR refresh warning','RushEpicTCNDialer will be turned off Nov 5 if AR data is not refreshed (RushEpicPB last snapshot 11/1, Late; RushEpicHB Pending)','Open'],['Nov 1','Late File Notification (Experian extract)','RushSegmentation outbound file','Open']],
-  jira:[['BIR-20257','LDM to add guarantor cell phone to HB and PB (still Blocked; LDM approved 11/2 and both files loaded successfully 11/2; you were mentioned)','Nov 2']],
-  change:['Guarantor cell phone field (BIR-20257): files loaded, go-live to agree','Dialer at risk of shutoff Nov 5 if the PB AR file is not refreshed'],
+  change:['Guarantor cell phone field: files loaded, go-live to agree','Dialer at risk of shutoff Nov 5 if the PB AR file is not refreshed'],
   actions:[['Dialer shutoff warning: confirm Rush sends a fresh RushEpicPB AR file before Nov 5','Owner needs to be assigned (verify)','Do Today','',false],
-   ['Guarantor cell phone (PB/HB): confirm the test files are handled and agree go-live with Andrea now that both files loaded (BIR-20257)','Jessica','Waiting on Me','',false],
+   ['Guarantor cell phone (PB/HB): confirm the test files are handled and agree go-live with Andrea now that both files loaded','Jessica','Waiting on Me','',false],
    ['Send David Pico (copy Jennifer McGuinness) parent-level Rush CO performance/ROI metrics; Rush also wants it by location','Jessica','Waiting on Me','',false],
    ['HospitalCompanyBridge file: confirm resolution (followed up 10/19)','Ryan Germino (Rush)','Waiting on Others','',false]],
-  next:['Head off the Nov 5 dialer shutoff: the PB AR file has not refreshed since 11/1.','BIR-20257 files loaded 11/2; agree the go-live date with Andrea and ask for the Jira status to move off Blocked.','Schedule the second-half 2025 ROI review; it is the only open item on the ROI cycle.','Rush called the merger an expansion opportunity; size it separately and keep it out of ROI.']},
+  next:['Head off the Nov 5 dialer shutoff: the PB AR file has not refreshed since 11/1.','The guarantor cell phone files loaded 11/2; agree the go-live date with Andrea.','Schedule the second-half 2025 ROI review; it is the only open item on the ROI cycle.','Rush called the merger an expansion opportunity; size it separately and keep it out of ROI.']},
  {id:'washu',name:'WashU',loc:'MO · Central',dm:'—',
   roi:{total:3219869,ratio:17,fteHrs:23226,period:'Jan – Jun 2025',delivered:'Nov 13, 2025',cadence:'blocked',cadNote:'Mid-year ROI only · no full-year ROI because of issues with the SBO conversion',
    mix:[['Cash Impact – Collection Lift',2066152],['Medicaid',608915],['Return Mail',324282],['Charity',110785],['Patient Financial Clearance',91887],['Bankruptcy',15169],['Deceased',2680]],src:'WashU Jan – June 2025 ROI Workbook V2',note:'Uses collection agencies (two agencies tracked against benchmark). SBO PB files are now arriving daily.'},
   charity:{cy:8416841,py:6897538,note:'Charity Tracking (confirmed on ROI)'},
   meetings:[['Nov 5, 2026 9:00 AM','WashU/Experian SBO Conversion/Agency Meeting (Cole Viers declined, Andrew Temple tentative)','Client call']],
   alerts:[],
-  jira:[],
   change:['SBO conversion is blocking the full-year ROI'],
   actions:[['Prep the agenda for the 11/5 WashU/Experian SBO Conversion/Agency Meeting','Jessica (organizer)','Do This Week','',false],
    ['Get CACI (Brian Schlemmer) an answer on the WashUCACi test-file status (Erin Robertson replied 11/2)','Owner needs to be assigned (verify)','Waiting on Others','',false]],
@@ -206,7 +203,6 @@ const OPS_CLIENTS=[
   charity:null,
   meetings:[],
   alerts:[['Nov 2','Late File Notification','MaineHealthDeceasedImport late again (earlier notice 10/19)','Open'],['Oct 13','Suspicious Feed FAIL check (reply thread)','MaineHealthEpicHB snapshot 10/06 (1,702,506 records)','Check status']],
-  jira:[],
   change:['Marcam agency implementation (BAA review pending)'],
   actions:[['Finish the ROI analysis plus the FPL / propensity-to-pay bucket analysis for the December review with Tony Murray and Sherry Van Joolen','Jessica','Can Wait','',false],
    ['Follow up on late MaineHealthDeceasedImport file','Owner needs to be assigned','Do This Week','',false],
@@ -214,23 +210,21 @@ const OPS_CLIENTS=[
   next:['Get the December ROI review on the calendar; no client meeting is booked in the next 14 days.','The deceased import is late again (11/2); ask for a new expected date.','Confirm the 10/06 EpicHB suspicious-feed check was resolved.']},
  {id:'bjc',name:'BJC HealthCare',loc:'MO · Central',dm:'Harold Mueller',
   roi:{total:null,ratio:null,fteHrs:null,period:'In implementation',delivered:'—',cadence:'imp',cadNote:'Implementation: no ROI yet; charity not live',
-   mix:[],src:'2025 ROI Stats (status: IMP)',note:'Six build tickets active (segmentation, presumptive charity, bankruptcy, deceased, return mail, Medicaid masters).'},
+   mix:[],src:'2025 ROI Stats (status: IMP)',note:'Six builds active (segmentation, presumptive charity, bankruptcy, deceased, return mail, Medicaid masters).'},
   charity:null,
   meetings:[['Nov 5, 2026 8:00 AM','BJC/Experian Weekly Collections Optimization Call','Client call'],['Nov 5, 2026 11:00 AM','BJC Collections Optimization – Weekly Internal Prep','Internal'],['Nov 10, 2026 12:00 PM','BJC CO A/R File used for e-Insights','Internal'],['Nov 12, 2026 8:00 AM','BJC/Experian Weekly Collections Optimization Call','Client call'],['Nov 12, 2026 11:00 AM','BJC Collections Optimization – Weekly Internal Prep','Internal']],
   alerts:[],
-  jira:[['BIR-19527','Segmentation Master','Oct 13'],['BIR-19528','Presumptive Charity Master','Oct 13'],['BIR-19529','Bankruptcy Master','Oct 13'],['BIR-19530','Deceased Master','Oct 13'],['BIR-19531','Return Mail Master','Oct 13'],['BIR-19532','Medicaid Master','Oct 13']],
-  change:['Go-live build in progress (6 master tickets)'],
+  change:['Go-live build in progress (6 master builds)'],
   actions:[['Respond to Nicole Hennessy on Medicaid fields vs. a single excludeFromMedicaidFlag','Jessica','Waiting on Me','',false],
    ['BJC AR file: additional fields for e-Insights','Owner needs to be assigned','Can Wait','',false]],
-  next:["Settle the Medicaid fields vs. single-flag question with Nicole Hennessy before the 11/5 call.","Get BJC's AR-file field list before the 11/10 e-Insights session.",'Agree go-live milestones for the six master tickets and when the first ROI baseline starts.']},
+  next:["Settle the Medicaid fields vs. single-flag question with Nicole Hennessy before the 11/5 call.","Get BJC's AR-file field list before the 11/10 e-Insights session.",'Agree go-live milestones for the six master builds and when the first ROI baseline starts.']},
  {id:'stl',name:"Saint Luke's Health",loc:'MO · Central',dm:'Melissa Abernathy',
   roi:{total:4900000,ratio:6,fteHrs:6884,period:'2025 full year',delivered:'Feb 16, 2026',cadence:'full',cadNote:'1H delivered Oct 9, 2025 · full year delivered Feb 16, 2026',
    mix:[['Segmentation',1800000],['Medicaid',1737684],['Return Mail',75104]],src:'2025 ROI Stats',note:"Does not use Experian's presumptive charity scrub."},
   charity:{cy:null,py:null,note:"Not on report: reporting issue on Saint Luke's side"},
   meetings:[['Nov 9, 2026 11:00 AM',"Experian CO – Operational Status Meeting",'Client call'],['Nov 10, 2026 2:00 PM','Cisco phones and Experian (call center platform change)','Client call']],
   alerts:[['Nov 1','Late File Notification (Experian extract)','SaintLukesMedicaidScrub outbound file (last sent 10/25)','Open']],
-  jira:[['BIR-19969','Expired credit card payment plan dialer and results','Oct 16'],['BIR-20255','Financial Assistance Dialer (Backlog)','Oct 27']],
-  change:['Call center platform change to Cisco phones (meeting 11/10)','Sept warnings that the SaintLukesEpicTCNDialer will be turned off','New Financial Assistance Dialer build (BIR-20255)'],
+  change:['Call center platform change to Cisco phones (meeting 11/10)','Sept warnings that the SaintLukesEpicTCNDialer will be turned off','New Financial Assistance Dialer build'],
   actions:[["Saint Luke's Monthly Reporting (Planner due 10/19)",'Jessica','Do This Week','Oct 19, 2026',true],
    ['Check why the SaintLukesMedicaidScrub extract (Experian send) was late 11/1','Owner needs to be assigned','Do This Week','',false],
    ["Check whether the Sept 'SaintLukesEpicTCNDialer will be turned off' warnings still apply",'Owner needs to be assigned','Can Wait','',false]],
@@ -247,12 +241,12 @@ const PROFILES={
   why:'Early-out client: CO automates the Medicaid, deceased, bankruptcy, return mail and presumptive charity scrubs into Epic, and supports agency reconciliation. Segmentation is not used.',
   comp:{'Bankruptcy':'Y','Deceased':'Y','Presumptive Charity':'Y','Medicaid':'Y','Return Mail':'Y','Segmentation':'NA','Vendor Reconciliation':'Y'},
   compNote:'Presumptive charity is HB only. Segmentation is not applicable (early out).',
-  utilStrategy:['Expand presumptive charity to 300–400% FPL (BIR-20254)','Stabilize the deceased import feed (late notices 10/19, 10/26, 11/2)','Review the historical guarantor-status-121 population after the BIR-20238 rule change'],
+  utilStrategy:['Expand presumptive charity to 300–400% FPL','Stabilize the deceased import feed (late notices 10/19, 10/26, 11/2)','Review the historical guarantor-status-121 population after the business rule change'],
   people:[['Megan Duncan',TC,TC,'?']],
   engStrategy:['Bi-weekly CO touchbase with agenda and minutes after each call','Reconciliation reviews with RSI and Harris & Harris'],freq:'Bi-weekly',
-  risk:[['Budget/Cost cut','?','No signal found'],['Competitor','?','No signal found'],['Not recognizing value','G','2025 full-year ROI (5x) delivered Feb 9, 2026'],['Organizational changes','Y','Agency AR system conversion (COI-1414) and Harris & Harris test-file onboarding'],['% of modules not installed','G','Segmentation not applicable; the core scrubs are live']],
-  riskStrategy:['Keep agency reconciliation on track with RSI and Harris & Harris','Show the charity expansion value once BIR-20254 is live'],
-  ar:['Presumptive charity 300–400% FPL expansion (BIR-20254)','Guarantor status 121 rule change (BIR-20238 done) and follow-up review'],
+  risk:[['Budget/Cost cut','?','No signal found'],['Competitor','?','No signal found'],['Not recognizing value','G','2025 full-year ROI (5x) delivered Feb 9, 2026'],['Organizational changes','Y','Agency AR system conversion and Harris & Harris test-file onboarding'],['% of modules not installed','G','Segmentation not applicable; the core scrubs are live']],
+  riskStrategy:['Keep agency reconciliation on track with RSI and Harris & Harris','Show the charity expansion value once it is live'],
+  ar:['Presumptive charity 300–400% FPL expansion','Guarantor status 121 rule change and follow-up review'],
   bd:['Agency reconciliation with RSI (Latitude inventory, CCR/LTPP accounts)','Harris & Harris file validation and review timing'],
   summary:'Strong Medicaid value (5x ROI). Watch agency onboarding and the repeat late deceased file.'},
  rush:{src:'Rush Consulting Review 2026 (your review deck), 2025 ROI Stats',
@@ -260,12 +254,12 @@ const PROFILES={
   why:'Minimize manual work and increase automation in Epic, decrease AR days and increase patient collections, and use every feature they pay for.',
   comp:{'Bankruptcy':'Y','Deceased':'N','Presumptive Charity':'Y','Medicaid':'Y','Return Mail':'Y','Segmentation':'Y','Routing – Basic / Intermediate':'Y','Routing – Advanced':'N','AR Management Reporting':'Y','Vendor Management Reporting':'Y','Vendor Reconciliation':'Y','Monitoring':'N','Compliance Manager':'N','Patient Dial':'Y','Patient Text':'N'},
   compNote:'Presumptive charity uses the FPL import. The deceased scrub is the main core scrub not live.',
-  utilStrategy:['Deceased scrub: the only core scrub not live','Guarantor cell phone field for dialer and text (BIR-20257)','More use of reporting: location-level views and director access'],
+  utilStrategy:['Deceased scrub: the only core scrub not live','Guarantor cell phone field for dialer and text','More use of reporting: location-level views and director access'],
   people:[['Ryan Germino','Director','Decision Maker','G'],['Patricia Hernandez','Patient Financial Experience Manager','Influencer','G'],['Cristina Cruz','Patient Financial Experience Supervisor','Influencer','G'],['Sridevi Palaparth','IT','NA','Y']],
   engStrategy:['Recurring operational status meetings every two weeks','Go over workflows to find enhancements','Calendar-year ROIs every 6 months','Direct, frequent contact with the manager and director'],freq:'Bi-weekly',
   risk:[['Budget/Cost cut','G','None noted'],['Competitor','G','None at this time'],['Not recognizing value','Y','Working on building trust in the data; Rush wants performance by location'],['Organizational changes','Y','Endeavor Health conversation: Rush asked for parent-level CO performance and ROI'],['% of modules not installed','G','About 95% installed; deceased scrub not live']],
   riskStrategy:['Give the director and managers access to reports','Deep-dive reporting sessions with key players','Validate account comparisons against Epic data'],
-  ar:['Guarantor cell phone field for HB and PB (BIR-20257)','Dialer campaigns (broken plan, segment-based)'],
+  ar:['Guarantor cell phone field for HB and PB','Dialer campaigns (broken plan, segment-based)'],
   bd:['Second-half 2025 ROI review','Location-level and parent-level performance reporting'],
   summary:'Client in overall good health with CO as they are utilizing most scrubs. Working on building trust and more utilization of reporting.'},
  washu:{src:'2025 ROI Stats, Washington University 2024 review',
@@ -294,17 +288,17 @@ const PROFILES={
   ar:['Presumptive charity automation','Medicaid results adoption'],
   bd:['Marcam agency implementation (BAA review)','FPL / propensity-to-pay bucket analysis'],
   summary:'Value is real but modest; adoption of Medicaid and charity results is the lever for the December review.'},
- bjc:{src:'2025 ROI Stats (implementation), Jira',
+ bjc:{src:'2025 ROI Stats (implementation)',
   overview:[['Corporate location(s)','St. Louis, MO (address to confirm)'],['Contractual annual patient volume & current',TC],['CO revenue annual',TC],['CO revenue monthly',TC],['HIS/PMS','Epic – HB and PB'],['Contract expiration date',TC],['Sales executive & engagement',TC],['Relationship manager & engagement',TC],['How long live?','In implementation'],['Last scrub review','None yet (implementation)'],['Last review health rating','Not rated yet']],
   why:'New implementation: segmentation, presumptive charity, bankruptcy, deceased, return mail and Medicaid are in build, with an AR file for e-Insights.',
   comp:{'Bankruptcy':'P','Deceased':'P','Presumptive Charity':'P','Medicaid':'P','Return Mail':'P','Segmentation':'P'},
-  compNote:'P = in build (six master tickets BIR-19527 to BIR-19532).',
-  utilStrategy:['Agree go-live milestones for the six master tickets','Settle the Medicaid fields vs. single-flag design','Set when the first ROI baseline starts'],
+  compNote:'P = in build.',
+  utilStrategy:['Agree go-live milestones for the six master builds','Settle the Medicaid fields vs. single-flag design','Set when the first ROI baseline starts'],
   people:[['Harold Mueller',TC,'Decision Maker','?'],['Nicole Hennessy',TC,TC,'?'],['William Schuster',TC,TC,'?']],
   engStrategy:['Weekly CO call (Thursdays 8:00 AM) with internal prep','AR file / e-Insights working session 11/10'],freq:'Weekly',
   risk:[['Budget/Cost cut','?','No signal found'],['Competitor','?','No signal found'],['Not recognizing value','?','Too early: no ROI until go-live'],['Organizational changes','?','No signal found'],['% of modules not installed','Y','All six core scrubs still in build']],
   riskStrategy:['Hold weekly milestones on the build','Plan the first ROI baseline at go-live'],
-  ar:['Six master build tickets (segmentation, charity, bankruptcy, deceased, return mail, Medicaid)','Medicaid fields vs. single excludeFromMedicaidFlag'],
+  ar:['Six master builds (segmentation, charity, bankruptcy, deceased, return mail, Medicaid)','Medicaid fields vs. single excludeFromMedicaidFlag'],
   bd:['BJC AR file additional fields for e-Insights'],
   summary:'Implementation on a weekly cadence; health depends on hitting build milestones.'},
  stl:{src:'Consulting Client Review – Saint Luke\'s MO (Dec 16, 2024, your deck), 2025 ROI Stats',
@@ -312,18 +306,18 @@ const PROFILES={
   why:'Segmentation-driven collections with dialer and IVR, plus Medicaid, return mail, deceased and bankruptcy automation.',
   comp:{'Bankruptcy':'Y','Deceased':'Y','Presumptive Charity':'N','Medicaid':'Y','Return Mail':'Y','Segmentation':'Y','Routing – Basic / Intermediate':'Y','Routing – Advanced':'N','AR Management Reporting':'Y','Vendor Management Reporting':'Y','Vendor Reconciliation':'Y','Monitoring':'Y','Compliance Manager':'Y','Patient Dial':'P','Patient Text':'N'},
   compNote:'Does not use the presumptive charity scrub (2025 ROI notes). Dialer at risk with the Cisco phone change.',
-  utilStrategy:['U271 Medicaid automation','Keep dialer campaigns running through the Cisco transition','Financial Assistance Dialer (BIR-20255)'],
+  utilStrategy:['U271 Medicaid automation','Keep dialer campaigns running through the Cisco transition','Financial Assistance Dialer'],
   people:[['Melissa Abernathy','Director, SBO & Physician Revenue Cycle','Decision Maker','G'],['Bethany Coplen','Revenue Cycle Analyst','Influencer','G'],['Andrea Lindsay','Patient Account Manager','Influencer','G'],['Holly Hoversten','Customer Service Call Center Manager','Influencer','G']],
   engStrategy:['Full CO group meets monthly','Self-pay dashboard for the monthly meeting','Interim requests between monthly calls; main players attend most meetings'],freq:'Monthly',
   risk:[['Budget/Cost cut','Y','Looked to cut costs during the 2024 ROI, including the dialer'],['Competitor','Y','Cisco dialer / phones in house; Cisco and Experian meeting 11/10'],['Not recognizing value','G','2025 full-year ROI (6x) delivered Feb 16, 2026'],['Organizational changes','?','Rebranded to Saint Luke\'s Health; confirm any leadership changes'],['% of modules not installed','G','Everything live except presumptive charity, advanced routing and texting'],['Contract renewal','Y','Contract expires Dec 31, 2026 per the Dec 2024 review']],
   riskStrategy:['Mirror Experian dialer files and processes for Cisco to avoid interruption','Implement U271 to show more automation and FTE savings','Keep building dialer campaigns','Confirm the renewal plan with Jeff Misch before year end'],
-  ar:['Financial Assistance Dialer (BIR-20255)','Expired credit card payment plan dialer (BIR-19969)'],
+  ar:['Financial Assistance Dialer','Expired credit card payment plan dialer'],
   bd:['U271 Medicaid automation','Monthly reporting'],
   summary:'Highly engaged and getting 6x ROI. The Cisco change and the Dec 31, 2026 contract date make this the account to watch.'}
 };
 
 
-const CHANGES=[];const CHANGES_UNUSED=["<b>New at 9:55 AM \u2013 dashboard now follows the Consulting Client Review:</b> each client is rated Green / Yellow / Red on Results, Utilization, Client engagement and Risk; a new Client review page mirrors the deck sections; a new Utilization matrix shows which CO components are live.", "<b>Scores under the new model (vs 8:15 AM):</b> McLeod 66 \u2192 77 (Green) \u00b7 Saint Luke's 70 \u2192 77 (Green) \u00b7 Rush 69 \u2192 74 (Yellow) \u00b7 BJC 77 \u2192 71 (Yellow) \u00b7 MaineHealth 63 \u2192 66 (Yellow) \u00b7 WashU unchanged at 83 (Green). The moves come from the new pillars, not from new client events.", "<b>New from your review decks:</b> Saint Luke's contract expires Dec 31, 2026 (per the Dec 2024 review) and Cisco is listed as a competitor \u00b7 Rush: deceased scrub is the only core scrub not live; Sales and RM engagement both low.", "<b>Score moves this morning (old six-part model, vs Nov 2):</b> Rush 77 \u2192 69 (now Watch: dialer shutoff warning for Nov 5) \u00b7 MaineHealth 57 \u2192 63 (repeat late-file notices for the same feed now count once; the deceased import is still late) \u00b7 Saint Luke's 71 \u2192 70 \u00b7 BJC 78 \u2192 77 \u00b7 McLeod unchanged at 66 (the EpicHB alert cleared, but the Harris &amp; Harris update is back open and overdue) \u00b7 WashU unchanged at 83.", "<b>Closed:</b> McLeod EpicHB suspicious-feed FAIL (you replied \u201cPlease process\u201d 11/2) \u00b7 McLeod 11/2 touchbase held (minutes sent) \u00b7 WashU agency question (you replied 11/2 that the meeting still needs to happen) \u00b7 BJC William Schuster charity item (Done in your tracker).", "<b>Reopened from your tracker:</b> McLeod / Harris &amp; Harris review-timing update is Open with a confirmed due date of 10/27, so it now shows as overdue.", "<b>New feed alerts:</b> RushEpicTCNDialer will be turned off Nov 5 if Rush AR is not refreshed (EpicPB last snapshot 11/1) \u00b7 McLeodHealthDeceasedImport late again 11/2 (last file 10/26).", "<b>Jira:</b> Rush BIR-20257 still Blocked, but the LDM was approved and both files loaded successfully 11/2 (you were mentioned) \u00b7 McLeod BIR-20254 updated 11/2 (Reviewing).", "<b>New items from your tracker and mail:</b> BJC: respond to Nicole Hennessy on Medicaid fields vs one flag \u00b7 Rush: parent-level metrics for David Pico \u00b7 McLeod: RSI CCR/LTPP question (Lynn replied twice after your 11/2 notes) \u00b7 McLeod: 121 population review \u00b7 WashU: CACI test-file status \u00b7 Saint Luke's: late Medicaid scrub extract.", "<b>Calendar:</b> WashU 11/5 meeting is now the SBO Conversion/Agency Meeting (Cole Viers declined, Andrew Temple tentative) \u00b7 next McLeod touchbase 11/16 \u00b7 still no MaineHealth client meeting in the next 14 days."];
+const CHANGES=[];const CHANGES_UNUSED=["<b>New at 9:55 AM \u2013 dashboard now follows the Consulting Client Review:</b> each client is rated Green / Yellow / Red on Results, Utilization, Client engagement and Risk; a new Client review page mirrors the deck sections; a new Utilization matrix shows which CO components are live.", "<b>Scores under the new model (vs 8:15 AM):</b> McLeod 66 \u2192 77 (Green) \u00b7 Saint Luke's 70 \u2192 77 (Green) \u00b7 Rush 69 \u2192 74 (Yellow) \u00b7 BJC 77 \u2192 71 (Yellow) \u00b7 MaineHealth 63 \u2192 66 (Yellow) \u00b7 WashU unchanged at 83 (Green). The moves come from the new pillars, not from new client events.", "<b>New from your review decks:</b> Saint Luke's contract expires Dec 31, 2026 (per the Dec 2024 review) and Cisco is listed as a competitor \u00b7 Rush: deceased scrub is the only core scrub not live; Sales and RM engagement both low.", "<b>Score moves this morning (old six-part model, vs Nov 2):</b> Rush 77 \u2192 69 (now Watch: dialer shutoff warning for Nov 5) \u00b7 MaineHealth 57 \u2192 63 (repeat late-file notices for the same feed now count once; the deceased import is still late) \u00b7 Saint Luke's 71 \u2192 70 \u00b7 BJC 78 \u2192 77 \u00b7 McLeod unchanged at 66 (the EpicHB alert cleared, but the Harris &amp; Harris update is back open and overdue) \u00b7 WashU unchanged at 83.", "<b>Closed:</b> McLeod EpicHB suspicious-feed FAIL (you replied \u201cPlease process\u201d 11/2) \u00b7 McLeod 11/2 touchbase held (minutes sent) \u00b7 WashU agency question (you replied 11/2 that the meeting still needs to happen) \u00b7 BJC William Schuster charity item (Done in your tracker).", "<b>Reopened from your tracker:</b> McLeod / Harris &amp; Harris review-timing update is Open with a confirmed due date of 10/27, so it now shows as overdue.", "<b>New feed alerts:</b> RushEpicTCNDialer will be turned off Nov 5 if Rush AR is not refreshed (EpicPB last snapshot 11/1) \u00b7 McLeodHealthDeceasedImport late again 11/2 (last file 10/26).", "<b>New items from your tracker and mail:</b> BJC: respond to Nicole Hennessy on Medicaid fields vs one flag \u00b7 Rush: parent-level metrics for David Pico \u00b7 McLeod: RSI CCR/LTPP question (Lynn replied twice after your 11/2 notes) \u00b7 McLeod: 121 population review \u00b7 WashU: CACI test-file status \u00b7 Saint Luke's: late Medicaid scrub extract.", "<b>Calendar:</b> WashU 11/5 meeting is now the SBO Conversion/Agency Meeting (Cole Viers declined, Andrew Temple tentative) \u00b7 next McLeod touchbase 11/16 \u00b7 still no MaineHealth client meeting in the next 14 days."];
 /* Client reviews from the team's Consulting Client Review decks */
 const DECKS={
  'Cone':{con:'Cari',status:'Approved',date:'2026-03-23',by:'Cari Hoffman',rating:'G',
@@ -467,7 +461,7 @@ function buildData(){
   if(r.g==='Terminated')return;
   const c={id:slug(r.n),name:r.n,con:r.con,reg:r.reg,loc:r.loc,row:r,ops:null,review:null,comments:[]};
   const jid=JMAP[r.n];
-  if(jid){const o=OPS_CLIENTS.find(x=>x.id===jid),p=PROFILES[jid];o.alerts=[];o.jira=[];o.change=[];o.next=[];o.actions=[];o.meetings=o.meetings.map(m=>[m[0],m[1].replace(/\s*\((Cole|call center)[^)]*\)/,''),m[2]]);c.id=jid;c.name=o.name;c.ops=o;c.dm=o.dm;
+  if(jid){const o=OPS_CLIENTS.find(x=>x.id===jid),p=PROFILES[jid];o.alerts=[];o.change=[];o.next=[];o.actions=[];o.meetings=o.meetings.map(m=>[m[0],m[1].replace(/\s*\((Cole|call center)[^)]*\)/,''),m[2]]);c.id=jid;c.name=o.name;c.ops=o;c.dm=o.dm;
    const lr=(p.overview.find(x=>x[0]==='Last review health rating')||[])[1]||'';
    c.review={status:jid==='rush'?'Approved':'Draft',date:jid==='rush'?'2026':TODAY,by:'Jessica Johns',rating:/^Green/.test(lr)?'G':/^Yellow/.test(lr)?'Y':/^Red/.test(lr)?'R':null,
     overview:p.overview.filter(x=>x[0]!=='Last review health rating').map(x=>[...x]),why:p.why,comp:{...p.comp},compNote:p.compNote,roiNote:'',utilStrategy:[...p.utilStrategy],help:'',
@@ -614,7 +608,7 @@ function vReview(){
  <p class="note">Meeting frequency: ${ed?`<input class="in" style="inline-size:220px" data-f="freq" value="${esc(rv.freq)}" aria-label="Meeting frequency">`:tcv(rv.freq)}</p><h4 style="margin-block-start:12px">Engagement strategy</h4>${listField('engStrategy',rv,ed)}</div>
  <div class="card"><h4>Open action items</h4>${actTable(ACTIONS.filter(a=>a.cid===c.id&&!a.done),false)}</div></div>
  ${sec(6,'Risk')}<div class="grid2"><div class="card"><table><tr><th>Risk category</th><th>Rating</th><th>Details</th><th>Next step</th>${ed?'<th></th>':''}</tr>${rv.risk.map((x,i)=>ed?`<tr><td><select class="in" data-f="risk.${i}.0" aria-label="Risk category">${[...new Set([...RISKCATS,x[0]])].map(k=>`<option ${k===x[0]?'selected':''}>${esc(k)}</option>`).join('')}</select></td><td>${ragSel('risk.'+i+'.1',x[1])}</td><td><input class="in" data-f="risk.${i}.2" value="${esc(x[2])}" aria-label="Details"></td><td><input class="in" data-f="risk.${i}.3" value="${esc(x[3])}" aria-label="Next step"></td><td><button type="button" class="x" data-del="risk.${i}" aria-label="Remove">✕</button></td></tr>`:`<tr><td class="k">${esc(x[0])}</td><td>${rag(x[1])}</td><td>${esc(x[2])}</td><td>${esc(x[3])}</td></tr>`).join('')}</table>${ed?`<button type="button" class="btn sm" id="addRisk">+ Add risk</button>`:''}</div>
- <div class="card"><h4>Risk strategy</h4>${listField('riskStrategy',rv,ed)}${o&&o.jira.length?`<h4 style="margin-block-start:14px">Active Jira</h4><table><tr><th>Ticket</th><th>Summary</th></tr>${o.jira.map(j=>`<tr><td>${j[0]}</td><td>${esc(j[1])}</td></tr>`).join('')}</table>`:''}</div></div>
+ <div class="card"><h4>Risk strategy</h4>${listField('riskStrategy',rv,ed)}</div></div>
  ${sec(7,'Current initiatives')}<div class="grid2"><div class="card"><h4>Top active AR initiatives</h4>${listField('ar',rv,ed)}</div><div class="card"><h4>Top bad debt and other initiatives</h4>${listField('bd',rv,ed)}</div></div>
  ${o&&o.next?`<div class="takeaway"><b>Recommended next steps (from today’s signals)</b><ol style="margin-block:6px 0;padding-inline-start:20px">${o.next.map(x=>`<li>${esc(x)}</li>`).join('')}</ol></div>`:''}
  ${sec(8,'Comments')}<div class="card">${(c.comments||[]).map(m=>`<div class="cmt"><b>${esc(m.u)}</b> <span class="note" style="margin:0">${esc(m.t)}</span><br>${esc(m.x)}</div>`).join('')||'<p class="note">No comments yet.</p>'}
@@ -785,7 +779,7 @@ function brief(c){const o=c.ops,rv=c.review,n=nextCall(c);const kw=KEY[c.id];
  const acts=ACTIONS.filter(a=>a.cid===c.id&&!a.done);const weOwe=acts.filter(a=>a.cat!=='Waiting on Others'),theyOwe=acts.filter(a=>a.cat==='Waiting on Others');
  const R=roiOf(c);const gaps=rv?COMP.filter(k=>rv.comp[k]==='N'):[];const partial=rv?COMP.filter(k=>rv.comp[k]==='P'):[];
  const risks=rv?rv.risk.filter(x=>x[1]==='Y'||x[1]==='R'):[];const ppl=rv?rv.people:[];
- const alerts=o?o.alerts.filter(a=>a[3]!=='Resolved'):[];const jira=o?o.jira:[];
+ const alerts=o?o.alerts.filter(a=>a[3]!=='Resolved'):[];
  const clean=t=>t.replace(/\s*\((verify|check)\)/gi,'').replace(/Owner needs to be assigned( \(verify\))?/,'');
  const ag=[`${c.name} / Experian Collections Optimization`,'',
   '1. Welcome and introductions',
@@ -793,7 +787,7 @@ function brief(c){const o=c.ops,rv=c.review,n=nextCall(c);const kw=KEY[c.id];
   '3. Projects and enhancements',...(rv?rv.ar.map(x=>'   • '+x):[]),
   '4. Performance and value',`   • ${R.total?'ROI results to date and next review timing':'Go-live milestones and the first ROI baseline'}`,...(gaps.length?['   • Getting more value: '+gaps.slice(0,3).join(', ')]:[]),
   '5. Open discussion and next steps'];
- return {n,since,weOwe,theyOwe,R,gaps,partial,risks,ppl,alerts,jira,agenda:ag.join('\n')}}
+ return {n,since,weOwe,theyOwe,R,gaps,partial,risks,ppl,alerts,agenda:ag.join('\n')}}
 function vPrep(){
  const list=visible();if(!cur||!list.some(c=>c.id===cur)){const up=list.map(c=>({c,n:nextCall(c)})).filter(x=>x.n).sort((a,b)=>a.n.d-b.n.d);cur=(up[0]||{c:list[0]}).c.id}
  const c=CLIENTS.find(x=>x.id===cur),b=brief(c),h=health(c),rv=c.review;NOTES[c.id]=NOTES[c.id]||[];
@@ -889,7 +883,8 @@ function vClient(){
  $('#tabbody').innerHTML=tab==='success'?tSuccessX(c,rv,ed,h):tab==='health'?tHealthX(c,rv,ed,h):tROIX(c,rv,ed);
  $('#back').addEventListener('click',()=>{editing=false;draft=null;view=['health','success','roi'].includes(hubFrom)?hubFrom:'home';render()});
  $$('[data-tab]').forEach(b=>b.addEventListener('click',()=>{if(editing)syncLists();tab=b.dataset.tab;render()}));
- wireClient(c)}
+ wireClient(c);
+ if(tab==='health')loadClientJira(c.id)}
 const li=(a,f,e)=>a.length?`<ul class="ul">${a.map(f).join('')}</ul>`:`<p class="note">${e||'None.'}</p>`;
 function tSuccess(c,rv,ed,h){const b=brief(c);NOTES[c.id]=NOTES[c.id]||[];const R=roiOf(c);
  const live=rv?COMP.filter(k=>rv.comp[k]==='Y'):[];const acts=ACTIONS.filter(a=>a.cid===c.id);const open=acts.filter(a=>!a.done);
@@ -1188,13 +1183,31 @@ function vROIHub(){const list=scopeList();const withR=list.filter(c=>tot25(c)).s
  <div class="grid2"><div class="card" id="r-trend"><h4>Trends · 2024 vs 2025 benefit</h4><div class="legend2"><span><i style="background:#9CC3EA"></i>2024</span><span><i style="background:${C.purple}"></i>2025</span></div>${tr.map(x=>`<div class="trow click" data-cl="${x.c.id}"><span>${esc(x.c.name)}</span><div><div class="bar"><span style="inline-size:${x.a/tmx*100}%;background:#9CC3EA"></span></div><div class="bar" style="margin-block-start:3px"><span style="inline-size:${x.b/tmx*100}%;background:${C.purple}"></span></div></div><b style="text-align:end;color:${x.b>=x.a?'#00756E':'#A0005C'}">${x.a?((x.b/x.a-1)*100>=0?'+':'')+((x.b/x.a-1)*100).toFixed(0)+'%':'—'}</b></div>`).join('')||'<p class="note">No clients with both years.</p>'}</div>
  <div class="card" id="r-wf"><h4>Workflow value · 2025</h4>${wf.map(w=>`<div class="drv" style="grid-template-columns:190px 1fr 70px"><span>${esc(w[0])}</span><div class="bar"><span style="inline-size:${w[1]/wmx*100}%;background:${w[2]}"></span></div><b style="text-align:end">${fm(w[1])}</b></div>`).join('')}<p class="note">Context, not ROI: presumptive charity identified ${fm(charity)}.</p></div></div>`;wireHub()}
 /* ---- client page additions ---- */
-function tHealthX(c,rv,ed,h){const ew=earlyWarnings(c);return tHealth(c,rv,ed,h)+`<div class="card"><h4>Early warnings</h4>${ew.length?ew.map(w=>`<div class="row"><div><b>${esc(w[0])}</b><br><span style="font-size:12.5px;color:var(--gray)">${esc(w[1])}</span></div><span class="chip" style="background:${SEV[w[2]][1]};color:${SEV[w[2]][2]}">${SEV[w[2]][0]}</span></div>`).join(''):'<p class="note">No early warning signs right now.</p>'}</div>`}
+function tHealthX(c,rv,ed,h){const ew=earlyWarnings(c);return tHealth(c,rv,ed,h)+`<div class="card"><h4>Early warnings</h4>${ew.length?ew.map(w=>`<div class="row"><div><b>${esc(w[0])}</b><br><span style="font-size:12.5px;color:var(--gray)">${esc(w[1])}</span></div><span class="chip" style="background:${SEV[w[2]][1]};color:${SEV[w[2]][2]}">${SEV[w[2]][0]}</span></div>`).join(''):'<p class="note">No early warning signs right now.</p>'}</div><div id="jira-slot"></div>`}
 function tSuccessX(c,rv,ed,h){const p=successPlan(c);return `<div class="grid2"><div class="card" style="border-inline-start:4px solid var(--purple)"><h4>Goals</h4>${rv?`<p class="p" style="color:var(--gray)">${esc(rv.why||'')}</p><p class="lbl">Organizational goals for CO</p>${listField('utilStrategy',rv,ed)}`:'<p class="note">No client profile yet.</p>'}</div>
  <div class="card" style="border-inline-start:4px solid var(--teal)"><h4>Success plan</h4><p class="p">Health today: ${rag(h.final)} → target: <b>${p.target}</b></p><p class="lbl">Plan</p>${ul(p.steps)}</div></div>`+tSuccess(c,rv,ed,h)}
 function tROIX(c,rv,ed){const p=r24(c),t=tot25(c);const cash=(c.row.seg||0)+(c.row.med||0)+(c.row.rm||0)+(c.row.db||0);
  return tROI(c,rv,ed)+`<div class="grid2"><div class="card"><h4>Trend · 2024 vs 2025</h4>${p&&p.tot&&t?`<table><tr><th></th><th class="num">2024</th><th class="num">2025</th></tr><tr><td class="k">Benefit</td><td class="num">${fm(p.tot)}</td><td class="num">${fm(t)}</td></tr><tr><td class="k">ROI</td><td class="num">${p.ratio?(+p.ratio).toFixed(1)+':1':'—'}</td><td class="num">${(+c.row.ratio).toFixed(1)}:1</td></tr><tr><td class="k">Segmentation</td><td class="num">${fm(p.seg)}</td><td class="num">${fm(c.row.seg)}</td></tr><tr><td class="k">Medicaid</td><td class="num">${fm(p.med)}</td><td class="num">${fm(c.row.med)}</td></tr><tr><td class="k">Return mail</td><td class="num">${fm(p.rm)}</td><td class="num">${fm(c.row.rm)}</td></tr>${p.inv?`<tr><td class="k">2024 invoice</td><td class="num">${fm(p.inv)}</td><td></td></tr>`:''}</table>${c.row.h2d?'':'<p class="note">2025 is a partial year, so the change is not comparable yet.</p>'}<p class="note">Change: <b style="color:${t>=p.tot?'#00756E':'#A0005C'}">${((t/p.tot-1)*100).toFixed(0)}%</b>. Methods can differ between years; check what was counted before presenting a change.</p>`:`<p class="note">${p&&p.st?'2024 status: '+esc(p.st)+'. ':''}No two-year comparison available.</p>`}</div>
  <div class="card"><h4>Cash impact · 2025</h4>${t?`<p class="big" style="color:${C.teal}">${fm(cash)}</p><p class="p">${Math.round(cash/t*100)}% of the ${fm(t)} benefit is cash (collection lift, Medicaid payments, return mail and deceased/bankruptcy collections).</p>${c.row.ftec?`<p class="p" style="margin-block-start:6px">FTE cost avoided: ${fm(c.row.ftec)} (${Math.round(c.row.fteh||0).toLocaleString('en-US')} hours)</p>`:''}`:'<p class="note">No 2025 ROI yet.</p>'}</div></div>`}
 
+
+var jiraFile, jiraLoad;
+function loadClientJira(id){
+  var slot=$('#jira-slot'); if(!slot)return;
+  slot.dataset.client=id;
+  function paint(file){
+    var el=$('#jira-slot'); if(!el||el.dataset.client!==id)return;
+    var row=file&&file.clients&&file.clients[id];
+    if(!row){el.remove();return}
+    var issues=row.issues||[];
+    var when=file.pulledAt?String(file.pulledAt).slice(0,16).replace('T',' ')+' UTC':'';
+    var note=file.source==='mock'?'Sample issues for this client. A Jira pull replaces this sample.':'Pulled from Jira for this client'+(when?' · '+esc(when):'')+'.';
+    el.innerHTML=`<div class="card"><h4>Jira</h4><p class="note" style="margin-block-start:0">${note}</p>${issues.length?`<table><tr><th>Key</th><th>Summary</th><th>Status</th><th>Updated</th><th>Assignee</th></tr>${issues.map(i=>`<tr><td>${i.url?`<a href="${esc(i.url)}" target="_blank" rel="noopener">${esc(i.key)}</a>`:esc(i.key)}</td><td>${esc(i.summary)}</td><td>${esc(i.status)}</td><td>${esc(i.updated)}</td><td>${esc(i.assignee||'—')}</td></tr>`).join('')}</table>`:'<p class="note">No issues matched this client’s Jira query.</p>'}</div>`;
+  }
+  if(jiraFile!==undefined){paint(jiraFile);return}
+  if(!jiraLoad)jiraLoad=fetch(new URL('jira-clients.json',location.href),{cache:'no-store'}).then(function(r){return r.ok?r.json():null}).catch(function(){return null}).then(function(d){jiraFile=d;return d});
+  jiraLoad.then(paint);
+}
 
 (function(){
   if (window.parent === window) return;
