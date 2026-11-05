@@ -57,7 +57,7 @@ export function Trending() {
               ))}
             </tbody>
           </table>
-          <p className="note">Each new workbook upload adds a row here; the date filter decides which loads feed the trend views.</p>
+          <p className="note">Each new workbook upload adds a row here; the date filter decides which loads appear in the trend views.</p>
         </div>
       )}
       <KpiRow>
