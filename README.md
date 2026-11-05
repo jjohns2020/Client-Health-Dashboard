@@ -11,9 +11,11 @@ health tab includes sample Jira issues until a real pull replaces them. The work
 The app opens on the command center sign-in. Choose **Sign in with Microsoft**, then a sample account. Nothing is sent
 to a directory, and the workspace does not read email, Outlook, or calendars. Reviews on the home page are ROI reviews
 from the stats files and client reviews entered in the workspace. The command center home leads into client health, client success, and ROI. **ROI** is this repository's
-dashboard, not the summary tables in the command center prototype. MaineHealth and WashU open their workbooks. Other
-clients do not have a workbook in this build yet. From the ROI module itself, the client selector can move between the
-workbooks that are loaded.
+dashboard, not the summary tables in the command center prototype. MaineHealth and WashU keep the workbook
+figures from the ROI prototype. Every other active client in the command center opens a mock workbook built from that
+client's 2025 ROI Stats row (benefit, ratio, and workflow mix). Monthly trends on those workbooks are illustrative.
+Clients with no quantified ROI yet still open, with the benefit shown as zero. From the ROI module itself, the client
+selector lists the full roster.
 
 ## Run
 

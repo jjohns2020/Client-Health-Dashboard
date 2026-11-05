@@ -33,8 +33,8 @@ export function Portfolio() {
                 <td>{x.name}</td>
                 <td>{x.period}</td>
                 <td className="num">{moneyFull(x.quantified)}</td>
-                <td className="num">{moneyFull(x.sub)}</td>
-                <td className="num">{roiRatio(x.quantified, x.sub).toFixed(1)} : 1</td>
+                <td className="num">{x.quantified === 0 ? '—' : moneyFull(x.sub)}</td>
+                <td className="num">{x.quantified === 0 ? '—' : roiRatio(x.quantified, x.sub).toFixed(1) + ' : 1'}</td>
                 <td>{x.pfc !== false ? 'Yes' : 'No'}</td>
                 <td>{x.agency ? 'Yes' : 'No'}</td>
                 <td>{x.dialer ? 'Yes' : 'No'}</td>

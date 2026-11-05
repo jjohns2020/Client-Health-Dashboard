@@ -7,7 +7,8 @@ export function VBars({ cats, series, fmt }: { cats: string[]; series: { n: stri
     h = 230,
     pad = 36,
     gw = (w - pad * 2) / cats.length,
-    max = Math.max(...series.flatMap((s) => s.v)),
+    max = Math.max(...series.flatMap((s) => s.v), 0),
+    scale = max > 0 ? max : 1,
     bw = gw / (series.length + 1);
   return (
     <svg viewBox={`0 0 ${w} ${h + 40}`} width="100%" role="img">
@@ -15,7 +16,7 @@ export function VBars({ cats, series, fmt }: { cats: string[]; series: { n: stri
       {cats.map((c, i) => (
         <g key={i}>
           {series.map((se, j) => {
-            const bh = ((h - 30) * se.v[i]) / max,
+            const bh = ((h - 30) * se.v[i]) / scale,
               x = pad + i * gw + bw * (j + 0.5);
             return (
               <g key={j}>
