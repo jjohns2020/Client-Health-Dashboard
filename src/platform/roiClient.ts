@@ -1,8 +1,7 @@
+import { healthRoster } from '../data/sample/fromHealth';
+
 /** Command-center clients whose ROI workspace is the dashboard in this repository. */
-const WORKBOOKS: Record<string, string> = {
-  maine: 'MaineHealth',
-  washu: 'WashU',
-};
+const WORKBOOKS: Record<string, string> = Object.fromEntries(healthRoster.map((row) => [row.id, row.name]));
 
 export interface RoiTarget {
   /** Workbook to open. Omitted for the portfolio entrance and for clients without a workbook. */

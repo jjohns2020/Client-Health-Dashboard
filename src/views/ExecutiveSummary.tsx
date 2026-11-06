@@ -14,6 +14,7 @@ import { C } from '../theme/colors';
 export function ExecutiveSummary() {
   const { ds, state, client: c, rangeLabel, insights } = useDashboard();
   const roi = roiRatio(c.quantified, c.sub);
+  const noBenefit = c.quantified === 0;
   const lr = c.trend.reviews[c.trend.reviews.length - 1];
   const M = ds.monthly[state.clientKey];
   const { fI, tI } = state.range;
@@ -37,14 +38,18 @@ export function ExecutiveSummary() {
         <Kpi label="Quantified Benefit" value={money(c.quantified)} note="Workbook ROI value" color={C.purple} />
         <Kpi label="Additional Value" value={money(c.additional)} note="Supporting value identified" color={C.magenta} />
         <Kpi label="Total Value Creation" value={money(totalValueCreation(c))} note="Quantified + additional" color={C.blue} />
-        <Kpi label="ROI" value={roi.toFixed(1) + ' : 1'} note="Benefit vs subscription" color={C.teal} />
+        <Kpi label="ROI" value={noBenefit ? '—' : roi.toFixed(1) + ' : 1'} note={noBenefit ? 'No quantified ROI in this review' : 'Benefit vs subscription'} color={C.teal} />
       </KpiRow>
       <Grid2>
         <Card title="Where the value came from">
           <HBar rows={visibleScrubs(c)} color={[C.blue, C.purple, C.magenta, C.teal, C.orange, C.gray]} fmt={money} />
         </Card>
         <Card title="Benefit vs. investment">
-          <VBars cats={['Quantified benefit', 'Subscription']} series={[{ n: 'Dollars', c: C.blue, v: [c.quantified, c.sub] }]} fmt={money} />
+          {noBenefit ? (
+            <p className="note">No quantified benefit in this review, so there is no comparison with subscription.</p>
+          ) : (
+            <VBars cats={['Quantified benefit', 'Subscription']} series={[{ n: 'Dollars', c: C.blue, v: [c.quantified, c.sub] }]} fmt={money} />
+          )}
         </Card>
       </Grid2>
       <Card

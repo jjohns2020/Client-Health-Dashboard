@@ -11,7 +11,13 @@ describe('command center ROI target', () => {
     expect(roiTarget('washu', 'WashU')).toEqual({ clientKey: 'washu', lockClient: true, organization: 'WashU' });
   });
 
-  it('does not invent a workbook for other command-center clients', () => {
-    expect(roiTarget('rush', 'Rush')).toEqual({ lockClient: false, missingName: 'Rush' });
+  it('opens a mock workbook for every other client health roster id', () => {
+    expect(roiTarget('rush', 'Rush')).toEqual({ clientKey: 'rush', lockClient: true, organization: 'Rush' });
+    expect(roiTarget('bjc', 'BJC HealthCare')).toEqual({ clientKey: 'bjc', lockClient: true, organization: 'BJC HealthCare' });
+    expect(roiTarget('cone', 'Cone')).toEqual({ clientKey: 'cone', lockClient: true, organization: 'Cone' });
+  });
+
+  it('leaves an unknown client on the portfolio with a missing note', () => {
+    expect(roiTarget('not-a-client', 'Somewhere')).toEqual({ lockClient: false, missingName: 'Somewhere' });
   });
 });

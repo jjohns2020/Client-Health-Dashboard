@@ -8,6 +8,7 @@ import { useDashboard } from '../state/DashboardContext';
 export function RoiDetail() {
   const { client: c } = useDashboard();
   const roi = roiRatio(c.quantified, c.sub);
+  const noBenefit = c.quantified === 0;
   return (
     <>
       <PageHead title="ROI Summary" subtitle="value delivered against subscription investment" />
@@ -40,11 +41,11 @@ export function RoiDetail() {
             </tr>
             <tr>
               <td>Subscription investment</td>
-              <td className="num">{moneyFull(c.sub)}</td>
+              <td className="num">{noBenefit ? '—' : moneyFull(c.sub)}</td>
             </tr>
             <tr className="total">
               <td>ROI</td>
-              <td className="num">{roi.toFixed(1)} : 1</td>
+              <td className="num">{noBenefit ? '—' : roi.toFixed(1) + ' : 1'}</td>
             </tr>
           </tbody>
         </table>

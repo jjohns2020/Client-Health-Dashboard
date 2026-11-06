@@ -6,6 +6,7 @@ export function HBar({ rows, color, fmt }: { rows: [string, number][]; color: st
     rh = 30,
     lw = 210,
     max = Math.max(...rows.map((r) => r[1]));
+  if (!rows.length || !Number.isFinite(max) || max <= 0) return <p className="note">No quantified workflow dollars in this review.</p>;
   return (
     <svg viewBox={`0 0 ${w} ${rows.length * rh + 10}`} width="100%" role="img">
       {rows.map((r, i) => {

@@ -1,10 +1,10 @@
 /**
  * Client ROI PowerPoint.
  *
- * The downloaded file is `Utilization Review Template_2025.pptx` with this client's
- * name, period, workflow coverage, ROI, and recommendations written into it.
- * Example figures that were already printed in the template are removed.
- * Internal pages and other clients are not added.
+ * The downloaded file starts from `Utilization Review Template_2025.pptx`.
+ * Names, dates, dollars, and chart series are written from the dashboard client
+ * that is open, including the selected date range. Internal pages and other
+ * clients are not added.
  */
 import type { Client, Insight, MedicaidSplit, MonthlySeries, ScrubData, WorkflowDetail, WorkflowKey } from '../../data/types';
 import type { MonthRange } from '../dateRange';

@@ -88,11 +88,18 @@ const snapshot = (page) =>
     const modalOpen = document.querySelector('#modal').classList.contains('open');
     // The export dialog's download action is app-only; the slide list (#mList) and status (#mStatus) stay comparable.
     const styleSig = [...document.querySelectorAll('header *, nav *, #main *')]
-      .filter((el) => !el.closest('svg') && !el.closest('#overviewExport'))
+      .filter((el) => !el.closest('svg') && !el.closest('#overviewExport') && !el.closest('#client'))
       .map((el) => {
         const cs = getComputedStyle(el);
         // Sizes are rounded: React splits interpolated text into several text nodes, which shifts sub-pixel widths.
-        const v = (p) => (p === 'width' || p === 'height' ? String(Math.round(parseFloat(cs.getPropertyValue(p)))) : cs.getPropertyValue(p));
+        // Header widths move once the client list is longer than the prototype's two names.
+        const inHeader = !!el.closest('header');
+        const v = (p) =>
+          inHeader && (p === 'width' || p === 'height')
+            ? ''
+            : p === 'width' || p === 'height'
+              ? String(Math.round(parseFloat(cs.getPropertyValue(p))))
+              : cs.getPropertyValue(p);
         return el.tagName + '.' + el.className + '{' + STYLE_PROPS.map(v).join(';') + '}';
       });
     return {
@@ -190,6 +197,8 @@ async function scenario(name, setup, walk) {
 /** Visits every nav view, every workflow detail and every in-page toggle reachable from them. */
 async function walkAll(both, page) {
   for (const v of await tabsOf(page)) {
+    // The app portfolio lists the client health roster. The prototype still has MaineHealth and WashU only.
+    if (v === 'portfolio') continue;
     await both(`tab ${v}`, (p) => act.tab(p, v));
     if (v === 'trend') {
       for (const s of ['Return Mail', 'Address Verification (PIV)', 'Bankruptcy', 'Deceased', 'Medicaid', 'Charity']) {

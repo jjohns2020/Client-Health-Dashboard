@@ -57,7 +57,7 @@ export function CommandCenterHost() {
             </div>
             {roi.missingName && (
               <p className="cc-missing" id="cc-missing">
-                The ROI workspace in this build covers MaineHealth and WashU. {roi.missingName} does not have a workbook here yet.
+                {roi.missingName} is not in the client health roster loaded in this build.
               </p>
             )}
             <App key={roi.clientKey ?? 'portfolio'} initialClientKey={roi.clientKey} />
