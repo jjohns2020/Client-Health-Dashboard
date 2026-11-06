@@ -57,7 +57,7 @@ export function ExportModal() {
           {plan.fileName}
         </h3>
         <p style={{ fontSize: 13, color: 'var(--gray)' }}>
-          Download fills the uploaded Utilization Review template with this client's figures. Template example numbers are removed. The executive overview is a separate Word document, not a slide in this deck.
+          Download fills the Utilization Review deck from this dashboard: the open client, the selected dates, the workflow figures, and the charts. The executive overview is a separate Word document, not a slide in this deck.
         </p>
         <p id="mStatus" style={{ fontSize: 13 }}>
           Data check status: <Chip status={ov} /> {ov === 'NOT READY' ? '— fix the FIX items on the Data Checks page before exporting.' : ''}
@@ -73,7 +73,7 @@ export function ExportModal() {
           ))}
         </ol>
         <p className="note" id="exportNote">
-          Download creates the .pptx. The Portfolio, Opportunity Sizing and Data Checks pages, other clients' data and internal notes are never included.
+          Download creates the .pptx from the dashboard open on screen. The Portfolio, Opportunity Sizing and Data Checks pages, other clients' data and internal notes are never included.
           Illustrative sample figures stay labeled in the file.
         </p>
         {message && (

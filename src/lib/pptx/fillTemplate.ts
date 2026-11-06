@@ -2,7 +2,9 @@ import JSZip from 'jszip';
 import { overlaps, sumRange } from '../dateRange';
 import { int, money, moneyFull } from '../format';
 import { returnMailScale, roiRatio } from '../roi';
+import { rewriteChart } from './chartCache';
 import type { DeckInput } from './buildDeck';
+import { applyDashboardText, dashboardChartPlots, successLines } from './dashboardDeck';
 
 const TEMPLATE_FILE = 'Utilization Review Template_2025.pptx';
 
@@ -82,15 +84,19 @@ function slidesToRemove(input: DeckInput) {
 
 function fillSlide1(xml: string, input: DeckInput) {
   let next = replaceExact(xml, 'Health System', input.client.name);
-  next = replaceNthExact(next, 'xxxx', [input.client.period, '', 'Sample data, not validated production results.']);
-  return replaceExact(next, ' – ', '');
+  next = replaceNthExact(next, 'xxxx', [
+    input.client.period,
+    input.rangeLabel,
+    `${input.rangeLabel}. Sample data, not validated production results.`,
+  ]);
+  return next;
 }
 
 function fillValue(xml: string, input: DeckInput) {
-  const roi = roiRatio(input.client.quantified, input.client.sub);
+  const roi = input.client.quantified === 0 ? '—' : roiRatio(input.client.quantified, input.client.sub).toFixed(1);
   let next = replaceExact(xml, '<<insert sum of dollar value>>', moneyFull(input.client.quantified));
-  next = replaceExact(next, '10 : 1 ROI', `${roi.toFixed(1)} : 1 ROI`);
-  if (input.client.cash.lift > 0) next = replaceExact(next, '<<Insert lift>>>', moneyFull(input.client.cash.lift));
+  next = replaceExact(next, '10 : 1 ROI', `${roi} : 1 ROI`);
+  next = replaceExact(next, '<<Insert lift>>>', moneyFull(input.client.cash.lift));
   if (input.client.fte != null) {
     next = replaceExact(next, '<<insert>> FTE  Hour Savings via Automation (insert # FTE)', `${input.client.fte} FTE hour savings via automation`);
   }
@@ -151,10 +157,10 @@ function fillDialer(xml: string, input: DeckInput) {
 }
 
 function fillSuccess(xml: string, input: DeckInput) {
-  const recommendations = input.client.recs.length ? input.client.recs : ['Sample recommendation'];
+  const recommendations = successLines(input);
   let index = 0;
   return xml.replaceAll('<a:t>Bullet</a:t>', () => {
-    const text = recommendations[index] ?? '';
+    const text = recommendations[index] ?? recommendations[index % recommendations.length];
     index += 1;
     return `<a:t>${escapeText(text)}</a:t>`;
   });
@@ -236,8 +242,16 @@ export async function fillReviewTemplate(input: DeckInput): Promise<Uint8Array> 
     let xml = await file.async('string');
     const edit = edits[number];
     if (edit) xml = edit(xml);
+    xml = applyDashboardText(xml, input);
     xml = scrubAbsentWorkflows(xml, phrases);
     zip.file(path, xml);
+  }
+  const plots = dashboardChartPlots(input);
+  for (const [number, plot] of Object.entries(plots)) {
+    const path = `ppt/charts/chart${number}.xml`;
+    const file = zip.file(path);
+    if (!file) continue;
+    zip.file(path, rewriteChart(await file.async('string'), plot));
   }
   await removeSlides(zip, dropped);
   return zip.generateAsync({ type: 'uint8array' });

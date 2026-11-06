@@ -97,6 +97,23 @@ describe('PowerPoint export', () => {
     expect(all).not.toContain('$5,276,613,542');
     expect(all).not.toContain('WashU');
     expect(all).not.toContain('Medicaid Scrub');
+    expect(all).not.toContain('<<');
+    expect(all).not.toContain('xxxx');
+    expect(all).not.toContain('University of Utah');
+    expect(all).not.toContain('August 6, 2026');
+    expect(all).toContain('Jan 2024 – Sep 2025');
+    expect(all).toContain('Q3 2025 (Jul – Sep)');
+    expect(all).toContain('$464,737');
+    const chart1 = await packed.file('ppt/charts/chart1.xml')!.async('string');
+    const chart4 = await packed.file('ppt/charts/chart4.xml')!.async('string');
+    const chart13 = await packed.file('ppt/charts/chart13.xml')!.async('string');
+    expect(chart1).toContain('545867');
+    expect(chart1).toContain('Jul–Sep 2025 (Q3 deck)');
+    expect(chart1).not.toContain('10/2019 - 11/2020');
+    expect(chart4).toContain('1–100%');
+    expect(chart4).not.toContain('10/2019 - 11/2020');
+    expect(chart13).toContain('0.26');
+    expect(chart1).not.toContain('<c:f>');
     for (const phrase of INTERNAL) expect(all, phrase).not.toContain(phrase);
   });
 
@@ -110,6 +127,8 @@ describe('PowerPoint export', () => {
     expect(all).toContain('ILLUSTRATIVE SAMPLE DATA');
     expect(all).toContain('17.2 : 1');
     expect(all).toContain('Dialer Performance');
+    expect(all).not.toContain('<<');
+    expect(all).not.toContain('xxxx');
     expect(all).not.toContain('MaineHealth');
     for (const phrase of INTERNAL) expect(all, phrase).not.toContain(phrase);
   });
