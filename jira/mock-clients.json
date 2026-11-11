@@ -3,48 +3,1352 @@
   "pulledAt": "2026-11-03T15:00:00.000Z",
   "site": "",
   "clients": {
-    "maine": {
-      "name": "MaineHealth",
+    "advocate-aurora": {
+      "name": "Advocate Aurora",
       "jql": "",
       "issues": [
-        { "key": "SAMPLE-11", "summary": "Sample: charity file check", "status": "In Progress", "type": "Task", "assignee": "Sample assignee", "updated": "2026-11-01", "url": "" },
-        { "key": "SAMPLE-12", "summary": "Sample: deceased import confirmed", "status": "Done", "type": "Task", "assignee": "Sample assignee", "updated": "2026-10-28", "url": "" }
+        {
+          "key": "CO-1840",
+          "summary": "Advocate Aurora: Bankruptcy monitoring results",
+          "status": "In Progress",
+          "type": "Story",
+          "assignee": "Tiffany Rudy",
+          "reporter": "Tiffany Rudy",
+          "component": "Bankruptcy",
+          "labels": [
+            "Advocate Aurora"
+          ],
+          "updated": "2026-10-13",
+          "url": ""
+        },
+        {
+          "key": "CO-1841",
+          "summary": "Advocate Aurora: Patient financial clearance review",
+          "status": "To Do",
+          "type": "Task",
+          "assignee": "Tiffany Rudy",
+          "reporter": "Tiffany Rudy",
+          "component": "Patient Financial Clearance",
+          "labels": [
+            "Advocate Aurora"
+          ],
+          "updated": "2026-11-03",
+          "url": ""
+        },
+        {
+          "key": "CO-1842",
+          "summary": "Advocate Aurora: Return mail address results",
+          "status": "In Review",
+          "type": "Task",
+          "assignee": "Tiffany Rudy",
+          "reporter": "Marie Murphy",
+          "component": "Return Mail",
+          "labels": [
+            "Advocate Aurora"
+          ],
+          "updated": "2026-11-03",
+          "url": ""
+        }
       ]
     },
-    "washu": {
-      "name": "WashU",
+    "baylor-scott-white": {
+      "name": "Baylor Scott & White",
       "jql": "",
       "issues": [
-        { "key": "SAMPLE-21", "summary": "Sample: SBO file follow-up", "status": "In Review", "type": "Task", "assignee": "Sample assignee", "updated": "2026-11-02", "url": "" }
+        {
+          "key": "CO-1843",
+          "summary": "Baylor Scott & White: Patient financial clearance review",
+          "status": "In Review",
+          "type": "Task",
+          "assignee": "Tiffany Rudy",
+          "reporter": "Tiffany Rudy",
+          "component": "Patient Financial Clearance",
+          "labels": [
+            "Baylor Scott & White"
+          ],
+          "updated": "2026-11-03",
+          "url": ""
+        },
+        {
+          "key": "CO-1844",
+          "summary": "Baylor Scott & White: Dialer campaign results",
+          "status": "Blocked",
+          "type": "Story",
+          "assignee": "Tiffany Rudy",
+          "reporter": "Tiffany Rudy",
+          "component": "Dialer",
+          "labels": [
+            "Baylor Scott & White"
+          ],
+          "updated": "2026-11-03",
+          "url": ""
+        },
+        {
+          "key": "CO-1845",
+          "summary": "Baylor Scott & White: Reporting request",
+          "status": "Done",
+          "type": "Task",
+          "assignee": "Tiffany Rudy",
+          "reporter": "Tiffany Rudy",
+          "component": "Reporting",
+          "labels": [
+            "Baylor Scott & White"
+          ],
+          "updated": "2026-11-03",
+          "url": ""
+        }
       ]
     },
-    "rush": {
-      "name": "Rush",
+    "integraconnect": {
+      "name": "IntegraConnect",
       "jql": "",
       "issues": [
-        { "key": "SAMPLE-31", "summary": "Sample: dialer file refresh", "status": "To Do", "type": "Task", "assignee": "Sample assignee", "updated": "2026-11-03", "url": "" }
+        {
+          "key": "CO-1846",
+          "summary": "IntegraConnect: Address verification results",
+          "status": "In Review",
+          "type": "Story",
+          "assignee": "Tiffany Rudy",
+          "reporter": "Tiffany Rudy",
+          "component": "Address Verification",
+          "labels": [
+            "IntegraConnect"
+          ],
+          "updated": "2026-11-03",
+          "url": ""
+        },
+        {
+          "key": "CO-1847",
+          "summary": "IntegraConnect: Patient financial clearance review",
+          "status": "To Do",
+          "type": "Story",
+          "assignee": "Tiffany Rudy",
+          "reporter": "Tiffany Rudy",
+          "component": "Patient Financial Clearance",
+          "labels": [
+            "IntegraConnect"
+          ],
+          "updated": "2026-11-03",
+          "url": ""
+        },
+        {
+          "key": "CO-1848",
+          "summary": "IntegraConnect: File load exception",
+          "status": "Done",
+          "type": "Task",
+          "assignee": "Tiffany Rudy",
+          "reporter": "Tiffany Rudy",
+          "component": "File Load",
+          "labels": [
+            "IntegraConnect"
+          ],
+          "updated": "2026-11-03",
+          "url": ""
+        }
+      ]
+    },
+    "altru": {
+      "name": "Altru",
+      "jql": "",
+      "issues": [
+        {
+          "key": "CO-1849",
+          "summary": "Altru: Segment call cadence",
+          "status": "In Progress",
+          "type": "Task",
+          "assignee": "Stefi Draeger",
+          "reporter": "Stefi Draeger",
+          "component": "Segmentation",
+          "labels": [
+            "Altru"
+          ],
+          "updated": "2026-11-03",
+          "url": ""
+        },
+        {
+          "key": "CO-1850",
+          "summary": "Altru: Reporting request",
+          "status": "To Do",
+          "type": "Task",
+          "assignee": "Stefi Draeger",
+          "reporter": "Stefi Draeger",
+          "component": "Reporting",
+          "labels": [
+            "Altru"
+          ],
+          "updated": "2026-11-03",
+          "url": ""
+        },
+        {
+          "key": "CO-1851",
+          "summary": "Altru: Segment call cadence",
+          "status": "Blocked",
+          "type": "Task",
+          "assignee": "Stefi Draeger",
+          "reporter": "Stefi Draeger",
+          "component": "Segmentation",
+          "labels": [
+            "Altru"
+          ],
+          "updated": "2026-11-03",
+          "url": ""
+        }
+      ]
+    },
+    "integris": {
+      "name": "Integris",
+      "jql": "",
+      "issues": [
+        {
+          "key": "CO-1852",
+          "summary": "Integris: Segment call cadence",
+          "status": "In Progress",
+          "type": "Story",
+          "assignee": "Stefi Draeger",
+          "reporter": "Stefi Draeger",
+          "component": "Segmentation",
+          "labels": [
+            "Integris"
+          ],
+          "updated": "2026-11-03",
+          "url": ""
+        },
+        {
+          "key": "CO-1853",
+          "summary": "Integris: Bankruptcy monitoring results",
+          "status": "To Do",
+          "type": "Task",
+          "assignee": "Stefi Draeger",
+          "reporter": "Stefi Draeger",
+          "component": "Bankruptcy",
+          "labels": [
+            "Integris"
+          ],
+          "updated": "2026-11-03",
+          "url": ""
+        }
+      ]
+    },
+    "aspirus": {
+      "name": "Aspirus",
+      "jql": "",
+      "issues": [
+        {
+          "key": "CO-1854",
+          "summary": "Aspirus: Bankruptcy monitoring results",
+          "status": "In Review",
+          "type": "Task",
+          "assignee": "Yvonne Wheaton",
+          "reporter": "Yvonne Wheaton",
+          "component": "Bankruptcy",
+          "labels": [
+            "Aspirus"
+          ],
+          "updated": "2026-11-03",
+          "url": ""
+        },
+        {
+          "key": "CO-1855",
+          "summary": "Aspirus: Return mail address results",
+          "status": "Done",
+          "type": "Task",
+          "assignee": "Yvonne Wheaton",
+          "reporter": "Marie Murphy",
+          "component": "Return Mail",
+          "labels": [
+            "Aspirus"
+          ],
+          "updated": "2026-10-06",
+          "url": ""
+        }
+      ]
+    },
+    "essentia": {
+      "name": "Essentia",
+      "jql": "",
+      "issues": [
+        {
+          "key": "CO-1856",
+          "summary": "Essentia: Presumptive charity review",
+          "status": "In Review",
+          "type": "Task",
+          "assignee": "Yvonne Wheaton",
+          "reporter": "Yvonne Wheaton",
+          "component": "Presumptive Charity",
+          "labels": [
+            "Essentia"
+          ],
+          "updated": "2026-10-25",
+          "url": ""
+        },
+        {
+          "key": "CO-1857",
+          "summary": "Essentia: Medicaid eligibility results",
+          "status": "In Review",
+          "type": "Story",
+          "assignee": "Yvonne Wheaton",
+          "reporter": "Yvonne Wheaton",
+          "component": "Medicaid",
+          "labels": [
+            "Essentia"
+          ],
+          "updated": "2026-11-03",
+          "url": ""
+        },
+        {
+          "key": "CO-1858",
+          "summary": "Essentia: Presumptive charity review",
+          "status": "Blocked",
+          "type": "Task",
+          "assignee": "Yvonne Wheaton",
+          "reporter": "Yvonne Wheaton",
+          "component": "Presumptive Charity",
+          "labels": [
+            "Essentia"
+          ],
+          "updated": "2026-11-03",
+          "url": ""
+        }
+      ]
+    },
+    "banner": {
+      "name": "Banner",
+      "jql": "",
+      "issues": [
+        {
+          "key": "CO-1859",
+          "summary": "Banner: Reporting request",
+          "status": "In Progress",
+          "type": "Task",
+          "assignee": "Cari Hoffman",
+          "reporter": "Cari Hoffman",
+          "component": "Reporting",
+          "labels": [
+            "Banner"
+          ],
+          "updated": "2026-11-03",
+          "url": ""
+        },
+        {
+          "key": "CO-1860",
+          "summary": "Banner: Deceased scrub results",
+          "status": "Done",
+          "type": "Task",
+          "assignee": "Cari Hoffman",
+          "reporter": "Cari Hoffman",
+          "component": "Deceased",
+          "labels": [
+            "Banner"
+          ],
+          "updated": "2026-10-09",
+          "url": ""
+        },
+        {
+          "key": "CO-1861",
+          "summary": "Banner: Segment call cadence",
+          "status": "In Progress",
+          "type": "Task",
+          "assignee": "Cari Hoffman",
+          "reporter": "Cari Hoffman",
+          "component": "Segmentation",
+          "labels": [
+            "Banner"
+          ],
+          "updated": "2026-10-28",
+          "url": ""
+        }
+      ]
+    },
+    "cone": {
+      "name": "Cone",
+      "jql": "",
+      "issues": [
+        {
+          "key": "CO-1862",
+          "summary": "Cone: Reporting request",
+          "status": "To Do",
+          "type": "Task",
+          "assignee": "Cari Hoffman",
+          "reporter": "Cari Hoffman",
+          "component": "Reporting",
+          "labels": [
+            "Cone"
+          ],
+          "updated": "2026-11-03",
+          "url": ""
+        },
+        {
+          "key": "CO-1863",
+          "summary": "Cone: Medicaid eligibility results",
+          "status": "In Review",
+          "type": "Task",
+          "assignee": "Cari Hoffman",
+          "reporter": "Cari Hoffman",
+          "component": "Medicaid",
+          "labels": [
+            "Cone"
+          ],
+          "updated": "2026-11-03",
+          "url": ""
+        },
+        {
+          "key": "CO-1864",
+          "summary": "Cone: File load exception",
+          "status": "In Progress",
+          "type": "Story",
+          "assignee": "Cari Hoffman",
+          "reporter": "Marie Murphy",
+          "component": "File Load",
+          "labels": [
+            "Cone"
+          ],
+          "updated": "2026-11-03",
+          "url": ""
+        }
       ]
     },
     "bjc": {
       "name": "BJC HealthCare",
       "jql": "",
       "issues": [
-        { "key": "SAMPLE-41", "summary": "Sample: go-live build", "status": "In Progress", "type": "Task", "assignee": "Sample assignee", "updated": "2026-10-30", "url": "" },
-        { "key": "SAMPLE-42", "summary": "Sample: Medicaid field question", "status": "To Do", "type": "Task", "assignee": "Sample assignee", "updated": "2026-10-29", "url": "" }
+        {
+          "key": "CO-1865",
+          "summary": "BJC HealthCare: Bankruptcy monitoring results",
+          "status": "In Review",
+          "type": "Task",
+          "assignee": "Jessica Johns",
+          "reporter": "Jessica Johns",
+          "component": "Bankruptcy",
+          "labels": [
+            "BJC HealthCare"
+          ],
+          "updated": "2026-10-27",
+          "url": ""
+        },
+        {
+          "key": "CO-1866",
+          "summary": "BJC HealthCare: Dialer campaign results",
+          "status": "In Review",
+          "type": "Task",
+          "assignee": "Jessica Johns",
+          "reporter": "Jessica Johns",
+          "component": "Dialer",
+          "labels": [
+            "BJC HealthCare"
+          ],
+          "updated": "2026-11-03",
+          "url": ""
+        },
+        {
+          "key": "CO-1867",
+          "summary": "BJC HealthCare: Reporting request",
+          "status": "In Review",
+          "type": "Task",
+          "assignee": "Jessica Johns",
+          "reporter": "Jessica Johns",
+          "component": "Reporting",
+          "labels": [
+            "BJC HealthCare"
+          ],
+          "updated": "2026-11-03",
+          "url": ""
+        }
+      ]
+    },
+    "maine": {
+      "name": "MaineHealth",
+      "jql": "",
+      "issues": [
+        {
+          "key": "CO-1868",
+          "summary": "MaineHealth: Patient financial clearance review",
+          "status": "Done",
+          "type": "Task",
+          "assignee": "Jessica Johns",
+          "reporter": "Jessica Johns",
+          "component": "Patient Financial Clearance",
+          "labels": [
+            "MaineHealth"
+          ],
+          "updated": "2026-11-03",
+          "url": ""
+        },
+        {
+          "key": "CO-1869",
+          "summary": "MaineHealth: Segment call cadence",
+          "status": "Done",
+          "type": "Task",
+          "assignee": "Jessica Johns",
+          "reporter": "Jessica Johns",
+          "component": "Segmentation",
+          "labels": [
+            "MaineHealth"
+          ],
+          "updated": "2026-10-16",
+          "url": ""
+        },
+        {
+          "key": "CO-1870",
+          "summary": "MaineHealth: Dialer campaign results",
+          "status": "In Review",
+          "type": "Story",
+          "assignee": "Jessica Johns",
+          "reporter": "Marie Murphy",
+          "component": "Dialer",
+          "labels": [
+            "MaineHealth"
+          ],
+          "updated": "2026-11-03",
+          "url": ""
+        }
       ]
     },
     "mcleod": {
       "name": "McLeod Health",
       "jql": "",
       "issues": [
-        { "key": "SAMPLE-51", "summary": "Sample: agency file validation", "status": "In Progress", "type": "Task", "assignee": "Sample assignee", "updated": "2026-10-27", "url": "" }
+        {
+          "key": "CO-1871",
+          "summary": "McLeod Health: Presumptive charity review",
+          "status": "Done",
+          "type": "Task",
+          "assignee": "Jessica Johns",
+          "reporter": "Jessica Johns",
+          "component": "Presumptive Charity",
+          "labels": [
+            "McLeod Health"
+          ],
+          "updated": "2026-11-03",
+          "url": ""
+        },
+        {
+          "key": "CO-1872",
+          "summary": "McLeod Health: Return mail address results",
+          "status": "In Progress",
+          "type": "Task",
+          "assignee": "Jessica Johns",
+          "reporter": "Jessica Johns",
+          "component": "Return Mail",
+          "labels": [
+            "McLeod Health"
+          ],
+          "updated": "2026-11-03",
+          "url": ""
+        },
+        {
+          "key": "CO-1873",
+          "summary": "McLeod Health: Patient financial clearance review",
+          "status": "To Do",
+          "type": "Task",
+          "assignee": "Jessica Johns",
+          "reporter": "Marie Murphy",
+          "component": "Patient Financial Clearance",
+          "labels": [
+            "McLeod Health"
+          ],
+          "updated": "2026-11-03",
+          "url": ""
+        }
+      ]
+    },
+    "rush": {
+      "name": "Rush",
+      "jql": "",
+      "issues": [
+        {
+          "key": "CO-1874",
+          "summary": "Rush: Reporting request",
+          "status": "Blocked",
+          "type": "Story",
+          "assignee": "Jessica Johns",
+          "reporter": "Jessica Johns",
+          "component": "Reporting",
+          "labels": [
+            "Rush"
+          ],
+          "updated": "2026-10-14",
+          "url": ""
+        },
+        {
+          "key": "CO-1875",
+          "summary": "Rush: Reporting request",
+          "status": "In Progress",
+          "type": "Task",
+          "assignee": "Jessica Johns",
+          "reporter": "Jessica Johns",
+          "component": "Reporting",
+          "labels": [
+            "Rush"
+          ],
+          "updated": "2026-11-03",
+          "url": ""
+        },
+        {
+          "key": "CO-1876",
+          "summary": "Rush: Reporting request",
+          "status": "Done",
+          "type": "Story",
+          "assignee": "Jessica Johns",
+          "reporter": "Jessica Johns",
+          "component": "Reporting",
+          "labels": [
+            "Rush"
+          ],
+          "updated": "2026-10-12",
+          "url": ""
+        }
       ]
     },
     "stl": {
       "name": "Saint Luke's Health",
       "jql": "",
       "issues": [
-        { "key": "SAMPLE-61", "summary": "Sample: Medicaid scrub file", "status": "To Do", "type": "Task", "assignee": "Sample assignee", "updated": "2026-11-01", "url": "" }
+        {
+          "key": "CO-1877",
+          "summary": "Saint Luke's Health: Patient financial clearance review",
+          "status": "Done",
+          "type": "Task",
+          "assignee": "Jessica Johns",
+          "reporter": "Jessica Johns",
+          "component": "Patient Financial Clearance",
+          "labels": [
+            "Saint Luke's Health"
+          ],
+          "updated": "2026-11-03",
+          "url": ""
+        },
+        {
+          "key": "CO-1878",
+          "summary": "Saint Luke's Health: Bankruptcy monitoring results",
+          "status": "In Progress",
+          "type": "Task",
+          "assignee": "Jessica Johns",
+          "reporter": "Jessica Johns",
+          "component": "Bankruptcy",
+          "labels": [
+            "Saint Luke's Health"
+          ],
+          "updated": "2026-10-11",
+          "url": ""
+        },
+        {
+          "key": "CO-1879",
+          "summary": "Saint Luke's Health: Medicaid eligibility results",
+          "status": "Done",
+          "type": "Task",
+          "assignee": "Jessica Johns",
+          "reporter": "Marie Murphy",
+          "component": "Medicaid",
+          "labels": [
+            "Saint Luke's Health"
+          ],
+          "updated": "2026-11-03",
+          "url": ""
+        }
+      ]
+    },
+    "washu": {
+      "name": "WashU",
+      "jql": "",
+      "issues": [
+        {
+          "key": "CO-1880",
+          "summary": "WashU: Return mail address results",
+          "status": "Done",
+          "type": "Task",
+          "assignee": "Jessica Johns",
+          "reporter": "Jessica Johns",
+          "component": "Return Mail",
+          "labels": [
+            "WashU"
+          ],
+          "updated": "2026-10-10",
+          "url": ""
+        },
+        {
+          "key": "CO-1881",
+          "summary": "WashU: Address verification results",
+          "status": "In Review",
+          "type": "Task",
+          "assignee": "Jessica Johns",
+          "reporter": "Marie Murphy",
+          "component": "Address Verification",
+          "labels": [
+            "WashU"
+          ],
+          "updated": "2026-11-03",
+          "url": ""
+        }
+      ]
+    },
+    "boradlawns": {
+      "name": "Boradlawns",
+      "jql": "",
+      "issues": [
+        {
+          "key": "CO-1882",
+          "summary": "Boradlawns: Reporting request",
+          "status": "Done",
+          "type": "Task",
+          "assignee": "Judy",
+          "reporter": "Judy",
+          "component": "Reporting",
+          "labels": [
+            "Boradlawns"
+          ],
+          "updated": "2026-10-29",
+          "url": ""
+        },
+        {
+          "key": "CO-1883",
+          "summary": "Boradlawns: Agency reconciliation",
+          "status": "Blocked",
+          "type": "Story",
+          "assignee": "Judy",
+          "reporter": "Judy",
+          "component": "Agency Reconciliation",
+          "labels": [
+            "Boradlawns"
+          ],
+          "updated": "2026-10-18",
+          "url": ""
+        },
+        {
+          "key": "CO-1884",
+          "summary": "Boradlawns: Return mail address results",
+          "status": "Blocked",
+          "type": "Task",
+          "assignee": "Judy",
+          "reporter": "Judy",
+          "component": "Return Mail",
+          "labels": [
+            "Boradlawns"
+          ],
+          "updated": "2026-10-06",
+          "url": ""
+        }
+      ]
+    },
+    "catholic": {
+      "name": "Catholic",
+      "jql": "",
+      "issues": [
+        {
+          "key": "CO-1885",
+          "summary": "Catholic: Bankruptcy monitoring results",
+          "status": "Blocked",
+          "type": "Task",
+          "assignee": "Judy",
+          "reporter": "Judy",
+          "component": "Bankruptcy",
+          "labels": [
+            "Catholic"
+          ],
+          "updated": "2026-11-03",
+          "url": ""
+        },
+        {
+          "key": "CO-1886",
+          "summary": "Catholic: Patient financial clearance review",
+          "status": "Blocked",
+          "type": "Task",
+          "assignee": "Judy",
+          "reporter": "Judy",
+          "component": "Patient Financial Clearance",
+          "labels": [
+            "Catholic"
+          ],
+          "updated": "2026-11-03",
+          "url": ""
+        },
+        {
+          "key": "CO-1887",
+          "summary": "Catholic: Patient financial clearance review",
+          "status": "Blocked",
+          "type": "Story",
+          "assignee": "Judy",
+          "reporter": "Judy",
+          "component": "Patient Financial Clearance",
+          "labels": [
+            "Catholic"
+          ],
+          "updated": "2026-11-03",
+          "url": ""
+        }
+      ]
+    },
+    "carle-foundation": {
+      "name": "Carle Foundation",
+      "jql": "",
+      "issues": [
+        {
+          "key": "CO-1888",
+          "summary": "Carle Foundation: Bankruptcy monitoring results",
+          "status": "Blocked",
+          "type": "Task",
+          "assignee": "Dan",
+          "reporter": "Dan",
+          "component": "Bankruptcy",
+          "labels": [
+            "Carle Foundation"
+          ],
+          "updated": "2026-11-03",
+          "url": ""
+        },
+        {
+          "key": "CO-1889",
+          "summary": "Carle Foundation: Medicaid eligibility results",
+          "status": "In Review",
+          "type": "Story",
+          "assignee": "Dan",
+          "reporter": "Marie Murphy",
+          "component": "Medicaid",
+          "labels": [
+            "Carle Foundation"
+          ],
+          "updated": "2026-10-11",
+          "url": ""
+        }
+      ]
+    },
+    "community-medical-center": {
+      "name": "Community Medical Center",
+      "jql": "",
+      "issues": [
+        {
+          "key": "CO-1890",
+          "summary": "Community Medical Center: File load exception",
+          "status": "In Progress",
+          "type": "Task",
+          "assignee": "Dan",
+          "reporter": "Dan",
+          "component": "File Load",
+          "labels": [
+            "Community Medical Center"
+          ],
+          "updated": "2026-10-17",
+          "url": ""
+        },
+        {
+          "key": "CO-1891",
+          "summary": "Community Medical Center: Agency reconciliation",
+          "status": "Done",
+          "type": "Task",
+          "assignee": "Dan",
+          "reporter": "Dan",
+          "component": "Agency Reconciliation",
+          "labels": [
+            "Community Medical Center"
+          ],
+          "updated": "2026-11-03",
+          "url": ""
+        }
+      ]
+    },
+    "columbia": {
+      "name": "Columbia",
+      "jql": "",
+      "issues": [
+        {
+          "key": "CO-1892",
+          "summary": "Columbia: Agency reconciliation",
+          "status": "Done",
+          "type": "Task",
+          "assignee": "Marie Murphy",
+          "reporter": "Marie Murphy",
+          "component": "Agency Reconciliation",
+          "labels": [
+            "Columbia"
+          ],
+          "updated": "2026-11-03",
+          "url": ""
+        },
+        {
+          "key": "CO-1893",
+          "summary": "Columbia: Agency reconciliation",
+          "status": "In Progress",
+          "type": "Story",
+          "assignee": "Marie Murphy",
+          "reporter": "Marie Murphy",
+          "component": "Agency Reconciliation",
+          "labels": [
+            "Columbia"
+          ],
+          "updated": "2026-11-03",
+          "url": ""
+        },
+        {
+          "key": "CO-1894",
+          "summary": "Columbia: Return mail address results",
+          "status": "Done",
+          "type": "Task",
+          "assignee": "Marie Murphy",
+          "reporter": "Marie Murphy",
+          "component": "Return Mail",
+          "labels": [
+            "Columbia"
+          ],
+          "updated": "2026-11-03",
+          "url": ""
+        }
+      ]
+    },
+    "new-york-presbyterian-nyp": {
+      "name": "New York Presbyterian (NYP)",
+      "jql": "",
+      "issues": [
+        {
+          "key": "CO-1895",
+          "summary": "New York Presbyterian (NYP): Reporting request",
+          "status": "To Do",
+          "type": "Task",
+          "assignee": "Marie Murphy",
+          "reporter": "Marie Murphy",
+          "component": "Reporting",
+          "labels": [
+            "New York Presbyterian (NYP)"
+          ],
+          "updated": "2026-11-03",
+          "url": ""
+        },
+        {
+          "key": "CO-1896",
+          "summary": "New York Presbyterian (NYP): Patient financial clearance review",
+          "status": "In Review",
+          "type": "Task",
+          "assignee": "Marie Murphy",
+          "reporter": "Marie Murphy",
+          "component": "Patient Financial Clearance",
+          "labels": [
+            "New York Presbyterian (NYP)"
+          ],
+          "updated": "2026-11-03",
+          "url": ""
+        }
+      ]
+    },
+    "confluence": {
+      "name": "Confluence",
+      "jql": "",
+      "issues": [
+        {
+          "key": "CO-1897",
+          "summary": "Confluence: Reporting request",
+          "status": "In Review",
+          "type": "Task",
+          "assignee": "Brooke Daniels",
+          "reporter": "Brooke Daniels",
+          "component": "Reporting",
+          "labels": [
+            "Confluence"
+          ],
+          "updated": "2026-10-12",
+          "url": ""
+        },
+        {
+          "key": "CO-1898",
+          "summary": "Confluence: Segment call cadence",
+          "status": "In Review",
+          "type": "Task",
+          "assignee": "Brooke Daniels",
+          "reporter": "Brooke Daniels",
+          "component": "Segmentation",
+          "labels": [
+            "Confluence"
+          ],
+          "updated": "2026-11-03",
+          "url": ""
+        },
+        {
+          "key": "CO-1899",
+          "summary": "Confluence: Dialer campaign results",
+          "status": "Done",
+          "type": "Task",
+          "assignee": "Brooke Daniels",
+          "reporter": "Brooke Daniels",
+          "component": "Dialer",
+          "labels": [
+            "Confluence"
+          ],
+          "updated": "2026-11-03",
+          "url": ""
+        }
+      ]
+    },
+    "first-health": {
+      "name": "First Health",
+      "jql": "",
+      "issues": [
+        {
+          "key": "CO-1900",
+          "summary": "First Health: Medicaid eligibility results",
+          "status": "Blocked",
+          "type": "Task",
+          "assignee": "Rich Wade",
+          "reporter": "Rich Wade",
+          "component": "Medicaid",
+          "labels": [
+            "First Health"
+          ],
+          "updated": "2026-11-03",
+          "url": ""
+        },
+        {
+          "key": "CO-1901",
+          "summary": "First Health: Reporting request",
+          "status": "To Do",
+          "type": "Task",
+          "assignee": "Rich Wade",
+          "reporter": "Rich Wade",
+          "component": "Reporting",
+          "labels": [
+            "First Health"
+          ],
+          "updated": "2026-11-03",
+          "url": ""
+        },
+        {
+          "key": "CO-1902",
+          "summary": "First Health: File load exception",
+          "status": "In Progress",
+          "type": "Task",
+          "assignee": "Rich Wade",
+          "reporter": "Rich Wade",
+          "component": "File Load",
+          "labels": [
+            "First Health"
+          ],
+          "updated": "2026-11-03",
+          "url": ""
+        }
+      ]
+    },
+    "grady": {
+      "name": "Grady",
+      "jql": "",
+      "issues": [
+        {
+          "key": "CO-1903",
+          "summary": "Grady: Dialer campaign results",
+          "status": "To Do",
+          "type": "Task",
+          "assignee": "Rich Wade",
+          "reporter": "Rich Wade",
+          "component": "Dialer",
+          "labels": [
+            "Grady"
+          ],
+          "updated": "2026-11-03",
+          "url": ""
+        },
+        {
+          "key": "CO-1904",
+          "summary": "Grady: Patient financial clearance review",
+          "status": "In Review",
+          "type": "Task",
+          "assignee": "Rich Wade",
+          "reporter": "Rich Wade",
+          "component": "Patient Financial Clearance",
+          "labels": [
+            "Grady"
+          ],
+          "updated": "2026-10-16",
+          "url": ""
+        },
+        {
+          "key": "CO-1905",
+          "summary": "Grady: File load exception",
+          "status": "Done",
+          "type": "Task",
+          "assignee": "Rich Wade",
+          "reporter": "Rich Wade",
+          "component": "File Load",
+          "labels": [
+            "Grady"
+          ],
+          "updated": "2026-11-03",
+          "url": ""
+        }
+      ]
+    },
+    "hcmc": {
+      "name": "HCMC",
+      "jql": "",
+      "issues": [
+        {
+          "key": "CO-1906",
+          "summary": "HCMC: Medicaid eligibility results",
+          "status": "In Progress",
+          "type": "Story",
+          "assignee": "Brooke Daniels",
+          "reporter": "Brooke Daniels",
+          "component": "Medicaid",
+          "labels": [
+            "HCMC"
+          ],
+          "updated": "2026-10-17",
+          "url": ""
+        },
+        {
+          "key": "CO-1907",
+          "summary": "HCMC: Presumptive charity review",
+          "status": "In Progress",
+          "type": "Story",
+          "assignee": "Brooke Daniels",
+          "reporter": "Marie Murphy",
+          "component": "Presumptive Charity",
+          "labels": [
+            "HCMC"
+          ],
+          "updated": "2026-11-03",
+          "url": ""
+        }
+      ]
+    },
+    "paragon": {
+      "name": "Paragon",
+      "jql": "",
+      "issues": [
+        {
+          "key": "CO-1908",
+          "summary": "Paragon: Reporting request",
+          "status": "In Progress",
+          "type": "Task",
+          "assignee": "Brooke Daniels",
+          "reporter": "Brooke Daniels",
+          "component": "Reporting",
+          "labels": [
+            "Paragon"
+          ],
+          "updated": "2026-11-03",
+          "url": ""
+        },
+        {
+          "key": "CO-1909",
+          "summary": "Paragon: File load exception",
+          "status": "Done",
+          "type": "Task",
+          "assignee": "Brooke Daniels",
+          "reporter": "Brooke Daniels",
+          "component": "File Load",
+          "labels": [
+            "Paragon"
+          ],
+          "updated": "2026-10-26",
+          "url": ""
+        }
+      ]
+    },
+    "inova": {
+      "name": "Inova",
+      "jql": "",
+      "issues": [
+        {
+          "key": "CO-1910",
+          "summary": "Inova: Reporting request",
+          "status": "In Progress",
+          "type": "Task",
+          "assignee": "Cortney",
+          "reporter": "Cortney",
+          "component": "Reporting",
+          "labels": [
+            "Inova"
+          ],
+          "updated": "2026-10-15",
+          "url": ""
+        },
+        {
+          "key": "CO-1911",
+          "summary": "Inova: Bankruptcy monitoring results",
+          "status": "In Progress",
+          "type": "Task",
+          "assignee": "Cortney",
+          "reporter": "Cortney",
+          "component": "Bankruptcy",
+          "labels": [
+            "Inova"
+          ],
+          "updated": "2026-10-11",
+          "url": ""
+        }
+      ]
+    },
+    "ochsner": {
+      "name": "Ochsner",
+      "jql": "",
+      "issues": [
+        {
+          "key": "CO-1912",
+          "summary": "Ochsner: Return mail address results",
+          "status": "In Progress",
+          "type": "Task",
+          "assignee": "Cortney",
+          "reporter": "Cortney",
+          "component": "Return Mail",
+          "labels": [
+            "Ochsner"
+          ],
+          "updated": "2026-11-03",
+          "url": ""
+        },
+        {
+          "key": "CO-1913",
+          "summary": "Ochsner: Segment call cadence",
+          "status": "To Do",
+          "type": "Story",
+          "assignee": "Cortney",
+          "reporter": "Cortney",
+          "component": "Segmentation",
+          "labels": [
+            "Ochsner"
+          ],
+          "updated": "2026-11-03",
+          "url": ""
+        }
+      ]
+    },
+    "lakeland": {
+      "name": "Lakeland",
+      "jql": "",
+      "issues": [
+        {
+          "key": "CO-1914",
+          "summary": "Lakeland: Patient financial clearance review",
+          "status": "Blocked",
+          "type": "Task",
+          "assignee": "Kimm",
+          "reporter": "Kimm",
+          "component": "Patient Financial Clearance",
+          "labels": [
+            "Lakeland"
+          ],
+          "updated": "2026-10-22",
+          "url": ""
+        },
+        {
+          "key": "CO-1915",
+          "summary": "Lakeland: Deceased scrub results",
+          "status": "In Review",
+          "type": "Task",
+          "assignee": "Kimm",
+          "reporter": "Kimm",
+          "component": "Deceased",
+          "labels": [
+            "Lakeland"
+          ],
+          "updated": "2026-11-03",
+          "url": ""
+        },
+        {
+          "key": "CO-1916",
+          "summary": "Lakeland: Segment call cadence",
+          "status": "In Review",
+          "type": "Task",
+          "assignee": "Kimm",
+          "reporter": "Kimm",
+          "component": "Segmentation",
+          "labels": [
+            "Lakeland"
+          ],
+          "updated": "2026-11-03",
+          "url": ""
+        }
+      ]
+    },
+    "memorial-care": {
+      "name": "Memorial Care",
+      "jql": "",
+      "issues": [
+        {
+          "key": "CO-1917",
+          "summary": "Memorial Care: Presumptive charity review",
+          "status": "In Review",
+          "type": "Task",
+          "assignee": "Kimm",
+          "reporter": "Kimm",
+          "component": "Presumptive Charity",
+          "labels": [
+            "Memorial Care"
+          ],
+          "updated": "2026-11-03",
+          "url": ""
+        },
+        {
+          "key": "CO-1918",
+          "summary": "Memorial Care: Reporting request",
+          "status": "Done",
+          "type": "Task",
+          "assignee": "Kimm",
+          "reporter": "Kimm",
+          "component": "Reporting",
+          "labels": [
+            "Memorial Care"
+          ],
+          "updated": "2026-11-03",
+          "url": ""
+        },
+        {
+          "key": "CO-1919",
+          "summary": "Memorial Care: Address verification results",
+          "status": "Done",
+          "type": "Task",
+          "assignee": "Kimm",
+          "reporter": "Kimm",
+          "component": "Address Verification",
+          "labels": [
+            "Memorial Care"
+          ],
+          "updated": "2026-10-16",
+          "url": ""
+        }
+      ]
+    },
+    "thomas-jefferson": {
+      "name": "Thomas Jefferson",
+      "jql": "",
+      "issues": [
+        {
+          "key": "CO-1920",
+          "summary": "Thomas Jefferson: Reporting request",
+          "status": "Blocked",
+          "type": "Story",
+          "assignee": "Melissa",
+          "reporter": "Melissa",
+          "component": "Reporting",
+          "labels": [
+            "Thomas Jefferson"
+          ],
+          "updated": "2026-10-23",
+          "url": ""
+        },
+        {
+          "key": "CO-1921",
+          "summary": "Thomas Jefferson: Reporting request",
+          "status": "To Do",
+          "type": "Task",
+          "assignee": "Melissa",
+          "reporter": "Melissa",
+          "component": "Reporting",
+          "labels": [
+            "Thomas Jefferson"
+          ],
+          "updated": "2026-11-03",
+          "url": ""
+        },
+        {
+          "key": "CO-1922",
+          "summary": "Thomas Jefferson: Dialer campaign results",
+          "status": "Blocked",
+          "type": "Task",
+          "assignee": "Melissa",
+          "reporter": "Melissa",
+          "component": "Dialer",
+          "labels": [
+            "Thomas Jefferson"
+          ],
+          "updated": "2026-11-03",
+          "url": ""
+        }
       ]
     }
   }

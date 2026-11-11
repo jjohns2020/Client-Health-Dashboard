@@ -20,9 +20,28 @@ test('issueFromApi keeps the fields the client page shows', () => {
     status: 'In Progress',
     type: 'Story',
     assignee: 'Alex Kim',
+    reporter: '',
+    component: '',
+    labels: [],
     updated: '2026-11-02',
     url: 'https://example.atlassian.net/browse/CO-100',
   });
+});
+
+test('issueFromApi keeps reporter, component, and labels', () => {
+  const issue = issueFromApi({
+    key: 'CO-200',
+    fields: {
+      summary: 'Medicaid scrub',
+      reporter: { displayName: 'Jessica Johns' },
+      components: [{ name: 'Medicaid' }, { name: 'Reporting' }],
+      labels: ['MaineHealth'],
+    },
+  }, '');
+  assert.equal(issue.reporter, 'Jessica Johns');
+  assert.equal(issue.component, 'Medicaid');
+  assert.deepEqual(issue.labels, ['MaineHealth']);
+  assert.equal(issue.url, '');
 });
 
 test('toSnapshot groups issues by client id', () => {
@@ -41,17 +60,27 @@ test('toSnapshot groups issues by client id', () => {
   assert.equal(snapshot.source, 'jira');
 });
 
-test('mock issues cover every configured client and stay labeled sample', () => {
+test('mock issues look like a Jira connection and can be grouped', () => {
   const config = JSON.parse(readFileSync(new URL('../../jira/clients.json', import.meta.url), 'utf8'));
   const mock = JSON.parse(readFileSync(new URL('../../jira/mock-clients.json', import.meta.url), 'utf8'));
   assert.equal(mock.source, 'mock');
   for (const row of config.clients) {
-    const issues = mock.clients[row.id] && mock.clients[row.id].issues;
-    assert.ok(issues && issues.length, `${row.id} has sample issues`);
-    for (const issue of issues) {
-      assert.match(issue.key, /^SAMPLE-/);
-      assert.match(issue.summary, /^Sample:/);
-      assert.equal(issue.url, '');
-    }
+    const clientIssues = mock.clients[row.id] && mock.clients[row.id].issues;
+    assert.ok(clientIssues && clientIssues.length, `${row.id} has tickets`);
   }
+  const issues = Object.values(mock.clients).flatMap((client) => client.issues);
+  const reporters = new Set();
+  const components = new Set();
+  for (const issue of issues) {
+    assert.match(issue.key, /^CO-\d+$/);
+    assert.ok(issue.reporter, issue.key);
+    assert.ok(issue.component, issue.key);
+    assert.ok(Array.isArray(issue.labels) && issue.labels.length, issue.key);
+    assert.equal(issue.url, '');
+    reporters.add(issue.reporter);
+    components.add(issue.component);
+  }
+  assert.ok(reporters.has('Tiffany Rudy'));
+  assert.ok(reporters.has('Jessica Johns'));
+  assert.ok(components.size >= 8);
 });
