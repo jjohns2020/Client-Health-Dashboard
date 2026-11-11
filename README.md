@@ -6,7 +6,7 @@ client health, and client success). `CO_ROI_Dashboard_Mockup (1).html` remains t
 
 All data is **sample data** from the prototypes. Values labelled *illustrative* / *sample* in the UI are not validated
 production data. No production systems, Microsoft 365, databases or client data are connected. Each client’s
-health tab includes a sample Jira snapshot until a real pull replaces it. Client health has a Jira tracking view grouped by reporter, client label, and component. Tiffany Rudy’s login also shows tickets by consultant and type of work. The workspace does not read email.
+health tab includes a sample Jira snapshot until a real pull replaces it. Client health has a Jira tracking view grouped by reporter, client label, and component. Tiffany Rudy’s leadership login also shows charts, a CSV download, and tickets by consultant and type of work. That same login can reassign clients and mark an account complex; the consultant tracker turns those marks into availability. Assignments stay in the browser session. The workspace does not read email.
 
 The app opens on the command center sign-in. Choose **Sign in with Microsoft**, then a sample account. Nothing is sent
 to a directory, and the workspace does not read email, Outlook, or calendars. Reviews on the home page are ROI reviews
@@ -75,7 +75,7 @@ Each client in `jira/clients.json` can have a JQL query. The pull calls Jira’s
 `public/jira-clients.json`. The command center loads that file and shows the matching issues on that
 client’s health tab and replaces the sample file `jira/mock-clients.json`. Client health → Jira tracking
 groups those tickets by reporter (consultant), client label, and component (type of work). Tiffany Rudy’s
-login adds a consultant-by-type grid. An empty `jql` leaves that client on the sample issues.
+leadership login adds open-ticket charts, a CSV download, and a consultant-by-type grid. An empty `jql` leaves that client on the sample issues.
 The API token stays in the environment and is never written into the page.
 
 ```bash
@@ -89,6 +89,10 @@ npm run jira:pull
 
 GitHub Pages runs the same pull during deploy when the repository secrets `JIRA_BASE_URL`, `JIRA_EMAIL`,
 and `JIRA_API_TOKEN` are set. Without those secrets the site keeps the sample issues.
+
+## Leadership admin
+
+Tiffany Rudy’s login is the leadership role. Backend admin reassigns a client to another consultant and marks the account complex or standard. The consultant tracker scores each book at 1 point per standard client and 2 points per complex client, against an 8-point full book, and labels the consultant available, limited, or full. Those edits stay in the browser session. Client reviews stay read-only for leadership.
 
 ## Connecting real data later
 
