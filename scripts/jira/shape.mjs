@@ -17,6 +17,7 @@ export function issueFromApi(issue, site) {
     reporter: String(reporter || ''),
     component: String(components[0] || ''),
     labels,
+    opened: String(fields.created || '').slice(0, 10),
     updated: String(fields.updated || '').slice(0, 10),
     url: site ? `${site.replace(/\/$/, '')}/browse/${issue.key}` : '',
   };
