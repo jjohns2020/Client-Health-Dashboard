@@ -5,12 +5,18 @@ export function issueFromApi(issue, site) {
   const status = fields.status && fields.status.name;
   const type = fields.issuetype && fields.issuetype.name;
   const assignee = fields.assignee && fields.assignee.displayName;
+  const reporter = fields.reporter && fields.reporter.displayName;
+  const components = Array.isArray(fields.components) ? fields.components.map((item) => item && item.name).filter(Boolean) : [];
+  const labels = Array.isArray(fields.labels) ? fields.labels.map((label) => String(label)) : [];
   return {
     key: String(issue.key || ''),
     summary: String(fields.summary || ''),
     status: String(status || ''),
     type: String(type || ''),
     assignee: String(assignee || ''),
+    reporter: String(reporter || ''),
+    component: String(components[0] || ''),
+    labels,
     updated: String(fields.updated || '').slice(0, 10),
     url: site ? `${site.replace(/\/$/, '')}/browse/${issue.key}` : '',
   };

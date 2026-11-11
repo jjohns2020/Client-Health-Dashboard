@@ -929,7 +929,7 @@ function wireClient(c){const on=(id,fn)=>{const el=$('#'+id);if(el)el.addEventLi
 function vSimple(fn,title){return ()=>{fn();const m=$('#main');m.innerHTML=`<p class="crumb"><span class="link" id="back">← All clients</span></p>`+m.innerHTML;$('#back').addEventListener('click',goHome);bindToClient()}}
 function bindToClient(){$$('[data-c]').forEach(b=>b.addEventListener('click',()=>goClient(b.dataset.c,'health')))}
 function renderNav(){}
-function render(){const bc=$('#bellN');if(ME){const n=alertCount();bc.textContent=n;bc.hidden=!n}const map={alerts:vAlerts,rules:vRules,home:vCommand,snapshot:vSnapshot,reviews:vReviews,health:vHealthHub,success:vSuccessHub,roi:vROIHub,landing:vLanding,client:vClient,queue:vSimple(vQueue),activity:vSimple(vActivity),users:vSimple(vUsers),model:vSimple(vModel)};(map[view]||vLanding)();window.scrollTo(0,0)}
+function render(){const bc=$('#bellN');if(ME){const n=alertCount();bc.textContent=n;bc.hidden=!n}const map={alerts:vAlerts,rules:vRules,home:vCommand,snapshot:vSnapshot,reviews:vReviews,health:vHealthHub,jira:vJira,success:vSuccessHub,roi:vROIHub,landing:vLanding,client:vClient,queue:vSimple(vQueue),activity:vSimple(vActivity),users:vSimple(vUsers),model:vSimple(vModel)};(map[view]||vLanding)();window.scrollTo(0,0)}
 
 /* ================= ALERTS & TRIGGERS ================= */
 const RULES=[
@@ -1080,7 +1080,7 @@ function vCommand(){
   ${tile('roi','💲','CO results',fm(T),`2025 quantified value · ${strong} of ${withR.length} at 5:1+`,both.length?`<span class="st-s">Same ${both.length} clients: ${fm(t24)} in 2024 → ${fm(t25)} in 2025 (${t24?((t25/t24-1)*100).toFixed(0):0}%)</span>`:'',C.purple)}
  </div>
  <div class="mods">
-  <div class="mod" style="--mc:${C.blue}"><p class="mod-t">Client health</p><p class="mod-k"><b>${avg??'—'}</b> average · <b>${ews}</b> early warnings</p><ul><li>Health score</li><li>Risks</li><li>Engagement</li><li>Utilization <span class="note" style="margin:0">(${adAvg??'—'}% adoption)</span></li><li>Early warnings</li></ul><button type="button" class="mod-go" data-go="health">ENTER →</button></div>
+  <div class="mod" style="--mc:${C.blue}"><p class="mod-t">Client health</p><p class="mod-k"><b>${avg??'—'}</b> average · <b>${ews}</b> early warnings</p><ul><li>Health score</li><li>Risks</li><li>Engagement</li><li>Utilization <span class="note" style="margin:0">(${adAvg??'—'}% adoption)</span></li><li>Early warnings</li><li>Jira tracking</li></ul><button type="button" class="mod-go" data-go="health">ENTER →</button></div>
   <div class="mod" style="--mc:${C.teal}"><p class="mod-t">Client success</p><p class="mod-k"><b>${goals}</b> clients with goals · <b>${stk.length}</b> stakeholders</p><ul><li>Goals</li><li>Initiatives</li><li>Success plan</li><li>Stakeholders</li></ul><button type="button" class="mod-go" data-go="success">ENTER →</button></div>
   <div class="mod" style="--mc:${C.purple}"><p class="mod-t">ROI</p><p class="mod-k"><b>${fm(T)}</b> benefit · <b>${fm(cash)}</b> cash impact</p><ul><li>ROI</li><li>Benefit</li><li>Cash impact</li><li>Trends</li><li>Workflow value</li></ul><button type="button" class="mod-go" data-go="roi">ENTER →</button></div>
  </div>
@@ -1105,8 +1105,9 @@ function vHealthHub(){const all=scopeList();let list=all.filter(c=>hFilter==='al
  const risks=riskItems(list).filter(i=>i[0]>=2);const ewAll=rows.flatMap(x=>x.ew.map(w=>({c:x.c,w}))).sort((a,b)=>b.w[2]-a.w[2]);
  const stk=list.flatMap(c=>c.review?c.review.people.map(p=>({c,p})):[]);const dm=stk.filter(x=>/decision/i.test(x.p[2]));
  const engCnt=k=>stk.filter(x=>x.p[3]===k).length;
- $('#main').innerHTML=hubHead('Client health',`${list.length} clients · health score, risks, engagement, utilization and early warnings`,[['h-score','Health score'],['h-risks','Risks'],['h-eng','Engagement'],['h-util','Utilization'],['h-ew','Early warnings']])+
- `<div class="filters">${[['all','All clients'],['risk','At risk (Red + Yellow)'],['red','Red only']].map(f=>`<button type="button" class="btn hf ${hFilter===f[0]?'on':''}" data-hf="${f[0]}">${f[1]}</button>`).join('')}</div>
+ $('#main').innerHTML=hubHead('Client health',`${list.length} clients · health score, risks, engagement, utilization, early warnings and Jira`,[['h-jira','Jira'],['h-score','Health score'],['h-risks','Risks'],['h-eng','Engagement'],['h-util','Utilization'],['h-ew','Early warnings']])+
+ `<div class="card" id="h-jira"><h4>Jira tracking</h4><div id="jira-hub"><p class="note">Loading Jira…</p></div></div>
+ <div class="filters">${[['all','All clients'],['risk','At risk (Red + Yellow)'],['red','Red only']].map(f=>`<button type="button" class="btn hf ${hFilter===f[0]?'on':''}" data-hf="${f[0]}">${f[1]}</button>`).join('')}</div>
  <div class="card" id="h-score"><h4>Health score</h4><div style="overflow-x:auto"><table><tr><th>Client</th>${ME.role!=='consultant'?'<th>Consultant</th>':''}<th style="text-align:center">Score</th><th>Rating</th>${DIM.map(d=>`<th style="text-align:center">${d[1]}</th>`).join('')}<th style="text-align:center">Early warnings</th></tr>
  ${rows.map(({c,h,ew})=>`<tr class="click" data-cl="${c.id}"><td><b>${esc(c.name)}</b></td>${ME.role!=='consultant'?`<td>${esc(FULL[c.con]||c.con)}</td>`:''}<td class="cell">${h.s.overall??'—'}</td><td>${rag(h.final)}${h.mismatch?' ⚠':''}</td>${DIM.map(([k])=>{const v=h.s.p[k],b=band(v);return `<td class="cell" title="${esc(h.s.w[k])}" style="background:${b[2]};color:${b[1]}">${v??'—'}</td>`}).join('')}<td class="cell">${ew.filter(w=>w[2]>=2).length||'—'}</td></tr>`).join('')}</table></div><p class="note">"—" means no client review data for that area yet. ⚠ = consultant rating differs from the data.</p></div>
  <div class="card" id="h-risks"><h4>Risks</h4>${risks.length?`<table><tr><th>Severity</th><th>Client</th><th>Area</th><th>Detail</th></tr>${risks.slice(0,25).map(i=>`<tr class="click" data-cl="${i[1].id}"><td><span class="chip" style="background:${SEV[i[0]][1]};color:${SEV[i[0]][2]}">${SEV[i[0]][0]}</span></td><td>${esc(i[1].name)}</td><td>${esc(i[2])}</td><td>${esc(i[3])}</td></tr>`).join('')}</table>`:'<p class="note">No medium or high risks.</p>'}</div>
@@ -1116,7 +1117,7 @@ function vHealthHub(){const all=scopeList();let list=all.filter(c=>hFilter==='al
  <div class="card" id="h-ew"><h4>Early warnings</h4>${ewAll.length?ewAll.slice(0,20).map(x=>`<div class="row click" data-cl="${x.c.id}"><div><b>${esc(x.c.name)}</b> · ${esc(x.w[0])}<br><span style="font-size:12.5px;color:var(--gray)">${esc(x.w[1])}</span></div><span class="chip" style="background:${SEV[x.w[2]][1]};color:${SEV[x.w[2]][2]}">${SEV[x.w[2]][0]}</span></div>`).join(''):'<p class="note">No early warnings.</p>'}
   <p class="note">Signals: leadership change, competitor, questioning value, budget talk, disengaged stakeholders, renewal inside 120 days, ROI value falling, health dropping, out-of-date review.</p></div></div>
  <div class="card" id="h-util"><h4>Utilization</h4><div style="overflow-x:auto"><table><tr><th>Client</th>${COMP.map(k=>`<th class="cth">${esc(k)}</th>`).join('')}<th style="text-align:center">Adoption</th></tr>${list.filter(c=>c.review).map(c=>`<tr class="click" data-cl="${c.id}"><td><b>${esc(c.name)}</b></td>${COMP.map(k=>{const x=compCell(c.review.comp[k]);return `<td class="cell" title="${esc(k)}: ${x[3]}" style="background:${x[1]};color:${x[2]}">${x[0]}</td>`}).join('')}<td class="cell">${adoption(c.review)??'—'}${adoption(c.review)!=null?'%':''}</td></tr>`).join('')}</table></div><p class="note">✔ live · ◐ partial or in build · ✕ not live · – not applicable · ? to confirm. ${list.filter(c=>!c.review).length} clients without a client review are not shown.</p></div>`;
- $$('[data-hf]').forEach(b=>b.addEventListener('click',()=>{hFilter=b.dataset.hf;render()}));wireHub()}
+ $$('[data-hf]').forEach(b=>b.addEventListener('click',()=>{hFilter=b.dataset.hf;render()}));wireHub();paintJiraHub()}
 /* ---- CLIENT SUCCESS hub ---- */
 function successPlan(c){const rv=c.review,h=health(c),ew=earlyWarnings(c);const steps=[];
  if(rv)rv.risk.filter(r=>r[1]==='R'||r[1]==='Y').slice(0,2).forEach(r=>{if(r[3])steps.push(r[3])});
@@ -1165,6 +1166,98 @@ function tROIX(c,rv,ed){const p=r24(c),t=tot25(c);const cash=(c.row.seg||0)+(c.r
 
 
 var jiraFile, jiraLoad;
+function ensureJira(done){
+  if(jiraFile!==undefined){done(jiraFile);return}
+  if(!jiraLoad)jiraLoad=fetch(new URL('jira-clients.json',location.href),{cache:'no-store'}).then(function(r){return r.ok?r.json():null}).catch(function(){return null}).then(function(d){jiraFile=d;return d});
+  jiraLoad.then(done);
+}
+function jiraNote(){
+  if(!jiraFile)return 'Jira snapshot could not be loaded.';
+  var when=jiraFile.pulledAt?String(jiraFile.pulledAt).slice(0,10):'';
+  if(jiraFile.source==='jira')return 'Pulled from Jira'+(when?' on '+when:'')+'.';
+  return 'Jira project snapshot'+(when?' · '+when:'')+'. Sample tickets until a live pull replaces them.';
+}
+function jiraFlat(){
+  var allowed=new Set(scopeList().map(function(c){return c.id}));
+  var clients=jiraFile&&jiraFile.clients||{};
+  var out=[];
+  Object.keys(clients).forEach(function(id){
+    if(!allowed.has(id))return;
+    (clients[id].issues||[]).forEach(function(issue){
+      out.push(Object.assign({},issue,{clientId:id,client:clients[id].name||id,reporter:issue.reporter||'Unknown',component:issue.component||'Unspecified'}));
+    });
+  });
+  out.sort(function(a,b){return String(b.updated||'').localeCompare(String(a.updated||''))});
+  return out;
+}
+function jiraGroups(issues,key){
+  var map=new Map();
+  issues.forEach(function(issue){var k=issue[key]||'Unknown'; if(!map.has(k))map.set(k,[]); map.get(k).push(issue)});
+  return [...map.entries()].sort(function(a,b){return b[1].length-a[1].length||a[0].localeCompare(b[0])});
+}
+function jiraKey(issue){return issue.url?'<a href="'+esc(issue.url)+'" target="_blank" rel="noopener">'+esc(issue.key)+'</a>':esc(issue.key)}
+function jiraRows(issues){
+  return issues.map(function(i){return '<tr class="click" data-cl="'+esc(i.clientId)+'"><td>'+jiraKey(i)+'</td><td>'+esc(i.summary)+'</td><td>'+esc(i.client)+'</td><td>'+esc(i.component)+'</td><td>'+esc(i.reporter)+'</td><td>'+esc(i.status)+'</td><td>'+esc(i.updated||'')+'</td></tr>'}).join('');
+}
+function jiraTable(issues){
+  if(!issues.length)return '<p class="note">No tickets in this group.</p>';
+  return '<div style="overflow-x:auto"><table><tr><th>Key</th><th>Summary</th><th>Client</th><th>Type of work</th><th>Reporter</th><th>Status</th><th>Updated</th></tr>'+jiraRows(issues)+'</table></div>';
+}
+function jiraGroupCards(title,blurb,issues,key){
+  var groups=jiraGroups(issues,key);
+  return '<div class="card"><h4>'+title+'</h4><p class="note" style="margin-block-start:0">'+blurb+'</p>'+
+    (groups.length?groups.map(function(g){return '<details style="margin-block-end:8px"><summary><b>'+esc(g[0])+'</b> · '+g[1].length+' ticket'+(g[1].length===1?'':'s')+'</summary>'+jiraTable(g[1])+'</details>'}).join(''):'<p class="note">No tickets in this book.</p>')+'</div>';
+}
+function jiraMatrix(issues){
+  var open=issues.filter(function(i){return i.status!=='Done'});
+  var reporters=[...new Set(open.map(function(i){return i.reporter}))].sort();
+  var components=[...new Set(open.map(function(i){return i.component}))].sort();
+  var cell=function(rep,comp){return open.filter(function(i){return i.reporter===rep&&i.component===comp}).length};
+  var head='<tr><th>Consultant</th>'+components.map(function(c){return '<th class="num">'+esc(c)+'</th>'}).join('')+'<th class="num">Open</th></tr>';
+  var body=reporters.map(function(rep){
+    var total=0;
+    var cells=components.map(function(comp){var n=cell(rep,comp); total+=n; return '<td class="num">'+(n||'—')+'</td>'}).join('');
+    return '<tr><td><b>'+esc(rep)+'</b></td>'+cells+'<td class="num"><b>'+total+'</b></td></tr>';
+  }).join('');
+  var foot='<tr><td><b>Open tickets</b></td>'+components.map(function(comp){return '<td class="num"><b>'+open.filter(function(i){return i.component===comp}).length+'</b></td>'}).join('')+'<td class="num"><b>'+open.length+'</b></td></tr>';
+  return '<div class="card" id="jira-matrix"><h4>Tickets by consultant and type of work</h4><p class="note" style="margin-block-start:0">Tiffany Rudy’s view. Rows are who entered the ticket. Columns are the Jira component, the type of work. Counts are open tickets.</p><div style="overflow-x:auto"><table>'+head+body+foot+'</table></div></div>';
+}
+function jiraBoardHtml(){
+  var issues=jiraFlat();
+  var open=issues.filter(function(i){return i.status!=='Done'}).length;
+  var matrix=ME&&ME.id==='tr'?jiraMatrix(issues):'';
+  return '<p class="note">'+esc(jiraNote())+' · '+issues.length+' tickets · '+open+' open.</p>'+matrix+
+    jiraGroupCards('Tickets entered by consultant','Grouped by reporter, the person who entered the ticket.',issues,'reporter')+
+    jiraGroupCards('Tickets by client','Grouped by the client label on the ticket.',issues,'client')+
+    jiraGroupCards('Tickets by type of work','Grouped by Jira component.',issues,'component');
+}
+function bindJiraClients(root){
+  $$(root+' [data-cl]').forEach(function(b){b.addEventListener('click',function(){hubFrom=view;goClient(b.dataset.cl,'health')})});
+  $$(root+' [data-go]').forEach(function(b){b.addEventListener('click',function(){view=b.dataset.go;render()})});
+}
+function paintJiraHub(){
+  ensureJira(function(){
+    var el=$('#jira-hub'); if(!el)return;
+    var issues=jiraFlat();
+    var open=issues.filter(function(i){return i.status!=='Done'});
+    var byRep=jiraGroups(open,'reporter').slice(0,4).map(function(g){return esc(g[0])+' '+g[1].length}).join(' · ')||'None';
+    var byWork=jiraGroups(open,'component').slice(0,4).map(function(g){return esc(g[0])+' '+g[1].length}).join(' · ')||'None';
+    el.innerHTML='<p class="note" style="margin-block-start:0">'+esc(jiraNote())+'</p><p class="p"><b>'+open.length+'</b> open ticket'+(open.length===1?'':'s')+' in this book · '+issues.length+' total.</p>'+
+      '<p class="p" style="margin-block:4px">By consultant: '+byRep+'</p><p class="p" style="margin-block:4px 10px">By type of work: '+byWork+'</p>'+
+      (ME&&ME.id==='tr'?'<p class="p">Your login includes the consultant-by-type grid.</p>':'')+
+      '<button type="button" class="btn" data-go="jira">Open Jira tracking</button>';
+    bindJiraClients('#jira-hub');
+  });
+}
+function vJira(){
+  $('#main').innerHTML=hubHead('Jira tracking','Reporter, client label, and type of work from the Jira snapshot',[])+'<div id="jira-board"><p class="note">Loading Jira…</p></div>';
+  wireHub();
+  ensureJira(function(){
+    var el=$('#jira-board'); if(!el)return;
+    el.innerHTML=jiraBoardHtml();
+    bindJiraClients('#jira-board');
+  });
+}
 function loadClientJira(id){
   var slot=$('#jira-slot'); if(!slot)return;
   slot.dataset.client=id;
@@ -1172,14 +1265,13 @@ function loadClientJira(id){
     var el=$('#jira-slot'); if(!el||el.dataset.client!==id)return;
     var row=file&&file.clients&&file.clients[id];
     if(!row){el.remove();return}
-    var issues=row.issues||[];
-    var when=file.pulledAt?String(file.pulledAt).slice(0,16).replace('T',' ')+' UTC':'';
-    var note=file.source==='mock'?'Sample issues for this client. A Jira pull replaces this sample.':'Pulled from Jira for this client'+(when?' · '+esc(when):'')+'.';
-    el.innerHTML=`<div class="card"><h4>Jira</h4><p class="note" style="margin-block-start:0">${note}</p>${issues.length?`<table><tr><th>Key</th><th>Summary</th><th>Status</th><th>Updated</th><th>Assignee</th></tr>${issues.map(i=>`<tr><td>${i.url?`<a href="${esc(i.url)}" target="_blank" rel="noopener">${esc(i.key)}</a>`:esc(i.key)}</td><td>${esc(i.summary)}</td><td>${esc(i.status)}</td><td>${esc(i.updated)}</td><td>${esc(i.assignee||'—')}</td></tr>`).join('')}</table>`:'<p class="note">No issues matched this client’s Jira query.</p>'}</div>`;
+    var issues=(row.issues||[]).map(function(issue){return Object.assign({},issue,{clientId:id,client:row.name||id,reporter:issue.reporter||'—',component:issue.component||'—' })});
+    el.innerHTML='<div class="card"><h4>Jira</h4><p class="note" style="margin-block-start:0">'+esc(jiraNote())+'</p>'+
+      (issues.length?jiraTable(issues):'<p class="note">No tickets for this client.</p>')+
+      '<p class="note"><span class="link" data-go="jira">Open Jira tracking →</span></p></div>';
+    bindJiraClients('#jira-slot');
   }
-  if(jiraFile!==undefined){paint(jiraFile);return}
-  if(!jiraLoad)jiraLoad=fetch(new URL('jira-clients.json',location.href),{cache:'no-store'}).then(function(r){return r.ok?r.json():null}).catch(function(){return null}).then(function(d){jiraFile=d;return d});
-  jiraLoad.then(paint);
+  ensureJira(paint);
 }
 
 (function(){
