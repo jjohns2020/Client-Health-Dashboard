@@ -35,7 +35,7 @@ async function search(site, auth, jql) {
     body: JSON.stringify({
       jql,
       maxResults: MAX,
-      fields: ['summary', 'status', 'issuetype', 'assignee', 'reporter', 'components', 'labels', 'created', 'updated'],
+      fields: ['summary', 'status', 'issuetype', 'assignee', 'reporter', 'components', 'labels', 'created', 'resolutiondate', 'updated'],
     }),
   });
   if (!response.ok) {

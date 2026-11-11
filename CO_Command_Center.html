@@ -1212,18 +1212,80 @@ function jiraAgeCell(issue){
   return '<td class="num" style="color:'+color+';font-weight:600">'+n+'</td>';
 }
 function jiraRows(issues){
-  return issues.map(function(i){return '<tr class="click" data-cl="'+esc(i.clientId)+'"><td>'+jiraKey(i)+'</td><td>'+esc(i.summary)+'</td><td>'+esc(i.client)+'</td><td>'+esc(i.component)+'</td><td>'+esc(i.reporter)+'</td><td>'+esc(i.status)+'</td><td>'+esc(fmtD(i.opened))+'</td>'+jiraAgeCell(i)+'<td>'+esc(i.updated||'')+'</td></tr>'}).join('');
+  return issues.map(function(i){return '<tr class="click" data-cl="'+esc(i.clientId)+'"><td>'+jiraKey(i)+'</td><td>'+esc(i.summary)+'</td><td>'+esc(i.client)+'</td><td>'+esc(i.component)+'</td><td>'+esc(i.reporter)+'</td><td>'+esc(i.status)+'</td><td>'+esc(fmtD(i.opened))+'</td>'+jiraAgeCell(i)+'<td>'+(i.closed?esc(fmtD(i.closed)):'—')+'</td><td>'+esc(i.updated||'')+'</td></tr>'}).join('');
 }
 function jiraTable(issues){
   if(!issues.length)return '<p class="note">No tickets in this group.</p>';
-  return '<div style="overflow-x:auto"><table><tr><th>Key</th><th>Summary</th><th>Client</th><th>Type of work</th><th>Reporter</th><th>Status</th><th>Opened</th><th class="num">Aging</th><th>Updated</th></tr>'+jiraRows(issues)+'</table></div>';
+  return '<div style="overflow-x:auto"><table><tr><th>Key</th><th>Summary</th><th>Client</th><th>Type of work</th><th>Reporter</th><th>Status</th><th>Opened</th><th class="num">Aging</th><th>Closed</th><th>Updated</th></tr>'+jiraRows(issues)+'</table></div>';
 }
 function jiraGroupCards(title,blurb,issues,key){
   var groups=jiraGroups(issues,key);
+  var empty=jiraWindow()?'No tickets in this date range.':'No tickets in this book.';
   return '<div class="card"><h4>'+title+'</h4><p class="note" style="margin-block-start:0">'+blurb+'</p>'+
-    (groups.length?groups.map(function(g){return '<details style="margin-block-end:8px"><summary><b>'+esc(g[0])+'</b> · '+g[1].length+' ticket'+(g[1].length===1?'':'s')+'</summary>'+jiraTable(g[1])+'</details>'}).join(''):'<p class="note">No tickets in this book.</p>')+'</div>';
+    (groups.length?groups.map(function(g){return '<details style="margin-block-end:8px"><summary><b>'+esc(g[0])+'</b> · '+g[1].length+' ticket'+(g[1].length===1?'':'s')+'</summary>'+jiraTable(g[1])+'</details>'}).join(''):'<p class="note">'+empty+'</p>')+'</div>';
 }
+var jiraFrom='', jiraTo='';
 function jiraOpen(issues){return issues.filter(function(i){return i.status!=='Done'})}
+function jiraClosed(issues){return issues.filter(function(i){return i.status==='Done'})}
+function jiraWindow(){
+  if(!isLeader()||(!jiraFrom&&!jiraTo))return null;
+  var from=jiraFrom||'0000-01-01', to=jiraTo||TODAY;
+  return {from:from,to:to,invalid:from>to};
+}
+function jiraInWindow(date,w){return !!(date&&date>=w.from&&date<=w.to)}
+function jiraActivity(issues){
+  var w=jiraWindow();
+  if(!w)return issues;
+  if(w.invalid)return [];
+  return issues.filter(function(i){return jiraInWindow(i.opened,w)||jiraInWindow(i.closed,w)});
+}
+function jiraRangeNote(){
+  var w=jiraWindow();
+  if(!w)return '';
+  if(w.invalid)return ' The start date is after the end date.';
+  return ' Showing '+(jiraFrom?fmtD(jiraFrom):'the earliest ticket')+' through '+(jiraTo?fmtD(jiraTo):'Nov 3, 2026')+'.';
+}
+function jiraMonthLabel(key){return new Date(key+'-01T12:00:00').toLocaleDateString('en-US',{month:'short',year:'numeric'})}
+function jiraMonthShift(key,delta){
+  var parts=String(key).split('-'), idx=(+parts[0])*12+(+parts[1]-1)+delta;
+  return Math.floor(idx/12)+'-'+String(idx%12+1).padStart(2,'0');
+}
+function jiraTrend(issues){
+  var w=jiraWindow();
+  if(w&&w.invalid)return [];
+  var keys=[];
+  issues.forEach(function(i){
+    if(i.opened&&(!w||jiraInWindow(i.opened,w)))keys.push(String(i.opened).slice(0,7));
+    if(i.closed&&(!w||jiraInWindow(i.closed,w)))keys.push(String(i.closed).slice(0,7));
+  });
+  var cursor, end;
+  if(w){
+    end=(w.to<TODAY?w.to:TODAY).slice(0,7);
+    keys.sort();
+    cursor=jiraFrom?w.from.slice(0,7):(keys[0]||end);
+    if(cursor>end)cursor=end;
+  } else { if(!keys.length)return []; keys.sort(); cursor=keys[0]; end=TODAY.slice(0,7) }
+  if(jiraMonthShift(cursor,23)<end)cursor=jiraMonthShift(end,-23);
+  var out=[];
+  while(cursor<=end && out.length<24){
+    var opened=issues.filter(function(i){return String(i.opened||'').slice(0,7)===cursor&&(!w||jiraInWindow(i.opened,w))}).length;
+    var closed=issues.filter(function(i){return String(i.closed||'').slice(0,7)===cursor&&(!w||jiraInWindow(i.closed,w))}).length;
+    out.push({key:cursor,label:jiraMonthLabel(cursor),opened:opened,closed:closed});
+    var parts=cursor.split('-'), y=+parts[0], m=+parts[1]+1;
+    if(m>12){m=1;y+=1}
+    cursor=y+'-'+String(m).padStart(2,'0');
+  }
+  return out;
+}
+function jiraTrendChart(issues){
+  var months=jiraTrend(issues);
+  var max=Math.max.apply(null,months.map(function(m){return Math.max(m.opened,m.closed)}).concat([1]));
+  var rows=months.map(function(m){
+    return '<div class="drv" style="grid-template-columns:88px 1fr 64px"><span>'+esc(m.label)+'</span><div><div class="bar" title="Opened '+m.opened+'"><span style="inline-size:'+(m.opened/max*100)+'%;background:'+C.blue+'"></span></div><div class="bar" title="Closed '+m.closed+'" style="margin-block-start:3px"><span style="inline-size:'+(m.closed/max*100)+'%;background:'+C.teal+'"></span></div></div><b style="text-align:end">'+m.opened+' / '+m.closed+'</b></div>';
+  }).join('');
+  var note=jiraWindow()?'Opened is the month the ticket was created. Closed is the month a Done ticket was resolved. Counts follow the date range and come from this sample snapshot.':'Opened is the month the ticket was created. Closed is the month a Done ticket was resolved. Counts are from this sample snapshot.';
+  return '<div class="card" id="jira-trend"><h4>Tickets opened and closed by month</h4><p class="note" style="margin-block-start:0">'+note+'</p><div class="legend2"><span><i style="background:'+C.blue+'"></i>Opened</span><span><i style="background:'+C.teal+'"></i>Closed</span></div>'+(rows||'<p class="note">No dated tickets.</p>')+'</div>';
+}
 function jiraMatrixParts(issues){
   var open=jiraOpen(issues);
   var reporters=[...new Set(open.map(function(i){return i.reporter}))].sort();
@@ -1257,7 +1319,7 @@ function jiraCharts(issues){
 }
 function jiraExportBar(){
   if(!isLeader())return '';
-  return '<div class="filters" id="jira-export"><button type="button" class="btn on" id="jiraCsv">Download tickets</button><button type="button" class="btn" id="jiraGrid">Download consultant grid</button><button type="button" class="btn" id="jiraChartsFile">Export charts</button><button type="button" class="btn" id="jiraPrint">Print</button><span class="note" style="margin:0">Chart export keeps the title and the bars. Ticket download is the sample snapshot, including open date and aging.</span></div>';
+  return '<div class="filters" id="jira-export"><label class="note" style="margin:0" for="jiraFrom">From</label><input class="sel" type="date" id="jiraFrom" max="'+TODAY+'" value="'+esc(jiraFrom)+'" aria-label="From date"><label class="note" style="margin:0" for="jiraTo">To</label><input class="sel" type="date" id="jiraTo" max="'+TODAY+'" value="'+esc(jiraTo)+'" aria-label="To date"><button type="button" class="btn" id="jiraRangeClear">All dates</button><button type="button" class="btn on" id="jiraCsv">Download tickets</button><button type="button" class="btn" id="jiraGrid">Download consultant grid</button><button type="button" class="btn" id="jiraChartsFile">Export charts</button><button type="button" class="btn" id="jiraPrint">Print</button><span class="note" style="margin:0">The month chart and the ticket download follow this date range. Open-ticket charts stay the tickets that are still open. Chart export keeps each title and the bars.</span></div>';
 }
 function jiraChartSection(title,groups,color){
   var max=Math.max.apply(null,groups.map(function(g){return g[1].length}).concat([1]));
@@ -1266,26 +1328,41 @@ function jiraChartSection(title,groups,color){
   }).join('');
   return '<section><h2>'+esc(title)+'</h2>'+(rows||'')+'</section>';
 }
-function jiraChartDocument(issues){
-  var open=jiraOpen(issues);
-  var body=jiraChartSection('Open tickets by consultant',jiraGroups(open,'reporter'),'#005EB8')
+function jiraTrendSection(issues){
+  var months=jiraTrend(issues);
+  var max=Math.max.apply(null,months.map(function(m){return Math.max(m.opened,m.closed)}).concat([1]));
+  var rows=months.map(function(m){
+    return '<div class="row"><span>'+esc(m.label)+'</span><div><div class="bar"><span style="width:'+(m.opened/max*100)+'%;background:#005EB8"></span></div><div class="bar" style="margin-top:3px"><span style="width:'+(m.closed/max*100)+'%;background:#00B4AA"></span></div></div></div>';
+  }).join('');
+  return '<section><h2>Tickets opened and closed by month</h2><p class="key"><i style="background:#005EB8"></i>Opened <i style="background:#00B4AA"></i>Closed</p>'+rows+'</section>';
+}
+function jiraChartDocument(issues,openIssues){
+  var open=openIssues||jiraOpen(issues);
+  var body=jiraTrendSection(issues)
+    +jiraChartSection('Open tickets by consultant',jiraGroups(open,'reporter'),'#005EB8')
     +jiraChartSection('Open tickets by type of work',jiraGroups(open,'component'),'#662D91')
     +jiraChartSection('Open tickets by client',jiraGroups(open,'client'),'#00B4AA');
   return '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Jira charts</title><style>'
     +'body{margin:32px;font-family:"Segoe UI",Arial,sans-serif;color:#262626}h2{font-size:18px;margin:0 0 14px;color:#005EB8}section{margin:0 0 28px}'
+    +'.key{margin:-6px 0 12px;font-size:13px}.key i{display:inline-block;width:10px;height:10px;border-radius:2px;margin:0 4px 0 10px}'
     +'.row{display:grid;grid-template-columns:220px 1fr;gap:12px;align-items:center;margin:7px 0;font-size:13px}'
     +'.bar{height:12px;background:#EEF0F3;border-radius:6px;overflow:hidden}.bar span{display:block;height:100%;border-radius:6px}'
     +'</style></head><body>'+body+'</body></html>';
 }
 function jiraBoardHtml(){
-  var issues=jiraFlat();
-  var open=jiraOpen(issues).length;
+  var all=jiraFlat();
+  var w=jiraWindow();
+  var activity=jiraActivity(all);
+  var openedN=w&&!w.invalid?all.filter(function(i){return jiraInWindow(i.opened,w)}).length:all.length;
+  var closedN=w&&!w.invalid?all.filter(function(i){return jiraInWindow(i.closed,w)}).length:jiraClosed(all).length;
+  var still=jiraOpen(all).length;
+  var counts=w&&w.invalid?'No tickets match this date range.':w?(openedN+' opened · '+closedN+' closed in this range. '+still+' tickets are still open.'):(all.length+' opened · '+closedN+' closed · '+still+' still open.');
   var leader=isLeader();
-  return '<p class="note">'+esc(jiraNote())+' · '+issues.length+' tickets · '+open+' open. Aging is days since the ticket was opened, as of Nov 3, 2026.</p>'+
-    (leader?jiraExportBar()+jiraCharts(issues)+jiraMatrix(issues):'')+
-    jiraGroupCards('Tickets entered by consultant','Grouped by reporter, the person who entered the ticket.',issues,'reporter')+
-    jiraGroupCards('Tickets by client','Grouped by the client label on the ticket.',issues,'client')+
-    jiraGroupCards('Tickets by type of work','Grouped by Jira component.',issues,'component');
+  return '<p class="note" id="jira-summary">'+esc(jiraNote())+' · '+counts+esc(jiraRangeNote())+' Aging is days since the ticket was opened, as of Nov 3, 2026.</p>'+
+    (leader?jiraExportBar()+jiraTrendChart(activity)+jiraCharts(all)+jiraMatrix(all):'')+
+    jiraGroupCards('Tickets entered by consultant','Grouped by reporter, the person who entered the ticket.',activity,'reporter')+
+    jiraGroupCards('Tickets by client','Grouped by the client label on the ticket.',activity,'client')+
+    jiraGroupCards('Tickets by type of work','Grouped by Jira component.',activity,'component');
 }
 function csvCell(value){
   var s=String(value==null?'':value);
@@ -1306,8 +1383,8 @@ function downloadCsv(name,rows){
   downloadFile(name,rows.map(function(row){return row.map(csvCell).join(',')}).join('\n'),'text/csv;charset=utf-8');
 }
 function jiraTicketRows(issues){
-  var rows=[['Key','Summary','Client','Label','Type of work','Reporter','Assignee','Status','Opened','Aging days','Updated']];
-  issues.forEach(function(i){var age=jiraAge(i.opened); rows.push([i.key,i.summary,i.client,(i.labels||[]).join('; '),i.component,i.reporter,i.assignee||'',i.status,i.opened||'',age==null?'':age,i.updated||''])});
+  var rows=[['Key','Summary','Client','Label','Type of work','Reporter','Assignee','Status','Opened','Aging days','Closed','Updated']];
+  issues.forEach(function(i){var age=jiraAge(i.opened); rows.push([i.key,i.summary,i.client,(i.labels||[]).join('; '),i.component,i.reporter,i.assignee||'',i.status,i.opened||'',age==null?'':age,i.closed||'',i.updated||''])});
   return rows;
 }
 function jiraGridRows(issues){
@@ -1320,11 +1397,21 @@ function jiraGridRows(issues){
   });
   return rows;
 }
+function paintJiraBoard(){
+  var el=$('#jira-board'); if(!el)return;
+  el.innerHTML=jiraBoardHtml();
+  bindJiraClients('#jira-board');
+  bindJiraExport();
+}
 function bindJiraExport(){
-  var csv=$('#jiraCsv'),grid=$('#jiraGrid'),charts=$('#jiraChartsFile'),print=$('#jiraPrint');
-  if(csv)csv.addEventListener('click',function(){var issues=jiraFlat(); downloadCsv('jira-tracking.csv',jiraTicketRows(issues)); toast('Downloaded '+issues.length+' tickets')});
+  var csv=$('#jiraCsv'),grid=$('#jiraGrid'),charts=$('#jiraChartsFile'),print=$('#jiraPrint'),from=$('#jiraFrom'),to=$('#jiraTo'),clear=$('#jiraRangeClear');
+  function applyRange(){jiraFrom=from&&from.value||''; jiraTo=to&&to.value||''; paintJiraBoard()}
+  if(from)from.addEventListener('change',applyRange);
+  if(to)to.addEventListener('change',applyRange);
+  if(clear)clear.addEventListener('click',function(){jiraFrom=''; jiraTo=''; paintJiraBoard()});
+  if(csv)csv.addEventListener('click',function(){var issues=jiraActivity(jiraFlat()); downloadCsv('jira-tracking.csv',jiraTicketRows(issues)); toast('Downloaded '+issues.length+' tickets'+(jiraWindow()?' in this date range':''))});
   if(grid)grid.addEventListener('click',function(){downloadCsv('jira-consultant-grid.csv',jiraGridRows(jiraFlat())); toast('Downloaded the consultant grid')});
-  if(charts)charts.addEventListener('click',function(){downloadFile('jira-charts.html',jiraChartDocument(jiraFlat()),'text/html;charset=utf-8'); toast('Exported the charts')});
+  if(charts)charts.addEventListener('click',function(){var all=jiraFlat(); downloadFile('jira-charts.html',jiraChartDocument(jiraActivity(all),jiraOpen(all)),'text/html;charset=utf-8'); toast(jiraWindow()?'Exported the charts. The month chart uses this date range.':'Exported the charts')});
   if(print)print.addEventListener('click',function(){try{window.print()}catch(e){toast('Printing is not available here')}});
 }
 function bindJiraClients(root){
@@ -1340,7 +1427,7 @@ function paintJiraHub(){
     var byWork=jiraGroups(open,'component').slice(0,4).map(function(g){return esc(g[0])+' '+g[1].length}).join(' · ')||'None';
     el.innerHTML='<p class="note" style="margin-block-start:0">'+esc(jiraNote())+'</p><p class="p"><b>'+open.length+'</b> open ticket'+(open.length===1?'':'s')+' in this book · '+issues.length+' total.</p>'+
       '<p class="p" style="margin-block:4px">By consultant: '+byRep+'</p><p class="p" style="margin-block:4px 10px">By type of work: '+byWork+'</p>'+
-      (isLeader()?'<p class="p">Your login adds charts, a download, and the consultant-by-type grid.</p>':'')+
+      (isLeader()?'<p class="p">Your login adds opened and closed trends, a date range, charts, a download, and the consultant-by-type grid.</p>':'')+
       '<button type="button" class="btn" data-go="jira">Open Jira tracking</button>';
     bindJiraClients('#jira-hub');
   });
@@ -1348,12 +1435,7 @@ function paintJiraHub(){
 function vJira(){
   $('#main').innerHTML=hubHead('Jira tracking','Reporter, client label, and type of work from the Jira snapshot',[])+'<div id="jira-board"><p class="note">Loading Jira…</p></div>';
   wireHub();
-  ensureJira(function(){
-    var el=$('#jira-board'); if(!el)return;
-    el.innerHTML=jiraBoardHtml();
-    bindJiraClients('#jira-board');
-    bindJiraExport();
-  });
+  ensureJira(paintJiraBoard);
 }
 function loadClientJira(id){
   var slot=$('#jira-slot'); if(!slot)return;
@@ -1363,7 +1445,7 @@ function loadClientJira(id){
     var row=file&&file.clients&&file.clients[id];
     if(!row){el.remove();return}
     var issues=(row.issues||[]).map(function(issue){return Object.assign({},issue,{clientId:id,client:row.name||id,reporter:issue.reporter||'—',component:issue.component||'—' })});
-    el.innerHTML='<div class="card"><h4>Jira</h4><p class="note" style="margin-block-start:0">'+esc(jiraNote())+' Aging is days since the ticket was opened, as of Nov 3, 2026.</p>'+
+    el.innerHTML='<div class="card"><h4>Jira</h4><p class="note" style="margin-block-start:0">'+esc(jiraNote())+' Aging is days since the ticket was opened, as of Nov 3, 2026. Closed is blank until the ticket is done.</p>'+
       (issues.length?jiraTable(issues):'<p class="note">No tickets for this client.</p>')+
       '<p class="note"><span class="link" data-go="jira">Open Jira tracking →</span></p></div>';
     bindJiraClients('#jira-slot');
