@@ -128,7 +128,7 @@ details.card summary{cursor:pointer}.facts{display:grid;grid-template-columns:re
 .st{background:var(--card);border:0;border-block-start:4px solid var(--blue);border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,.08);padding:14px 16px;text-align:start;cursor:pointer;font:inherit;color:inherit;display:grid;gap:4px;align-content:start}.st:hover{box-shadow:0 3px 10px rgba(0,94,184,.18)}
 .st-t{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--gray)}.st-v{font-size:30px;font-weight:800;line-height:1.1}.st-s{font-size:12.5px;color:var(--gray)}.st-go{font-size:12px;color:var(--blue);font-weight:700;margin-block-start:2px}
 .xr-bar.sm{display:flex;block-size:14px;border-radius:4px;overflow:hidden;margin-block:4px}.xr-bar.sm span{font-size:10px}
-.mods{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.mods{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
 .mod{background:var(--card);border-radius:14px;box-shadow:0 2px 8px rgba(0,0,0,.08);padding:22px;border-block-start:6px solid var(--mc);display:flex;flex-direction:column}
 .mod-t{font-size:20px;font-weight:800;color:var(--mc);margin:0;text-transform:uppercase;letter-spacing:1px}.mod-k{font-size:13px;color:var(--gray);margin-block:6px 10px}
 .mod ul{margin:0 0 16px;padding-inline-start:20px;font-size:14.5px;line-height:1.9;flex:1}
@@ -410,7 +410,7 @@ const USERS=[
  {id:'ch',name:'Cari Hoffman',title:'Collections Optimization Consultant',role:'consultant',con:'Cari',init:'CH'},
  {id:'rw',name:'Rich Wade',title:'Collections Optimization Consultant',role:'consultant',con:'Rich',init:'RW'},
  {id:'mm',name:'Marie Murphy',title:'Analytics Consulting Manager',role:'manager',con:'Marie',init:'MM'},
- {id:'tr',name:'Tiffany Rudy',title:'Leadership (read-only)',role:'leader',con:null,init:'TR'}];
+ {id:'tr',name:'Tiffany Rudy',title:'Leadership · admin',role:'leader',con:null,init:'TR'}];
 const ROLE={consultant:'Consultant',manager:'Manager',leader:'Leadership'};
 const RISKCATS=['Budget/Cost cut','Competitor','Not recognizing value','Organizational changes','% of modules not installed','Contract renewal'];
 const CATS=['Do Today','Do This Week','Waiting on Me','Waiting on Others','Decisions Needed','Can Wait'];
@@ -443,7 +443,7 @@ let CLIENTS=[],ACTIONS=[],LOG=[],aid=1;
 function buildData(){
  ROI.forEach(r=>{
   if(r.g==='Terminated')return;
-  const c={id:slug(r.n),name:r.n,con:r.con,reg:r.reg,loc:r.loc,row:r,ops:null,review:null,comments:[]};
+  const c={id:slug(r.n),name:r.n,con:r.con,reg:r.reg,loc:r.loc,row:r,ops:null,review:null,comments:[],complex:r.g==='Implementation'||r.g==='No ROI / incomplete'};
   const jid=JMAP[r.n];
   if(jid){const o=OPS_CLIENTS.find(x=>x.id===jid),p=PROFILES[jid];o.change=[];o.next=[];o.actions=[];c.id=jid;c.name=o.name;c.ops=o;c.dm=o.dm;
    const lr=(p.overview.find(x=>x[0]==='Last review health rating')||[])[1]||'';
@@ -483,6 +483,7 @@ let ME=null,view='home',cur=null,editing=false,draft=null,fCon='All',fSt='All',f
 const visible=()=>ME.role==='consultant'?CLIENTS.filter(c=>c.con===ME.con):CLIENTS;
 const canEdit=c=>ME.role!=='leader'&&c.con===ME.con;
 const canApprove=c=>ME.role==='manager'&&c.con!==ME.con;
+function isLeader(){return !!(ME&&ME.role==='leader')}
 const log=x=>LOG.unshift({t:nowStamp(),u:ME.name,x});
 function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');setTimeout(()=>t.classList.remove('on'),2600)}
 /* ---------- login ---------- */
@@ -929,7 +930,7 @@ function wireClient(c){const on=(id,fn)=>{const el=$('#'+id);if(el)el.addEventLi
 function vSimple(fn,title){return ()=>{fn();const m=$('#main');m.innerHTML=`<p class="crumb"><span class="link" id="back">← All clients</span></p>`+m.innerHTML;$('#back').addEventListener('click',goHome);bindToClient()}}
 function bindToClient(){$$('[data-c]').forEach(b=>b.addEventListener('click',()=>goClient(b.dataset.c,'health')))}
 function renderNav(){}
-function render(){const bc=$('#bellN');if(ME){const n=alertCount();bc.textContent=n;bc.hidden=!n}const map={alerts:vAlerts,rules:vRules,home:vCommand,snapshot:vSnapshot,reviews:vReviews,health:vHealthHub,jira:vJira,success:vSuccessHub,roi:vROIHub,landing:vLanding,client:vClient,queue:vSimple(vQueue),activity:vSimple(vActivity),users:vSimple(vUsers),model:vSimple(vModel)};(map[view]||vLanding)();window.scrollTo(0,0)}
+function render(){const bc=$('#bellN');if(ME){const n=alertCount();bc.textContent=n;bc.hidden=!n}const map={alerts:vAlerts,rules:vRules,home:vCommand,snapshot:vSnapshot,reviews:vReviews,health:vHealthHub,jira:vJira,admin:vAdmin,tracker:vTracker,success:vSuccessHub,roi:vROIHub,landing:vLanding,client:vClient,queue:vSimple(vQueue),activity:vSimple(vActivity),users:vSimple(vUsers),model:vSimple(vModel)};(map[view]||vLanding)();window.scrollTo(0,0)}
 
 /* ================= ALERTS & TRIGGERS ================= */
 const RULES=[
@@ -1067,6 +1068,7 @@ function vCommand(){
  const stk=list.flatMap(c=>c.review?c.review.people:[]);const goals=list.filter(c=>c.review&&c.review.utilStrategy.length).length;
  const cash=withR.reduce((a,c)=>a+(c.row.seg||0)+(c.row.med||0)+(c.row.rm||0)+(c.row.db||0),0);
  const qn=CLIENTS.filter(c=>c.review&&c.review.status==='Submitted'&&canApprove(c)).length;
+ const books=isLeader()?consultantNames().map(bookOf):[];
  const tile=(go,icon,t,big,sub,extra,col)=>`<button type="button" class="st" data-go="${go}" style="border-block-start-color:${col}"><span class="st-t">${icon} ${t}</span><span class="st-v" style="color:${col}">${big}</span><span class="st-s">${sub}</span>${extra||''}</button>`;
  $('#main').innerHTML=`<div class="banner">🔒 <b>INTERNAL ONLY.</b> Never screen-share the command center with a client.</div>
  <div class="cc-head"><div><p class="kicker">Collections Optimization</p><p class="cc-title">Command Center</p><p class="subtitle" style="margin:0">${ME.role==='consultant'?'Good morning, '+esc(ME.name.split(' ')[0])+' · your book of ':''}${list.length} clients · as of Nov 3, 2026</p></div>
@@ -1078,13 +1080,15 @@ function vCommand(){
   ${tile('reviews','📋','Reviews due',pend.length+due,`${pend.length} ROI review${pend.length===1?'':'s'} outstanding · ${due} client review${due===1?'':'s'} due`,'',C.purple)}
   ${tile('health:risk','⚠','Clients at risk',R.length+' / '+Y.length,'Red / Yellow',`<span class="st-s">${atRisk.slice(0,3).map(x=>esc(x.c.name)).join(' · ')||'None'}</span>`,C.orange)}
   ${tile('roi','💲','CO results',fm(T),`2025 quantified value · ${strong} of ${withR.length} at 5:1+`,both.length?`<span class="st-s">Same ${both.length} clients: ${fm(t24)} in 2024 → ${fm(t25)} in 2025 (${t24?((t25/t24-1)*100).toFixed(0):0}%)</span>`:'',C.purple)}
+  ${isLeader()?tile('tracker','👥','Consultant capacity',books.filter(b=>b.band==='Available').length,`${books.filter(b=>b.band==='Limited').length} limited · ${books.filter(b=>b.band==='Full').length} full`,'<span class="st-go">Open tracker →</span>',C.teal):''}
  </div>
  <div class="mods">
-  <div class="mod" style="--mc:${C.blue}"><p class="mod-t">Client health</p><p class="mod-k"><b>${avg??'—'}</b> average · <b>${ews}</b> early warnings</p><ul><li>Health score</li><li>Risks</li><li>Engagement</li><li>Utilization <span class="note" style="margin:0">(${adAvg??'—'}% adoption)</span></li><li>Early warnings</li><li>Jira tracking</li></ul><button type="button" class="mod-go" data-go="health">ENTER →</button></div>
+  <div class="mod" style="--mc:${C.blue}"><p class="mod-t">Client health</p><p class="mod-k"><b>${avg??'—'}</b> average · <b>${ews}</b> early warnings</p><ul><li>Health score</li><li>Risks</li><li>Engagement</li><li>Utilization <span class="note" style="margin:0">(${adAvg??'—'}% adoption)</span></li><li>Early warnings</li><li>Jira tracking${isLeader()?' <span class="note" style="margin:0">(charts and export)</span>':''}</li></ul><button type="button" class="mod-go" data-go="health">ENTER →</button></div>
   <div class="mod" style="--mc:${C.teal}"><p class="mod-t">Client success</p><p class="mod-k"><b>${goals}</b> clients with goals · <b>${stk.length}</b> stakeholders</p><ul><li>Goals</li><li>Initiatives</li><li>Success plan</li><li>Stakeholders</li></ul><button type="button" class="mod-go" data-go="success">ENTER →</button></div>
   <div class="mod" style="--mc:${C.purple}"><p class="mod-t">ROI</p><p class="mod-k"><b>${fm(T)}</b> benefit · <b>${fm(cash)}</b> cash impact</p><ul><li>ROI</li><li>Benefit</li><li>Cash impact</li><li>Trends</li><li>Workflow value</li></ul><button type="button" class="mod-go" data-go="roi">ENTER →</button></div>
+  ${isLeader()?`<div class="mod" style="--mc:${C.orange}"><p class="mod-t">Team admin</p><p class="mod-k"><b>${books.filter(b=>b.band==='Full').length}</b> full · <b>${books.filter(b=>b.band==='Available').length}</b> available</p><ul><li>Reassign clients</li><li>Mark complex accounts</li><li>Consultant availability</li></ul><button type="button" class="mod-go" data-go="admin">ENTER →</button></div>`:''}
  </div>
- <p class="note" style="margin-block-start:18px"><span class="link" data-go="rules">Alert rules</span> · <span class="link" data-go="model">How client health is scored</span>${ME.role==='manager'?' · <span class="link" data-go="queue">Review approvals</span> · <span class="link" data-go="activity">Activity</span> · <span class="link" data-go="users">Users & roles</span>':''}</p>`;
+ <p class="note" style="margin-block-start:18px"><span class="link" data-go="rules">Alert rules</span> · <span class="link" data-go="model">How client health is scored</span>${isLeader()?' · <span class="link" data-go="admin">Backend admin</span> · <span class="link" data-go="tracker">Consultant tracker</span>':''}${ME.role==='manager'?' · <span class="link" data-go="queue">Review approvals</span> · <span class="link" data-go="activity">Activity</span> · <span class="link" data-go="users">Users & roles</span>':''}</p>`;
  const lc=$('#lcon');if(lc)lc.addEventListener('change',e=>{fConL=e.target.value;render()});
  $('#jump').addEventListener('change',e=>{if(e.target.value){hubFrom='home';goClient(e.target.value,'health')}});
  $$('[data-go]').forEach(b=>b.addEventListener('click',()=>{const [v,f]=b.dataset.go.split(':');view=v;if(v==='health')hFilter=f==='risk'?'risk':'all';if(v==='success')cFilter='open';render();if(f==='commit'){const el=document.getElementById('commitments');if(el&&el.scrollIntoView)el.scrollIntoView()}}))}
@@ -1208,28 +1212,88 @@ function jiraGroupCards(title,blurb,issues,key){
   return '<div class="card"><h4>'+title+'</h4><p class="note" style="margin-block-start:0">'+blurb+'</p>'+
     (groups.length?groups.map(function(g){return '<details style="margin-block-end:8px"><summary><b>'+esc(g[0])+'</b> · '+g[1].length+' ticket'+(g[1].length===1?'':'s')+'</summary>'+jiraTable(g[1])+'</details>'}).join(''):'<p class="note">No tickets in this book.</p>')+'</div>';
 }
-function jiraMatrix(issues){
-  var open=issues.filter(function(i){return i.status!=='Done'});
+function jiraOpen(issues){return issues.filter(function(i){return i.status!=='Done'})}
+function jiraMatrixParts(issues){
+  var open=jiraOpen(issues);
   var reporters=[...new Set(open.map(function(i){return i.reporter}))].sort();
   var components=[...new Set(open.map(function(i){return i.component}))].sort();
   var cell=function(rep,comp){return open.filter(function(i){return i.reporter===rep&&i.component===comp}).length};
-  var head='<tr><th>Consultant</th>'+components.map(function(c){return '<th class="num">'+esc(c)+'</th>'}).join('')+'<th class="num">Open</th></tr>';
-  var body=reporters.map(function(rep){
+  return {open:open,reporters:reporters,components:components,cell:cell};
+}
+function jiraMatrix(issues){
+  var m=jiraMatrixParts(issues);
+  var head='<tr><th>Consultant</th>'+m.components.map(function(c){return '<th class="num">'+esc(c)+'</th>'}).join('')+'<th class="num">Open</th></tr>';
+  var body=m.reporters.map(function(rep){
     var total=0;
-    var cells=components.map(function(comp){var n=cell(rep,comp); total+=n; return '<td class="num">'+(n||'—')+'</td>'}).join('');
+    var cells=m.components.map(function(comp){var n=m.cell(rep,comp); total+=n; return '<td class="num">'+(n||'—')+'</td>'}).join('');
     return '<tr><td><b>'+esc(rep)+'</b></td>'+cells+'<td class="num"><b>'+total+'</b></td></tr>';
   }).join('');
-  var foot='<tr><td><b>Open tickets</b></td>'+components.map(function(comp){return '<td class="num"><b>'+open.filter(function(i){return i.component===comp}).length+'</b></td>'}).join('')+'<td class="num"><b>'+open.length+'</b></td></tr>';
-  return '<div class="card" id="jira-matrix"><h4>Tickets by consultant and type of work</h4><p class="note" style="margin-block-start:0">Tiffany Rudy’s view. Rows are who entered the ticket. Columns are the Jira component, the type of work. Counts are open tickets.</p><div style="overflow-x:auto"><table>'+head+body+foot+'</table></div></div>';
+  var foot='<tr><td><b>Open tickets</b></td>'+m.components.map(function(comp){return '<td class="num"><b>'+m.open.filter(function(i){return i.component===comp}).length+'</b></td>'}).join('')+'<td class="num"><b>'+m.open.length+'</b></td></tr>';
+  return '<div class="card" id="jira-matrix"><h4>Tickets by consultant and type of work</h4><p class="note" style="margin-block-start:0">Leadership view. Rows are who entered the ticket. Columns are the Jira component, the type of work. Counts are open tickets.</p><div style="overflow-x:auto"><table>'+head+body+foot+'</table></div></div>';
+}
+function jiraBars(title,blurb,groups,color){
+  var max=Math.max.apply(null,groups.map(function(g){return g[1].length}).concat([1]));
+  var rows=groups.slice(0,12).map(function(g){return '<div class="drv" style="grid-template-columns:180px 1fr 36px"><span>'+esc(g[0])+'</span><div class="bar"><span style="inline-size:'+(g[1].length/max*100)+'%;background:'+color+'"></span></div><b style="text-align:end">'+g[1].length+'</b></div>'}).join('');
+  var more=groups.length>12?'<p class="note">Top 12 of '+groups.length+'.</p>':'';
+  return '<div class="card"><h4>'+title+'</h4><p class="note" style="margin-block-start:0">'+blurb+'</p>'+(rows||'<p class="note">No open tickets.</p>')+more+'</div>';
+}
+function jiraCharts(issues){
+  var open=jiraOpen(issues);
+  return '<div id="jira-charts" class="grid2">'+
+    jiraBars('Open tickets by consultant','Who entered the ticket (Jira reporter).',jiraGroups(open,'reporter'),C.blue)+
+    jiraBars('Open tickets by type of work','Jira component.',jiraGroups(open,'component'),C.purple)+
+    '</div>'+jiraBars('Open tickets by client','Client label on the ticket.',jiraGroups(open,'client'),C.teal);
+}
+function jiraExportBar(){
+  if(!isLeader())return '';
+  return '<div class="filters" id="jira-export"><button type="button" class="btn on" id="jiraCsv">Download tickets</button><button type="button" class="btn" id="jiraGrid">Download consultant grid</button><button type="button" class="btn" id="jiraPrint">Print</button><span class="note" style="margin:0">Download from this sample snapshot. A live Jira export replaces it.</span></div>';
 }
 function jiraBoardHtml(){
   var issues=jiraFlat();
-  var open=issues.filter(function(i){return i.status!=='Done'}).length;
-  var matrix=ME&&ME.id==='tr'?jiraMatrix(issues):'';
-  return '<p class="note">'+esc(jiraNote())+' · '+issues.length+' tickets · '+open+' open.</p>'+matrix+
+  var open=jiraOpen(issues).length;
+  var leader=isLeader();
+  return '<p class="note">'+esc(jiraNote())+' · '+issues.length+' tickets · '+open+' open.</p>'+
+    (leader?jiraExportBar()+jiraCharts(issues)+jiraMatrix(issues):'')+
     jiraGroupCards('Tickets entered by consultant','Grouped by reporter, the person who entered the ticket.',issues,'reporter')+
     jiraGroupCards('Tickets by client','Grouped by the client label on the ticket.',issues,'client')+
     jiraGroupCards('Tickets by type of work','Grouped by Jira component.',issues,'component');
+}
+function csvCell(value){
+  var s=String(value==null?'':value);
+  if(/^[=\-+@]/.test(s))s="'"+s;
+  return '"'+s.replace(/"/g,'""')+'"';
+}
+function downloadCsv(name,rows){
+  var text=rows.map(function(row){return row.map(csvCell).join(',')}).join('\n');
+  var blob=new Blob([text],{type:'text/csv;charset=utf-8'});
+  var a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download=name;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(function(){URL.revokeObjectURL(a.href)},1000);
+}
+function jiraTicketRows(issues){
+  var rows=[['Key','Summary','Client','Label','Type of work','Reporter','Assignee','Status','Updated']];
+  issues.forEach(function(i){rows.push([i.key,i.summary,i.client,(i.labels||[]).join('; '),i.component,i.reporter,i.assignee||'',i.status,i.updated||''])});
+  return rows;
+}
+function jiraGridRows(issues){
+  var m=jiraMatrixParts(issues);
+  var rows=[['Consultant'].concat(m.components,['Open'])];
+  m.reporters.forEach(function(rep){
+    var total=0;
+    var cells=m.components.map(function(comp){var n=m.cell(rep,comp); total+=n; return n});
+    rows.push([rep].concat(cells,[total]));
+  });
+  return rows;
+}
+function bindJiraExport(){
+  var csv=$('#jiraCsv'),grid=$('#jiraGrid'),print=$('#jiraPrint');
+  if(csv)csv.addEventListener('click',function(){var issues=jiraFlat(); downloadCsv('jira-tracking.csv',jiraTicketRows(issues)); toast('Downloaded '+issues.length+' tickets')});
+  if(grid)grid.addEventListener('click',function(){downloadCsv('jira-consultant-grid.csv',jiraGridRows(jiraFlat())); toast('Downloaded the consultant grid')});
+  if(print)print.addEventListener('click',function(){try{window.print()}catch(e){toast('Printing is not available here')}});
 }
 function bindJiraClients(root){
   $$(root+' [data-cl]').forEach(function(b){b.addEventListener('click',function(){hubFrom=view;goClient(b.dataset.cl,'health')})});
@@ -1244,7 +1308,7 @@ function paintJiraHub(){
     var byWork=jiraGroups(open,'component').slice(0,4).map(function(g){return esc(g[0])+' '+g[1].length}).join(' · ')||'None';
     el.innerHTML='<p class="note" style="margin-block-start:0">'+esc(jiraNote())+'</p><p class="p"><b>'+open.length+'</b> open ticket'+(open.length===1?'':'s')+' in this book · '+issues.length+' total.</p>'+
       '<p class="p" style="margin-block:4px">By consultant: '+byRep+'</p><p class="p" style="margin-block:4px 10px">By type of work: '+byWork+'</p>'+
-      (ME&&ME.id==='tr'?'<p class="p">Your login includes the consultant-by-type grid.</p>':'')+
+      (isLeader()?'<p class="p">Your login adds charts, a download, and the consultant-by-type grid.</p>':'')+
       '<button type="button" class="btn" data-go="jira">Open Jira tracking</button>';
     bindJiraClients('#jira-hub');
   });
@@ -1256,6 +1320,7 @@ function vJira(){
     var el=$('#jira-board'); if(!el)return;
     el.innerHTML=jiraBoardHtml();
     bindJiraClients('#jira-board');
+    bindJiraExport();
   });
 }
 function loadClientJira(id){
@@ -1272,6 +1337,91 @@ function loadClientJira(id){
     bindJiraClients('#jira-slot');
   }
   ensureJira(paint);
+}
+
+/* ================= LEADERSHIP ADMIN ================= */
+const BOOK_CAPACITY=8;
+let adminQ='';
+function conName(k){return !k||k==='N/A'?'Unassigned':(FULL[k]||k)}
+function consultantNames(){
+  var fromClients=CLIENTS.map(function(c){return c.con}).filter(function(k){return k&&k!=='N/A'});
+  var fromUsers=USERS.filter(function(u){return u.con}).map(function(u){return u.con});
+  return [...new Set(fromUsers.concat(fromClients))].sort();
+}
+function bookOf(con){
+  var clients=CLIENTS.filter(function(c){return c.con===con});
+  var points=clients.reduce(function(a,c){return a+(c.complex?2:1)},0);
+  var complex=clients.filter(function(c){return c.complex}).length;
+  var room=BOOK_CAPACITY-points;
+  var band=room>=2?'Available':room===1?'Limited':'Full';
+  return {con:con,clients:clients,points:points,complex:complex,capacity:BOOK_CAPACITY,room:room,band:band};
+}
+function availChip(band){
+  var m={Available:['#D7F2EF','#00756E'],Limited:['#FFF1E0','#B35F00'],Full:['#FBE0EE','#A0005C']};
+  return '<span class="chip" style="background:'+m[band][0]+';color:'+m[band][1]+'">'+band+'</span>';
+}
+function roomLabel(room){return room>=2?'Complex or standard':room===1?'Standard only':'None'}
+function leaderOnly(title){
+  $('#main').innerHTML='<p class="crumb"><span class="link" id="back">← Command center</span></p><p class="title">'+title+'</p><div class="card"><p class="p">This page is for leadership. Sign in as Tiffany Rudy to reassign clients and read consultant availability.</p></div>';
+  $('#back').addEventListener('click',goHome);
+}
+function assignClient(id,con){
+  var c=CLIENTS.find(function(x){return x.id===id});
+  if(!c||c.con===con)return;
+  var from=c.con;
+  c.con=con;
+  if(c.row)c.row.con=con;
+  log('Reassigned '+c.name+' from '+conName(from)+' to '+conName(con));
+  var load=con==='N/A'?null:bookOf(con);
+  toast(c.name+' → '+conName(con)+(load?'. '+load.band+' ('+load.points+' of '+load.capacity+').':'.'));
+  render();
+}
+function setComplex(id,on){
+  var c=CLIENTS.find(function(x){return x.id===id});
+  if(!c)return;
+  c.complex=on;
+  log(c.name+' marked '+(on?'complex':'standard'));
+  var load=c.con&&c.con!=='N/A'?bookOf(c.con):null;
+  toast(c.name+' is '+(on?'complex (2 points)':'standard (1 point)')+(load?'. '+conName(c.con)+': '+load.points+' of '+load.capacity+'.':'.'));
+  render();
+}
+function vAdmin(){
+  if(!isLeader()){leaderOnly('Backend admin');return}
+  var names=consultantNames();
+  var q=adminQ.trim().toLowerCase();
+  var list=CLIENTS.filter(function(c){return !q||c.name.toLowerCase().includes(q)||conName(c.con).toLowerCase().includes(q)}).sort(function(a,b){return conName(a.con).localeCompare(conName(b.con))||a.name.localeCompare(b.name)});
+  var opts=function(c){return '<option value="N/A"'+(c.con==='N/A'?' selected':'')+'>Unassigned</option>'+names.map(function(k){return '<option value="'+esc(k)+'"'+(c.con===k?' selected':'')+'>'+esc(conName(k))+'</option>'}).join('')};
+  $('#main').innerHTML='<p class="crumb"><span class="link" id="back">← Command center</span></p><div class="hero"><div><p class="kicker">Collections Optimization</p><p class="title">Backend admin</p><p class="subtitle" style="margin:0">Reassign a client and mark whether the account is complex. Leadership only.</p></div><div class="filters" style="margin:0"><input id="adminQ" class="sel" placeholder="Find a client or consultant…" value="'+esc(adminQ)+'" aria-label="Find a client or consultant"><span class="link" data-go="tracker">Consultant tracker →</span></div></div>'+
+    '<div class="banner" style="background:#E8F1FB;color:#005EB8">Sample admin. Assignments and complexity stay in this browser session. Nothing is written to Jira or a staffing system.</div>'+
+    '<div class="card"><p class="note" style="margin-block-start:0">A standard client is 1 point. A complex client is 2. Implementation and incomplete-ROI clients start as complex. Change any row. '+list.length+' clients.</p>'+
+    '<div style="overflow-x:auto"><table id="admin-book"><tr><th>Client</th><th>Consultant</th><th>Complex</th><th class="num">Points</th></tr>'+
+    list.map(function(c){return '<tr><td><b>'+esc(c.name)+'</b></td><td><select class="sel" data-reassign="'+esc(c.id)+'" aria-label="Consultant for '+esc(c.name)+'">'+opts(c)+'</select></td><td><label><input type="checkbox" data-complex="'+esc(c.id)+'"'+(c.complex?' checked':'')+'> Complex</label></td><td class="num">'+(c.complex?2:1)+'</td></tr>'}).join('')+
+    '</table></div></div>';
+  $('#back').addEventListener('click',goHome);
+  $$('[data-go]').forEach(function(b){b.addEventListener('click',function(){view=b.dataset.go;render()})});
+  var box=$('#adminQ');
+  box.addEventListener('input',function(){adminQ=box.value;var pos=box.selectionStart;render();var n=$('#adminQ');n.focus();try{n.setSelectionRange(pos,pos)}catch(e){}});
+  $$('[data-reassign]').forEach(function(el){el.addEventListener('change',function(){assignClient(el.dataset.reassign,el.value)})});
+  $$('[data-complex]').forEach(function(el){el.addEventListener('change',function(){setComplex(el.dataset.complex,el.checked)})});
+}
+function vTracker(){
+  if(!isLeader()){leaderOnly('Consultant tracker');return}
+  var books=consultantNames().map(bookOf).sort(function(a,b){return b.points-a.points||conName(a.con).localeCompare(conName(b.con))});
+  var avail=books.filter(function(b){return b.band==='Available'}).length;
+  var limited=books.filter(function(b){return b.band==='Limited'}).length;
+  var full=books.filter(function(b){return b.band==='Full'}).length;
+  var unassigned=CLIENTS.filter(function(c){return !c.con||c.con==='N/A'});
+  $('#main').innerHTML='<p class="crumb"><span class="link" id="back">← Command center</span></p><div class="hero"><div><p class="kicker">Collections Optimization</p><p class="title">Consultant tracker</p><p class="subtitle" style="margin:0">Availability from the sample workload model. A complex client counts double.</p></div><div class="filters" style="margin:0"><span class="link" data-go="admin">Backend admin →</span></div></div>'+
+    '<div class="banner" style="background:#E8F1FB;color:#005EB8">Sample staffing view. Workload uses the complexity marks in this session. It is not a live capacity system.</div>'+
+    '<div class="kpis"><div class="kpi" style="border-block-start-color:'+C.teal+'"><div class="l">Available</div><div class="v" style="color:'+C.teal+'">'+avail+'</div><div class="n">Room for a complex client</div></div><div class="kpi" style="border-block-start-color:'+C.orange+'"><div class="l">Limited</div><div class="v" style="color:'+C.orange+'">'+limited+'</div><div class="n">Room for one standard client</div></div><div class="kpi" style="border-block-start-color:'+C.magenta+'"><div class="l">Full</div><div class="v" style="color:'+C.magenta+'">'+full+'</div><div class="n">No open points</div></div></div>'+
+    '<div class="card" id="tracker-chart"><h4>Workload against a '+BOOK_CAPACITY+'-point book</h4><p class="note" style="margin-block-start:0">Standard = 1 point. Complex = 2 points. A full bar is a full book.</p>'+
+    books.map(function(b){var col=b.band==='Full'?C.magenta:b.band==='Limited'?C.orange:C.teal;var pct=Math.min(100,b.points/b.capacity*100);return '<div class="drv" style="grid-template-columns:160px 1fr 92px"><span>'+esc(conName(b.con))+'</span><div class="bar" title="'+b.points+' of '+b.capacity+'"><span style="inline-size:'+pct+'%;background:'+col+'"></span></div><b style="text-align:end">'+b.points+' / '+b.capacity+'</b></div>'}).join('')+
+    '</div><div class="card"><div style="overflow-x:auto"><table id="tracker-book"><tr><th>Consultant</th><th class="num">Clients</th><th class="num">Complex</th><th class="num">Points</th><th>Availability</th><th>Room for</th><th>Book</th></tr>'+
+    books.map(function(b){return '<tr><td><b>'+esc(conName(b.con))+'</b></td><td class="num">'+b.clients.length+'</td><td class="num">'+b.complex+'</td><td class="num">'+b.points+'</td><td>'+availChip(b.band)+'</td><td>'+roomLabel(b.room)+'</td><td>'+b.clients.slice().sort(function(a,c){return a.name.localeCompare(c.name)}).map(function(c){return esc(c.name)+(c.complex?' <span class="chip" style="background:#F7F2FB;color:#4B1F6F">Complex</span>':'')}).join('<br>')+'</td></tr>'}).join('')+
+    '</table></div>'+(unassigned.length?'<p class="note">'+unassigned.length+' unassigned: '+unassigned.map(function(c){return esc(c.name)}).join(', ')+'.</p>':'')+
+    '<p class="note">Available means at least 2 open points, enough for a complex client. Limited means 1 open point, a standard client only. Full means the book is at '+BOOK_CAPACITY+' points or more. Set complex and reassign on Backend admin.</p></div>';
+  $('#back').addEventListener('click',goHome);
+  $$('[data-go]').forEach(function(b){b.addEventListener('click',function(){view=b.dataset.go;render()})});
 }
 
 (function(){
