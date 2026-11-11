@@ -23,6 +23,7 @@ test('issueFromApi keeps the fields the client page shows', () => {
     reporter: '',
     component: '',
     labels: [],
+    opened: '',
     updated: '2026-11-02',
     url: 'https://example.atlassian.net/browse/CO-100',
   });
@@ -36,11 +37,13 @@ test('issueFromApi keeps reporter, component, and labels', () => {
       reporter: { displayName: 'Jessica Johns' },
       components: [{ name: 'Medicaid' }, { name: 'Reporting' }],
       labels: ['MaineHealth'],
+      created: '2026-09-01T12:00:00.000+0000',
     },
   }, '');
   assert.equal(issue.reporter, 'Jessica Johns');
   assert.equal(issue.component, 'Medicaid');
   assert.deepEqual(issue.labels, ['MaineHealth']);
+  assert.equal(issue.opened, '2026-09-01');
   assert.equal(issue.url, '');
 });
 
@@ -76,6 +79,8 @@ test('mock issues look like a Jira connection and can be grouped', () => {
     assert.ok(issue.reporter, issue.key);
     assert.ok(issue.component, issue.key);
     assert.ok(Array.isArray(issue.labels) && issue.labels.length, issue.key);
+    assert.match(issue.opened, /^\d{4}-\d{2}-\d{2}$/, issue.key);
+    assert.ok(issue.opened <= issue.updated && issue.opened <= '2026-11-03', issue.key);
     assert.equal(issue.url, '');
     reporters.add(issue.reporter);
     components.add(issue.component);
