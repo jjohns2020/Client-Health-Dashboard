@@ -8,6 +8,7 @@ export function issueFromApi(issue, site) {
   const reporter = fields.reporter && fields.reporter.displayName;
   const components = Array.isArray(fields.components) ? fields.components.map((item) => item && item.name).filter(Boolean) : [];
   const labels = Array.isArray(fields.labels) ? fields.labels.map((label) => String(label)) : [];
+  const done = /done|closed|resolved/i.test(String(status || ''));
   return {
     key: String(issue.key || ''),
     summary: String(fields.summary || ''),
@@ -18,6 +19,7 @@ export function issueFromApi(issue, site) {
     component: String(components[0] || ''),
     labels,
     opened: String(fields.created || '').slice(0, 10),
+    closed: done ? String(fields.resolutiondate || '').slice(0, 10) : '',
     updated: String(fields.updated || '').slice(0, 10),
     url: site ? `${site.replace(/\/$/, '')}/browse/${issue.key}` : '',
   };

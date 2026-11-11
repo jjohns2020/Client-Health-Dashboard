@@ -24,6 +24,7 @@ test('issueFromApi keeps the fields the client page shows', () => {
     component: '',
     labels: [],
     opened: '',
+    closed: '',
     updated: '2026-11-02',
     url: 'https://example.atlassian.net/browse/CO-100',
   });
@@ -44,7 +45,21 @@ test('issueFromApi keeps reporter, component, and labels', () => {
   assert.equal(issue.component, 'Medicaid');
   assert.deepEqual(issue.labels, ['MaineHealth']);
   assert.equal(issue.opened, '2026-09-01');
+  assert.equal(issue.closed, '');
   assert.equal(issue.url, '');
+});
+
+test('issueFromApi keeps a resolution date only when the ticket is closed', () => {
+  const closed = issueFromApi({
+    key: 'CO-300',
+    fields: { status: { name: 'Done' }, resolutiondate: '2026-10-02T12:00:00.000+0000' },
+  }, '');
+  const open = issueFromApi({
+    key: 'CO-301',
+    fields: { status: { name: 'In Progress' }, resolutiondate: '2026-10-02T12:00:00.000+0000' },
+  }, '');
+  assert.equal(closed.closed, '2026-10-02');
+  assert.equal(open.closed, '');
 });
 
 test('toSnapshot groups issues by client id', () => {
@@ -81,6 +96,12 @@ test('mock issues look like a Jira connection and can be grouped', () => {
     assert.ok(Array.isArray(issue.labels) && issue.labels.length, issue.key);
     assert.match(issue.opened, /^\d{4}-\d{2}-\d{2}$/, issue.key);
     assert.ok(issue.opened <= issue.updated && issue.opened <= '2026-11-03', issue.key);
+    if (issue.status === 'Done') {
+      assert.match(issue.closed, /^\d{4}-\d{2}-\d{2}$/, issue.key);
+      assert.ok(issue.closed >= issue.opened && issue.closed <= '2026-11-03', issue.key);
+    } else {
+      assert.equal(issue.closed, '', issue.key);
+    }
     assert.equal(issue.url, '');
     reporters.add(issue.reporter);
     components.add(issue.component);
