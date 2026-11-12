@@ -1286,47 +1286,80 @@ function jiraTrendChart(issues){
   var note=jiraWindow()?'Opened is the month the ticket was created. Closed is the month a Done ticket was resolved. Counts follow the date range and come from this sample snapshot.':'Opened is the month the ticket was created. Closed is the month a Done ticket was resolved. Counts are from this sample snapshot.';
   return '<div class="card" id="jira-trend"><h4>Tickets opened and closed by month</h4><p class="note" style="margin-block-start:0">'+note+'</p><div class="legend2"><span><i style="background:'+C.blue+'"></i>Opened</span><span><i style="background:'+C.teal+'"></i>Closed</span></div>'+(rows||'<p class="note">No dated tickets.</p>')+'</div>';
 }
+function jiraDated(issues,field){
+  var w=jiraWindow();
+  if(w&&w.invalid)return [];
+  return issues.filter(function(i){return i[field]&&(!w||jiraInWindow(i[field],w))});
+}
+function jiraPairGroups(issues,key){
+  var counts={};
+  function add(list,field){
+    list.forEach(function(issue){
+      var name=issue[key]||'Unknown';
+      if(!counts[name])counts[name]={opened:0,closed:0};
+      counts[name][field]+=1;
+    });
+  }
+  add(jiraDated(issues,'opened'),'opened');
+  add(jiraDated(issues,'closed'),'closed');
+  return Object.keys(counts).map(function(name){return {name:name,opened:counts[name].opened,closed:counts[name].closed}}).sort(function(a,b){return (b.opened+b.closed)-(a.opened+a.closed)||a.name.localeCompare(b.name)});
+}
+function jiraPairLegend(){return '<div class="legend2"><span><i style="background:'+C.blue+'"></i>Opened</span><span><i style="background:'+C.teal+'"></i>Closed</span></div>'}
+function jiraPairRows(pairs,wide){
+  var max=Math.max.apply(null,pairs.map(function(p){return Math.max(p.opened,p.closed)}).concat([1]));
+  return pairs.map(function(p){
+    return '<div class="drv" style="grid-template-columns:'+(wide?'180px':'140px')+' 1fr 72px"><span>'+esc(p.name)+'</span><div><div class="bar" title="Opened '+p.opened+'"><span style="inline-size:'+(p.opened/max*100)+'%;background:'+C.blue+'"></span></div><div class="bar" title="Closed '+p.closed+'" style="margin-block-start:3px"><span style="inline-size:'+(p.closed/max*100)+'%;background:'+C.teal+'"></span></div></div><b style="text-align:end">'+p.opened+' / '+p.closed+'</b></div>';
+  }).join('');
+}
 function jiraMatrixParts(issues){
-  var open=jiraOpen(issues);
-  var reporters=[...new Set(open.map(function(i){return i.reporter}))].sort();
-  var components=[...new Set(open.map(function(i){return i.component}))].sort();
-  var cell=function(rep,comp){return open.filter(function(i){return i.reporter===rep&&i.component===comp}).length};
-  return {open:open,reporters:reporters,components:components,cell:cell};
+  var opened=jiraDated(issues,'opened');
+  var closed=jiraDated(issues,'closed');
+  var reporters=[...new Set(opened.map(function(i){return i.reporter}).concat(closed.map(function(i){return i.reporter})))].sort();
+  var components=[...new Set(opened.map(function(i){return i.component}).concat(closed.map(function(i){return i.component})))].sort();
+  var tally=function(list,rep,comp){return list.filter(function(i){return i.reporter===rep&&i.component===comp}).length};
+  return {opened:opened,closed:closed,reporters:reporters,components:components,tally:tally};
 }
 function jiraMatrix(issues){
   var m=jiraMatrixParts(issues);
-  var head='<tr><th>Consultant</th>'+m.components.map(function(c){return '<th class="num">'+esc(c)+'</th>'}).join('')+'<th class="num">Open</th></tr>';
+  var pair=function(o,c){return o||c?o+' / '+c:'—'};
+  var head='<tr><th>Consultant</th>'+m.components.map(function(c){return '<th class="num">'+esc(c)+'</th>'}).join('')+'<th class="num">Opened / Closed</th></tr>';
   var body=m.reporters.map(function(rep){
-    var total=0;
-    var cells=m.components.map(function(comp){var n=m.cell(rep,comp); total+=n; return '<td class="num">'+(n||'—')+'</td>'}).join('');
-    return '<tr><td><b>'+esc(rep)+'</b></td>'+cells+'<td class="num"><b>'+total+'</b></td></tr>';
+    var opened=0, closed=0;
+    var cells=m.components.map(function(comp){var o=m.tally(m.opened,rep,comp), c=m.tally(m.closed,rep,comp); opened+=o; closed+=c; return '<td class="num">'+pair(o,c)+'</td>'}).join('');
+    return '<tr><td><b>'+esc(rep)+'</b></td>'+cells+'<td class="num"><b>'+opened+' / '+closed+'</b></td></tr>';
   }).join('');
-  var foot='<tr><td><b>Open tickets</b></td>'+m.components.map(function(comp){return '<td class="num"><b>'+m.open.filter(function(i){return i.component===comp}).length+'</b></td>'}).join('')+'<td class="num"><b>'+m.open.length+'</b></td></tr>';
-  return '<div class="card" id="jira-matrix"><h4>Tickets by consultant and type of work</h4><p class="note" style="margin-block-start:0">Leadership view. Rows are who entered the ticket. Columns are the Jira component, the type of work. Counts are open tickets.</p><div style="overflow-x:auto"><table>'+head+body+foot+'</table></div></div>';
+  var footOpened=0, footClosed=0;
+  var footCells=m.components.map(function(comp){
+    var o=m.opened.filter(function(i){return i.component===comp}).length;
+    var c=m.closed.filter(function(i){return i.component===comp}).length;
+    footOpened+=o; footClosed+=c;
+    return '<td class="num"><b>'+pair(o,c)+'</b></td>';
+  }).join('');
+  var foot='<tr><td><b>All tickets</b></td>'+footCells+'<td class="num"><b>'+footOpened+' / '+footClosed+'</b></td></tr>';
+  return '<div class="card" id="jira-matrix"><h4>Tickets by consultant and type of work</h4><p class="note" style="margin-block-start:0">Each cell is opened / closed. Rows are who entered the ticket. Columns are the type of work.</p><div style="overflow-x:auto"><table>'+head+body+foot+'</table></div></div>';
 }
-function jiraBars(title,blurb,groups,color){
-  var max=Math.max.apply(null,groups.map(function(g){return g[1].length}).concat([1]));
-  var rows=groups.slice(0,12).map(function(g){return '<div class="drv" style="grid-template-columns:180px 1fr 36px"><span>'+esc(g[0])+'</span><div class="bar"><span style="inline-size:'+(g[1].length/max*100)+'%;background:'+color+'"></span></div><b style="text-align:end">'+g[1].length+'</b></div>'}).join('');
-  var more=groups.length>12?'<p class="note">Top 12 of '+groups.length+'.</p>':'';
-  return '<div class="card"><h4>'+title+'</h4><p class="note" style="margin-block-start:0">'+blurb+'</p>'+(rows||'<p class="note">No open tickets.</p>')+more+'</div>';
+function jiraPairCard(title,blurb,pairs){
+  var shown=pairs.slice(0,12);
+  var more=pairs.length>12?'<p class="note">Top 12 of '+pairs.length+'.</p>':'';
+  return '<div class="card"><h4>'+title+'</h4><p class="note" style="margin-block-start:0">'+blurb+'</p>'+jiraPairLegend()+jiraPairRows(shown,true)+(shown.length?'': '<p class="note">No dated tickets.</p>')+more+'</div>';
 }
 function jiraCharts(issues){
-  var open=jiraOpen(issues);
-  return '<div id="jira-charts" class="grid2">'+
-    jiraBars('Open tickets by consultant','Who entered the ticket (Jira reporter).',jiraGroups(open,'reporter'),C.blue)+
-    jiraBars('Open tickets by type of work','Jira component.',jiraGroups(open,'component'),C.purple)+
-    '</div>'+jiraBars('Open tickets by client','Client label on the ticket.',jiraGroups(open,'client'),C.teal);
+  var range=jiraWindow()?' Counts follow the date range.':'';
+  return '<div id="jira-charts"><div class="grid2">'+
+    jiraPairCard('Tickets by consultant','Who entered the ticket.'+range,jiraPairGroups(issues,'reporter'))+
+    jiraPairCard('Tickets by type of work','Jira component, the type of work.'+range,jiraPairGroups(issues,'component'))+
+    '</div>'+jiraPairCard('Tickets by client','Client label on the ticket.'+range,jiraPairGroups(issues,'client'))+'</div>';
 }
 function jiraExportBar(){
   if(!isLeader())return '';
-  return '<div class="filters" id="jira-export"><label class="note" style="margin:0" for="jiraFrom">From</label><input class="sel" type="date" id="jiraFrom" max="'+TODAY+'" value="'+esc(jiraFrom)+'" aria-label="From date"><label class="note" style="margin:0" for="jiraTo">To</label><input class="sel" type="date" id="jiraTo" max="'+TODAY+'" value="'+esc(jiraTo)+'" aria-label="To date"><button type="button" class="btn" id="jiraRangeClear">All dates</button><button type="button" class="btn on" id="jiraCsv">Download tickets</button><button type="button" class="btn" id="jiraGrid">Download consultant grid</button><button type="button" class="btn" id="jiraChartsFile">Export charts</button><button type="button" class="btn" id="jiraPrint">Print</button><span class="note" style="margin:0">The month chart and the ticket download follow this date range. Open-ticket charts stay the tickets that are still open. Chart export keeps each title and the bars.</span></div>';
+  return '<div class="filters" id="jira-export"><label class="note" style="margin:0" for="jiraFrom">From</label><input class="sel" type="date" id="jiraFrom" max="'+TODAY+'" value="'+esc(jiraFrom)+'" aria-label="From date"><label class="note" style="margin:0" for="jiraTo">To</label><input class="sel" type="date" id="jiraTo" max="'+TODAY+'" value="'+esc(jiraTo)+'" aria-label="To date"><button type="button" class="btn" id="jiraRangeClear">All dates</button><button type="button" class="btn on" id="jiraCsv">Download tickets</button><button type="button" class="btn" id="jiraGrid">Download consultant grid</button><button type="button" class="btn" id="jiraChartsFile">Export charts</button><button type="button" class="btn" id="jiraPrint">Print</button><span class="note" style="margin:0">Every chart and the ticket download follow this date range. Chart export keeps each title and the bars.</span></div>';
 }
-function jiraChartSection(title,groups,color){
-  var max=Math.max.apply(null,groups.map(function(g){return g[1].length}).concat([1]));
-  var rows=groups.map(function(g){
-    return '<div class="row"><span>'+esc(g[0])+'</span><div class="bar"><span style="width:'+(g[1].length/max*100)+'%;background:'+color+'"></span></div></div>';
+function jiraPairSection(title,pairs){
+  var max=Math.max.apply(null,pairs.map(function(p){return Math.max(p.opened,p.closed)}).concat([1]));
+  var rows=pairs.map(function(p){
+    return '<div class="row"><span>'+esc(p.name)+'</span><div><div class="bar"><span style="width:'+(p.opened/max*100)+'%;background:#005EB8"></span></div><div class="bar" style="margin-top:3px"><span style="width:'+(p.closed/max*100)+'%;background:#00B4AA"></span></div></div></div>';
   }).join('');
-  return '<section><h2>'+esc(title)+'</h2>'+(rows||'')+'</section>';
+  return '<section><h2>'+esc(title)+'</h2><p class="key"><i style="background:#005EB8"></i>Opened <i style="background:#00B4AA"></i>Closed</p>'+rows+'</section>';
 }
 function jiraTrendSection(issues){
   var months=jiraTrend(issues);
@@ -1336,12 +1369,11 @@ function jiraTrendSection(issues){
   }).join('');
   return '<section><h2>Tickets opened and closed by month</h2><p class="key"><i style="background:#005EB8"></i>Opened <i style="background:#00B4AA"></i>Closed</p>'+rows+'</section>';
 }
-function jiraChartDocument(issues,openIssues){
-  var open=openIssues||jiraOpen(issues);
+function jiraChartDocument(issues){
   var body=jiraTrendSection(issues)
-    +jiraChartSection('Open tickets by consultant',jiraGroups(open,'reporter'),'#005EB8')
-    +jiraChartSection('Open tickets by type of work',jiraGroups(open,'component'),'#662D91')
-    +jiraChartSection('Open tickets by client',jiraGroups(open,'client'),'#00B4AA');
+    +jiraPairSection('Tickets by consultant',jiraPairGroups(issues,'reporter'))
+    +jiraPairSection('Tickets by type of work',jiraPairGroups(issues,'component'))
+    +jiraPairSection('Tickets by client',jiraPairGroups(issues,'client'));
   return '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Jira charts</title><style>'
     +'body{margin:32px;font-family:"Segoe UI",Arial,sans-serif;color:#262626}h2{font-size:18px;margin:0 0 14px;color:#005EB8}section{margin:0 0 28px}'
     +'.key{margin:-6px 0 12px;font-size:13px}.key i{display:inline-block;width:10px;height:10px;border-radius:2px;margin:0 4px 0 10px}'
@@ -1389,11 +1421,11 @@ function jiraTicketRows(issues){
 }
 function jiraGridRows(issues){
   var m=jiraMatrixParts(issues);
-  var rows=[['Consultant'].concat(m.components,['Open'])];
+  var rows=[['Consultant'].concat(m.components,['Opened','Closed'])];
   m.reporters.forEach(function(rep){
-    var total=0;
-    var cells=m.components.map(function(comp){var n=m.cell(rep,comp); total+=n; return n});
-    rows.push([rep].concat(cells,[total]));
+    var opened=0, closed=0;
+    var cells=m.components.map(function(comp){var o=m.tally(m.opened,rep,comp), c=m.tally(m.closed,rep,comp); opened+=o; closed+=c; return o+' / '+c});
+    rows.push([rep].concat(cells,[opened,closed]));
   });
   return rows;
 }
@@ -1411,7 +1443,7 @@ function bindJiraExport(){
   if(clear)clear.addEventListener('click',function(){jiraFrom=''; jiraTo=''; paintJiraBoard()});
   if(csv)csv.addEventListener('click',function(){var issues=jiraActivity(jiraFlat()); downloadCsv('jira-tracking.csv',jiraTicketRows(issues)); toast('Downloaded '+issues.length+' tickets'+(jiraWindow()?' in this date range':''))});
   if(grid)grid.addEventListener('click',function(){downloadCsv('jira-consultant-grid.csv',jiraGridRows(jiraFlat())); toast('Downloaded the consultant grid')});
-  if(charts)charts.addEventListener('click',function(){var all=jiraFlat(); downloadFile('jira-charts.html',jiraChartDocument(jiraActivity(all),jiraOpen(all)),'text/html;charset=utf-8'); toast(jiraWindow()?'Exported the charts. The month chart uses this date range.':'Exported the charts')});
+  if(charts)charts.addEventListener('click',function(){downloadFile('jira-charts.html',jiraChartDocument(jiraFlat()),'text/html;charset=utf-8'); toast(jiraWindow()?'Exported the charts for this date range.':'Exported the charts')});
   if(print)print.addEventListener('click',function(){try{window.print()}catch(e){toast('Printing is not available here')}});
 }
 function bindJiraClients(root){
@@ -1423,9 +1455,10 @@ function paintJiraHub(){
     var el=$('#jira-hub'); if(!el)return;
     var issues=jiraFlat();
     var open=issues.filter(function(i){return i.status!=='Done'});
-    var byRep=jiraGroups(open,'reporter').slice(0,4).map(function(g){return esc(g[0])+' '+g[1].length}).join(' · ')||'None';
-    var byWork=jiraGroups(open,'component').slice(0,4).map(function(g){return esc(g[0])+' '+g[1].length}).join(' · ')||'None';
-    el.innerHTML='<p class="note" style="margin-block-start:0">'+esc(jiraNote())+'</p><p class="p"><b>'+open.length+'</b> open ticket'+(open.length===1?'':'s')+' in this book · '+issues.length+' total.</p>'+
+    var byRep=jiraPairGroups(issues,'reporter').slice(0,4).map(function(p){return esc(p.name)+' '+p.opened+'/'+p.closed}).join(' · ')||'None';
+    var byWork=jiraPairGroups(issues,'component').slice(0,4).map(function(p){return esc(p.name)+' '+p.opened+'/'+p.closed}).join(' · ')||'None';
+    var closed=issues.filter(function(i){return i.status==='Done'}).length;
+    el.innerHTML='<p class="note" style="margin-block-start:0">'+esc(jiraNote())+'</p><p class="p"><b>'+issues.length+'</b> opened · <b>'+closed+'</b> closed · <b>'+open.length+'</b> still open.</p>'+
       '<p class="p" style="margin-block:4px">By consultant: '+byRep+'</p><p class="p" style="margin-block:4px 10px">By type of work: '+byWork+'</p>'+
       (isLeader()?'<p class="p">Your login adds opened and closed trends, a date range, charts, a download, and the consultant-by-type grid.</p>':'')+
       '<button type="button" class="btn" data-go="jira">Open Jira tracking</button>';

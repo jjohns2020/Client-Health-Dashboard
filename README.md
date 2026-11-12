@@ -75,7 +75,7 @@ Each client in `jira/clients.json` can have a JQL query. The pull calls Jira’s
 `public/jira-clients.json`. The command center loads that file and shows the matching issues on that
 client’s health tab and replaces the sample file `jira/mock-clients.json`. Client health → Jira tracking
 groups those tickets by reporter (consultant), client label, and component (type of work). Tiffany Rudy’s
-leadership login adds open-ticket charts, a month-over-month chart of tickets opened and closed, a date range that filters that chart and the ticket download, a chart export that keeps the titles and bars, a CSV download, and a consultant-by-type grid. Every tracking table shows the open date, the closed date when the ticket is done, and aging in days since the ticket was opened. An empty `jql` leaves that client on the sample issues.
+leadership login adds charts of tickets opened and closed by month, consultant, type of work, and client, a date range that filters those charts and the ticket download, a chart export that keeps the titles and bars, a CSV download, and a consultant-by-type grid of opened and closed counts. Every tracking table shows the open date, the closed date when the ticket is done, and aging in days since the ticket was opened. An empty `jql` leaves that client on the sample issues.
 The API token stays in the environment and is never written into the page.
 
 ```bash
