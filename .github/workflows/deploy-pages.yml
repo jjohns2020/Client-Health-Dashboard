@@ -11,8 +11,10 @@ permissions:
   id-token: write
 
 concurrency:
-  group: github-pages
-  cancel-in-progress: false
+  # The previous group name is held by a queued run GitHub will not cancel.
+  # A new name lets the next push publish without waiting on that run.
+  group: pages-deploy
+  cancel-in-progress: true
 
 jobs:
   build:
